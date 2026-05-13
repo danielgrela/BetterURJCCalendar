@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+	--primary: #E4002B;
+	--secundario: #333333;
+	--tertiary: #007AA4;
+	--neutro: #717171;
+	font-family: 'Inter', sans-serif;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+}
+
+/* Utilities to use CSS variables with Tailwind classes */
+@layer utilities {
+	.bg-primary { background-color: var(--primary) !important; }
+	.bg-secundario { background-color: var(--secundario) !important; }
+	.bg-tertiary { background-color: var(--tertiary) !important; }
+	.bg-neutro { background-color: var(--neutro) !important; }
+
+	.text-primary { color: var(--primary) !important; }
+	.text-secundario { color: var(--secundario) !important; }
+	.text-tertiary { color: var(--tertiary) !important; }
+	.text-neutro { color: var(--neutro) !important; }
+
+	.border-primary { border-color: var(--primary) !important; }
+	.border-secundario { border-color: var(--secundario) !important; }
+	.border-tertiary { border-color: var(--tertiary) !important; }
+	.border-neutro { border-color: var(--neutro) !important; }
+}

@@ -1,0 +1,42 @@
+import ExcelJS from 'exceljs';
+
+export default async function excelTojson(excelFile) {
+  return new Promise((resolve, reject) => {
+    const workbook = new ExcelJS.Workbook();
+    const reader = new FileReader();
+
+    reader.readAsArrayBuffer(excelFile);
+
+    reader.onload = async () => {
+      try {
+        const buffer = reader.result;
+        await workbook.xlsx.load(buffer);
+
+        const worksheet = workbook.getWorksheet(1);
+        const jsonData = [];
+
+        worksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
+          if (rowNumber > 2) {
+            jsonData.push({
+              Curso: row.getCell(1).value,
+              Plan: row.getCell(2).value,
+              Asignatura: row.getCell(3).value,
+              CodigoPlan: row.getCell(4).value,
+              CodigoAsignatura: row.getCell(5).value,
+              CodigoGrupo: row.getCell(6).value,
+              Convocatoria: row.getCell(7).value,
+              Fecha: row.getCell(8).value,
+              Hora: row.getCell(9).value,
+              Aula: row.getCell(10).value,
+            });
+          }
+        });
+
+        resolve(jsonData);
+      } catch (error) {
+        reject(error);
+      }
+    };
+    reader.onerror = (error) => reject(error);
+  });
+}
