@@ -32,7 +32,6 @@ export function ImportPage() {
     return (
         <div className='px-4 lg:px-0 min-h-full flex flex-col'>
             <h1 className="text-3xl font-bold">Importar Calendario de Exámenes</h1>
-            <p className="mt-4 text-neutro">Carga tu archivo de calendario de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">examenes</a> para importarlo directamente.</p>
             <div className='flex flex-row gap-1 items-center text-center mt-3'>
                 <IconHelpCircle size={16} className="inline-block text-gray-500 mr-1" />
                 <p className="text-neutro text-sm">¿Tienes dudas? puedes ver esta <a href="../../public/GuiaDeUso.pdf" download="GuiaDeUso.pdf" className="text-blue-500 hover:underline">guía de uso</a></p>
@@ -52,7 +51,7 @@ export function ImportPage() {
                         <IconFileUpload stroke={2} />
                     </div>
                     <p className="font-semibold">Arrastra tu archivo de examenes aqui o haz clic para buscar</p>
-                    <p className="mt-1 text-sm text-gray-500">Formatos soportados: el .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">examenes</a> </p>
+                    <p className="mt-1 text-sm text-gray-500">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">examenes</a> </p>
                 </label>
                 {file && <p className="text-start text-sm text-secundario font-medium">Archivo seleccionado: {file.name}</p>}
                 </div>
