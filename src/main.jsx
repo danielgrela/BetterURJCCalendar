@@ -5,9 +5,11 @@ import App from './App.jsx'
 import { HomePage } from './components/HomePage.jsx'
 import { CalendarPage } from './components/CalendarPage.jsx'
 import { ImportPage } from './components/ImportPage.jsx'
+import { HeroPage } from './components/HeroPage.jsx'
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
+      <Route path="/" element={<HeroPage />} />
       <Route path="/dashboard" element={<App />}>
          <Route path="" element={<HomePage />} />
          <Route path="calendario" element={<CalendarPage />} />

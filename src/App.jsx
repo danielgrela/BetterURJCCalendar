@@ -3,9 +3,9 @@ import { SideBar } from './components/SideBar.jsx'
 
 function App() {
   return (
-    <main className="flex flex-row w-full h-screen">
+    <main className="flex flex-col-reverse lg:flex-row w-full h-screen">
       <SideBar />
-      <main className="flex-1 p-12 bg-gray-100">
+      <main className="flex-1 py-8 lg:p-12 bg-gray-100">
         <Outlet />
       </main>
     </main>
