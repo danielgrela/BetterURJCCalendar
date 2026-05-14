@@ -19,7 +19,7 @@ export default function Calendar({ jsonData, year, month }) {
         });
     };
     return(
-        <div className="grid grid-cols-7 gap-px bg-slate-200 rounded-2xl overflow-hidden shadow-2xl w-full lg:max-w-6xl mx-auto border border-slate-200">
+        <div className="grid grid-cols-7 gap-px bg-slate-200 rounded-2xl overflow-hidden shadow-2xl max-w-6xl mx-auto border border-slate-200">
             {/* Cabecera Días */}
             {['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sáb', 'Dom'].map((d) => (
                 <div key={d} className="text-center text-[11px] font-bold uppercase tracking-widest text-secundario py-4 bg-white">
@@ -29,7 +29,7 @@ export default function Calendar({ jsonData, year, month }) {
 
                 {/* Huecos mes anterior */}
                 {[...Array(startingDay)].map((_, i) => (
-                    <div key={`empty-${i}`} className="h-28 lg:h-36 bg-slate-50/50" />
+                    <div key={`empty-${i}`} className="h-36 bg-slate-50/50" />
                 ))}
 
                 {/* Días del mes */}
@@ -42,7 +42,7 @@ export default function Calendar({ jsonData, year, month }) {
                         year === new Date().getFullYear();
 
                     return (
-                        <div key={day} className={`relative h-28 lg:h-36 p-2 border-t border-slate-100 transition-colors bg-white hover:bg-slate-50`}>
+                        <div key={day} className={`relative h-36 p-2 border-t border-slate-100 transition-colors bg-white hover:bg-slate-50`}>
                             <span className={`inline-flex items-center justify-center w-8 h-8 text-sm rounded-full mb-2
                                 ${isToday ? 'bg-indigo-600 text-white font-bold shadow-md shadow-indigo-200' : 'text-slate-600 font-semibold'}`}>
                                 {day}
@@ -52,7 +52,7 @@ export default function Calendar({ jsonData, year, month }) {
                                 {dayEvents.map((ev, idx) => (
                                     <div 
                                         key={idx}
-                                        className="group relative p-2 rounded-lg bg-indigo-50 border-l-[3px] border-primary text-primary shadow-sm hover:shadow-md transition-shadow cursor-help"
+                                        className="group relative p-2 rounded-lg bg-indigo-50 border-l-[3px] border-primary text-primary shadow-sm hover:shadow-md transition-shadow"
                                     >
                                         <div className="flex items-center gap-1 mb-0.5">
                                             <IconSchool size={10} className="text-tertiary" />
