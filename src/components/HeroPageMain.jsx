@@ -5,7 +5,7 @@ export default function HeroPageMain() {
     return (
         <section className="w-full min-h-2/3 bg-gray-100 px-6 py-15 lg:p-15 flex flex-row justify-between">
             <section className="w-full lg:w-2/5 gap-10 lg:gap-13 flex flex-col items-center lg:items-start justify-center">
-                <span className='flex flex-row border border-gray-400 bg-gray-200/70 w-fit px-3 py-1 gap-1 text-xs items-center justify-center rounded-xl'>
+                <span className='flex flex-row border cursor-default hover:bg-gray-300/70 bg-gray-200/70 hover:border-gray-500 border-gray-400 duration-300 transition-all w-fit px-3 py-1 gap-1 text-xs items-center justify-center rounded-xl'>
                     <IconSpeakerphone size={16}/>De Daniel para Daniel (y amigos)
                 </span>
                 <h1 className='text-3xl lg:text-5xl font-bold text-primary text-center lg:text-start'>Organiza tus examenes en segundos</h1>

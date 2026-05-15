@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useFileStore from '../hooks/useFileStore';
 import { MobileCalendar } from './MobileCalendar';
 import PCCalendar from './PCCalendar';
@@ -38,7 +38,7 @@ export function CalendarPage() {
     return (
         <>
         {isLgBreakpoint() ? (
-            <PCCalendar date={date} jsonData={jsonData} year={year} month={month} />
+            <PCCalendar date={date} setDate={setDate} jsonData={jsonData} year={year} month={month} />
             ) : 
                 <MobileCalendar jsonData={jsonData} year={year} month={month} />
             }

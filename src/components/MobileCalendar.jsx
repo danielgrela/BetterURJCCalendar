@@ -104,7 +104,7 @@ export const MobileCalendar = ({ jsonData, year, month }) => {
                         </div>
                     </div> 
                     )): <p className='font-medium text-center'>No hay examenes que coincidan</p> ) 
-                    : <p className='font-medium text-center'>Porfavor, importa tus exámenes</p>
+                    : <p className='font-medium text-center'>Recarga la página o asegurate de haber importado tus exámenes</p>
                 }
             </div>
         </div>

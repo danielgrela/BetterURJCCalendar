@@ -1,4 +1,5 @@
-import {     IconSchool,
+import {
+    IconSchool,
     IconClock,
     IconMapPin} from '@tabler/icons-react';
 
