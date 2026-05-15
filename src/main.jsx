@@ -6,6 +6,7 @@ import { HomePage } from './components/HomePage.jsx'
 import { CalendarPage } from './components/CalendarPage.jsx'
 import { ImportPage } from './components/ImportPage.jsx'
 import { HeroPage } from './components/HeroPage.jsx'
+import { UseGuide } from './components/UseGuide.jsx'
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
          <Route path="" element={<HomePage />} />
          <Route path="calendario" element={<CalendarPage />} />
          <Route path="importar" element={<ImportPage />} />
+         <Route path="guia-de-uso" element={<UseGuide />} />
       </Route>
     </Routes>
   </BrowserRouter>
