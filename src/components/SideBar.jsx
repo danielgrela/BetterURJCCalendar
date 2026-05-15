@@ -1,6 +1,6 @@
-import {NavButtons} from './NavButtons.jsx'
+import NavButtons from './NavButtons.jsx'
 import { NavLink } from 'react-router-dom';
-export function SideBar() {
+export default function SideBar() {
     return (
         <section className="w-full h-25 lg:w-70 min-h-25 lg:h-screen bg-white shadow-md lg:py-12 text-center items-center flex flex-row lg:flex-col">
             <div className='px-4 hidden lg:block'>

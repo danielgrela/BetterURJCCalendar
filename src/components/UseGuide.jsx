@@ -4,7 +4,7 @@ import fotoguia02 from "../assets/fotoguia02.jpg";
 import fotoguia03 from "../assets/fotoguia03.png";
 import { NavLink } from 'react-router-dom';
 
-export function UseGuide() {
+export default function UseGuide() {
     return (
         <main className='px-8 lg:px-0 flex flex-col gap-8'>
             <article className="p-6 gap-10 w-full max-w-300 rounded-md shadow-md border-2 border-gray-400 bg-gray-200/60 h-fit flex flex-col lg:flex-row">
@@ -28,7 +28,7 @@ export function UseGuide() {
                         </div>    
                     </div>
                 </div>
-                <div className="min-w-full lg:min-w-1/3 gap-8 flex flex-col">
+                <div className="min-w-full lg:min-w-1/3 gap-8 flex flex-col justify-center">
                     <img src={fotoguia02} alt="Botón de descarga en Excel" className="rounded-md w-full h-auto object-contain" />
                     <img src={fotoguia01} alt="SSO URJC de inicio de sesión" className="rounded-md w-full h-auto object-contain" />
                 </div>

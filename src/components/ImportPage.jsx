@@ -3,7 +3,7 @@ import useFileStore from '../hooks/useFileStore';
 import { useState} from 'react';
 import excelToJson from '../scripts/handleExcel';
 import { NavLink, useNavigate } from 'react-router-dom';
-export function ImportPage() {
+export default function ImportPage() {
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
     const [jsonAuxData, setJsonAuxData] = useState(null);

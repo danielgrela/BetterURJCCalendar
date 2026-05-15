@@ -1,9 +1,13 @@
 import Calendar from './Calendar';
+import FiltersCalendar from './FiltersCalendar';
+import { useFileStoreJsonFilters } from '../hooks/useFileStore';
 import { 
     IconChevronLeft, 
     IconChevronRight, 
 } from '@tabler/icons-react';
-export default function PCCalendar({ date, setDate, jsonData, year, month }) {
+export default function PCCalendar({ parseEventDate, date, setDate, jsonData, year, month }) {
+    const dataFiltered = useFileStoreJsonFilters((state) => state.dataFiltered);
+    const visibleData = dataFiltered ?? jsonData;
     const prevMonth = () => setDate(new Date(year, month - 1, 1));
     const nextMonth = () => setDate(new Date(year, month + 1, 1));
     function sanitizeDate(date) {
@@ -25,7 +29,8 @@ export default function PCCalendar({ date, setDate, jsonData, year, month }) {
                     </button>
                 </div>
             </header>
-            <Calendar jsonData={jsonData} year={year} month={month} />
+            <FiltersCalendar parseEventDate={parseEventDate} sortedEvents={jsonData} className="max-w-6xl mx-auto mb-5" />
+            <Calendar jsonData={visibleData} year={year} month={month} />
         </>
     );
 }

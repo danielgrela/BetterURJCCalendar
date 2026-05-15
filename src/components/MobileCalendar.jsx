@@ -2,76 +2,21 @@ import {
     IconClock,
     IconSchool,
 } from '@tabler/icons-react';
-import React, { useEffect, useState } from 'react';
-export const MobileCalendar = ({ jsonData, year, month }) => {
-    function parseEventDate(fecha) {
-        if (!fecha) {
-            return new Date(0);
-        }
-
-        const [day, monthValue, yearValue] = fecha.split('-').map(Number);
-        if (!day || !monthValue || !yearValue) {
-            return new Date(0);
-        }
-
-        return new Date(yearValue, monthValue - 1, day);
-    }
-    const sortedEvents = Array.isArray(jsonData)
-            ? [...jsonData]
-                .filter((event) => event && event.Fecha)
-                .sort((a, b) => {
-                    const dateDiff = parseEventDate(a.Fecha) - parseEventDate(b.Fecha);
-                    if (dateDiff !== 0) {
-                        return dateDiff;
-                    }
-    
-                    return (a.Hora || '').localeCompare(b.Hora || '');
-                })
-            : [];
-    const [dataFiltered, setDataFiltered] = useState(sortedEvents);
-    const handleChange = (e) => {
-        let filtered = [...sortedEvents];
-
-        const convocatoriaValue = document.getElementById('convocatoria')?.value;
-        const fechaValue = document.getElementById('fecha')?.value;
-
-        if (convocatoriaValue && convocatoriaValue !== 'Convocatoria') {
-            filtered = filtered.filter(ev => ev.Convocatoria === convocatoriaValue);
-        }
-
-        if (fechaValue && fechaValue === 'Pendientes') {
-            filtered = filtered.filter(ev => {
-                const eventDate = parseEventDate(ev.Fecha);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                return eventDate >= today;
-            });
-        }
-
-        setDataFiltered(filtered);
-    };
+import FiltersCalendar from './FiltersCalendar';
+import { useFileStoreJsonFilters } from '../hooks/useFileStore';
+export default function MobileCalendar({ parseEventDate, jsonData, year, month }) {
+    const dataFiltered = useFileStoreJsonFilters((state) => state.dataFiltered);
+    const visibleData = dataFiltered ?? jsonData;
     return (
         <div className="flex flex-col gap-6 max-h-full pt-8 px-4">
             <header className="flex flex-col mx-auto h-fit items-start justify-between mb-4 w-full">
                 <h1 className="text-3xl font-black text-slate-800 tracking-tight">
                     Mis Exámenes
                 </h1>
-                <form onChange={handleChange} className='w-full mt-4 flex flex-row gap-1'>
-                    <select id="convocatoria" name="convocatoria" className="w-48 px-2 py-3 rounded-lg border border-slate-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">
-                        <option value="Convocatoria">Convocatoria</option>
-                        <option value="Septiembre">Septiembre</option>
-                        <option value="Enero">Enero</option>
-                        <option value="Mayo">Mayo</option>
-                        <option value="Junio">Junio</option>
-                    </select>
-                    <select id="fecha" name="fecha" className="w-32 p-3 rounded-lg border border-slate-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">
-                        <option value="Todos">Todos</option>
-                        <option value="Pendientes">Pendientes</option>
-                    </select>
-                </form>
+                <FiltersCalendar parseEventDate={parseEventDate} sortedEvents={jsonData} />
             </header>
             <div className="flex flex-col gap-4 overflow-y-auto custom-scrollbar pb-2">
-                {sortedEvents.length > 0 ? (dataFiltered.length > 0 ? dataFiltered.map((ev, idx) => (
+                {Array.isArray(visibleData) && visibleData.length > 0 ? (visibleData.map((ev, idx) => (
                     <div 
                         key={idx}
                         className="flex flex-col gap-2 group relative p-5 border-l-5 border-primary text-primary rounded-md shadow-sm">
@@ -103,8 +48,8 @@ export const MobileCalendar = ({ jsonData, year, month }) => {
                             <span>{ev.Aula}</span>
                         </div>
                     </div> 
-                    )): <p className='font-medium text-center'>No hay examenes que coincidan</p> ) 
-                    : <p className='font-medium text-center'>Recarga la página o asegurate de haber importado tus exámenes</p>
+                    )))
+                    : <p className='font-medium text-center'>No hay nada aquí. Si crees que es un error recarga la página o asegurate de haber importado tus exámenes</p>
                 }
             </div>
         </div>

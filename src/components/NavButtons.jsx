@@ -9,7 +9,7 @@ function getSelectedFromPath(path) {
     return lastSegment === 'dashboard' ? '/' : lastSegment ?? '/';
 }
 
-export function NavButtons() {
+export default function NavButtons() {
     const location = useLocation();
     const Selected = getSelectedFromPath(location.pathname);
     return (
