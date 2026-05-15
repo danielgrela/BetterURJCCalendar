@@ -51,8 +51,8 @@ export const MobileCalendar = ({ jsonData, year, month }) => {
         setDataFiltered(filtered);
     };
     return (
-        <div className="flex flex-col gap-6 max-h-full pt-8">
-            <header className="flex flex-col mx-auto h-fit items-start justify-between mb-4 px-4 w-full">
+        <div className="flex flex-col gap-6 max-h-full pt-8 px-4">
+            <header className="flex flex-col mx-auto h-fit items-start justify-between mb-4 w-full">
                 <h1 className="text-3xl font-black text-slate-800 tracking-tight">
                     Mis Exámenes
                 </h1>
@@ -70,8 +70,8 @@ export const MobileCalendar = ({ jsonData, year, month }) => {
                     </select>
                 </form>
             </header>
-            <div className="flex flex-col gap-1.5 px-3 overflow-y-auto custom-scrollbar pb-2">
-                {sortedEvents.length > 0 ? dataFiltered.map((ev, idx) => (
+            <div className="flex flex-col gap-4 overflow-y-auto custom-scrollbar pb-2">
+                {sortedEvents.length > 0 ? (dataFiltered.length > 0 ? dataFiltered.map((ev, idx) => (
                     <div 
                         key={idx}
                         className="flex flex-col gap-2 group relative p-5 border-l-5 border-primary text-primary rounded-md shadow-sm">
@@ -89,8 +89,8 @@ export const MobileCalendar = ({ jsonData, year, month }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex items-center gap-1 mb-0.5 overflow-hidden flex-1">
-                            <IconSchool size={22} className="text-primary" />
+                        <div className="flex items-center gap-2 mb-0.5 overflow-hidden">
+                            <IconSchool size={22} className="text-primary min-w-fit" />
                             <p className="text-lg font-bold leading-tight truncate uppercase">
                                 {ev.Asignatura.split('(')[0].trim()}
                             </p>
@@ -103,8 +103,8 @@ export const MobileCalendar = ({ jsonData, year, month }) => {
                             <span>{ev.Aula}</span>
                         </div>
                     </div> 
-                    )) 
-                    : <p>Porfavor, importa tus exámenes</p>
+                    )): <p className='font-medium text-center'>No hay examenes que coincidan</p> ) 
+                    : <p className='font-medium text-center'>Porfavor, importa tus exámenes</p>
                 }
             </div>
         </div>

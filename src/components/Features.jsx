@@ -19,8 +19,8 @@ export default function Features() {
                     </div>
                 </article>
                 <article className="border-2 bg-gray-50 border-gray-300 border-l-4 border-l-red-500 px-4 py-4 flex-flex-col gap-4 rounded-md">
-                    <div className='flex items-center justify-center w-12 h-12 bg-red-200 rounded-lg mb-4'>
-                        <IconCalendar size={24} stroke={2.5} className="text-primary" />
+                    <div className='flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mb-4'>
+                        <IconCalendar size={24} stroke={2.5} className="text-tertiary" />
                     </div>
                     <div className='flex flex-col gap-1'>
                         <h1 className='text-xl font-bold'>
