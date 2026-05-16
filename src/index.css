@@ -26,6 +26,8 @@ body {
 	.text-neutro { color: var(--neutro) !important; }
 
 	.border-primary { border-color: var(--primary) !important; }
+	.border-r-primary { border-right-color: var(--primary) !important; }
+	.border-l-primary { border-left-color: var(--primary) !important; }
 	.border-secundario { border-color: var(--secundario) !important; }
 	.border-tertiary { border-color: var(--tertiary) !important; }
 	.border-neutro { border-color: var(--neutro) !important; }

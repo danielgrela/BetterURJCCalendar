@@ -1,6 +1,10 @@
+import NextExams from "./NextExams";
+import DashboardHeader from "./DashboardHeader";
 export default function HomePage() {
     return (
-        <>
-            <h1 className="text-3xl font-bold">Aun no hay home</h1>
-        </>)
+        <main className="flex flex-col gap-8 px-6 lg:p-0">
+            <DashboardHeader />
+            <NextExams />
+        </main>
+    )
 }

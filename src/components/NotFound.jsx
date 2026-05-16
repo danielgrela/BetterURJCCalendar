@@ -7,10 +7,10 @@ export default function NotFound() {
     return (
         <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="text-balance py-20 w-full px-5 lg:w-1/2 flex flex-col items-center justify-center gap-4 mx-auto text-center">
+            <main className="text-balance py-20 w-full px-2 lg:w-1/2 flex flex-col items-center justify-center gap-4 mx-auto text-center">
                 <img src={GatoImagen} alt="404 Not Found" className="w-1/2 lg:w-full max-w-md shadow-lg" />
-                <h1 className="text-5xl font-bold">¡Ups! Parece que te has perdido</h1>
-                <p className="text-xl text-gray-700">La página que buscas no existe o ha sido movida a una nueva ubicación dentro del sitio web.</p>
+                <h1 className="text-3xl lg:text-5xl font-bold">¡Ups! Parece que te has perdido</h1>
+                <p className="text-base lg:text-xl text-gray-700">La página que buscas no existe o ha sido movida a una nueva ubicación dentro del sitio web.</p>
                 <div className="flex flex-col lg:flex-row items-center gap-8 mt-8">
                     <NavLink to="/dashboard" className="inline-block px-9 py-7 hover:brightness-80 bg-primary text-white rounded-lg shadow-md hover:bg-primary-dark transition-colors">
                         <IconLayoutDashboard className="inline-block mr-2" />

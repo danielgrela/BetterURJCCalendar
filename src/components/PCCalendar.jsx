@@ -5,7 +5,7 @@ import {
     IconChevronLeft, 
     IconChevronRight, 
 } from '@tabler/icons-react';
-export default function PCCalendar({ parseEventDate, date, setDate, jsonData, year, month }) {
+export default function PCCalendar({date, setDate, jsonData, year, month }) {
     const dataFiltered = useFileStoreJsonFilters((state) => state.dataFiltered);
     const visibleData = dataFiltered ?? jsonData;
     const prevMonth = () => setDate(new Date(year, month - 1, 1));
@@ -29,7 +29,7 @@ export default function PCCalendar({ parseEventDate, date, setDate, jsonData, ye
                     </button>
                 </div>
             </header>
-            <FiltersCalendar parseEventDate={parseEventDate} sortedEvents={jsonData} className="max-w-6xl mx-auto mb-5" />
+            <FiltersCalendar sortedEvents={jsonData} className="max-w-6xl mx-auto mb-5" />
             <Calendar jsonData={visibleData} year={year} month={month} />
         </>
     );

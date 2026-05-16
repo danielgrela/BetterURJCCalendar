@@ -1,6 +1,6 @@
 import handleChange from '../scripts/filtersCalendar';
-
-export default function FiltersCalendar({ parseEventDate, sortedEvents, ...props }) {
+import parseEventDate from '../scripts/sortEvents';
+export default function FiltersCalendar({ sortedEvents, ...props }) {
     return (
         <form onChange={(e) => handleChange(e, parseEventDate, sortedEvents)} className={`w-full mt-4 flex flex-row gap-1 ${props.className}`}>
             <select id="convocatoria" name="convocatoria" className="w-48 px-2 py-3 rounded-lg border border-slate-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">

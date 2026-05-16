@@ -63,11 +63,11 @@ export default function Calendar({ jsonData, year, month }) {
                                         </div>
                                         
                                         <div className="flex items-center gap-1 text-[9px] text-tertiary font-medium">
-                                            <IconClock size={10} />
+                                            <IconClock size={10} className="min-w-fit" />
                                             <span>{ev.Hora}</span>
                                         </div>
                                         <div className="flex items-center gap-1 text-[9px] text-tertiary font-medium">
-                                            <IconClock size={10} />
+                                            <IconMapPin size={10} className='min-w-fit'/>
                                             <span>{ev.Aula}</span>
                                         </div>
                                     </div>
