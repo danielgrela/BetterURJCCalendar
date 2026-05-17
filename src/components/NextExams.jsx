@@ -40,7 +40,7 @@ export default function NextExams() {
                 : 
                 <div className="flex flex-col gap-4">
                     {proximosExamenes.map((examen, id) => (
-                        <div className="flex flex-col lg:flex-row gap-4 justify-between items-center w-full shadow-sm border border-gray-200 dark:border-gray-800 border-l-6 p-4 lg:p-8 border-l-primary bg-white dark:bg-gray-950" key={id}>
+                        <div className="flex flex-col lg:flex-row gap-4 justify-between items-center w-full shadow-sm border border-gray-200 dark:border-gray-800 border-l-6 p-4 lg:p-8 border-l-primary dark:border-l-primary bg-white dark:bg-gray-950" key={id}>
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-row gap-4 items-center">
                                     <p className="bg-gray-200 dark:bg-gray-800 dark:text-gray-200 rounded-sm py-px px-3 w-fit font-medium">{examen.Convocatoria}</p>

@@ -9,7 +9,7 @@ export default function SideBar() {
                 </NavLink>
                 <p className="text-gray-600 dark:text-gray-400 text-start">Un proyecto de Daniel Grela.</p>
             </div>
-            <div className='bg-secundario w-full h-px mt-8 mb-4 hidden lg:block'/>
+            <div className='bg-gray-300 dark:bg-gray-800 w-full h-px mt-8 mb-4 hidden lg:block'/>
             <NavButtons />
         </section>)
 }
