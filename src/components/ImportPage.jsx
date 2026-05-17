@@ -52,12 +52,12 @@ export default function ImportPage() {
     };
     return (
         <div className='px-4 lg:px-0 min-h-full flex flex-col'>
-            <h1 className="text-3xl font-bold">Importar Calendario de Exámenes</h1>
+            <h1 className="text-3xl font-bold dark:text-gray-100">Importar Calendario de Exámenes</h1>
             <div className='flex flex-row gap-1 items-center text-center mt-3'>
                 <IconHelpCircle size={16} className="inline-block text-gray-500 mr-1" />
                 <p className="text-neutro text-sm">¿Tienes dudas? puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-blue-700 hover:underline">guía de uso</NavLink></p>
             </div>
-            <form className="relative mt-6 flex flex-col bg-white h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded shadow-sm gap-8 lg:gap-10">
+            <form className="relative mt-6 flex flex-col bg-white dark:bg-gray-800 h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded shadow-sm gap-8 lg:gap-10">
             <div className='flex flex-col gap-4'>
                 <input
                 onChange={handleFileChange}
@@ -67,7 +67,7 @@ export default function ImportPage() {
                     className="sr-only"/>
                 <label
                     htmlFor="exam-file"
-                    className="border-2 border-dashed border-gray-300 rounded-lg px-6 py-14 text-center cursor-pointer hover:border-primary hover:bg-gray-50 transition-colors">
+                    className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg px-6 py-14 text-center cursor-pointer hover:border-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors dark:text-gray-200">
                     <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100">
                         <IconFileUpload stroke={2} />
                     </div>
@@ -79,12 +79,12 @@ export default function ImportPage() {
                 </div>
                 <div className='flex flex-col gap-6'>
                     {jsonDataState && jsonDataState.length > 0 && (
-                        <div className="text-sm text-secundario border border-gray-400 bg-gray-100 rounded-sm p-4 gap-4 flex flex-row items-center">
+                        <div className="text-sm text-secundario dark:text-gray-300 border border-gray-400 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 rounded-sm p-4 gap-4 flex flex-row items-center">
                             <IconExclamationCircle stroke={2} />
                             <p>Ya tiene un calendario, importar otro lo sobreescribirá.</p>
                         </div>
                     )}
-                    <div className="text-sm text-secundario border border-gray-400 bg-gray-100 rounded-sm p-4 gap-4 flex flex-row">
+                    <div className="text-sm text-secundario dark:text-gray-300 border border-gray-400 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 rounded-sm p-4 gap-4 flex flex-row">
                         <IconInfoCircle stroke={2} />
                         <div className='flex flex-col gap-2'>
                             <h4 className="font-semibold">Instrucciones de formato:</h4>

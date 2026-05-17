@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
 	--primary: #E4002B;
 	--secundario: #333333;
