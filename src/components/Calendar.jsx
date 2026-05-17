@@ -43,7 +43,7 @@ export default function Calendar({ jsonData, year, month }) {
                         year === new Date().getFullYear();
 
                     return (
-                        <div key={day} className={`pb-10 relative h-36 p-2 border-t border-slate-100 dark:border-gray-700 transition-colors bg-white dark:bg-gray-950 hover:bg-slate-50 dark:hover:bg-gray-750`}>
+                        <div key={day} className={`pb-10 relative h-36 p-2 border-t border-slate-100 dark:border-gray-700 transition-colors bg-white dark:bg-gray-950 hover:bg-slate-50 dark:hover:bg-gray-800`}>
                             <span className={`inline-flex items-center justify-center w-8 h-8 text-sm rounded-full
                                 ${isToday ? 'bg-indigo-600 text-white font-bold shadow-md shadow-indigo-200 dark:shadow-indigo-800' : 'text-slate-600 dark:text-slate-300 font-semibold'}`}>
                                 {day}

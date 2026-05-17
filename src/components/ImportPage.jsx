@@ -93,7 +93,7 @@ export default function ImportPage() {
                     </div>
                 </div>
                 <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 disabled:cursor-not-allowed hover:brightness-90 hidden lg:block cursor-pointer bg-primary self-end w-38 text-white px-8 py-2 rounded hover:bg-primary-dark">Importar</button>
-                <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 lg:hidden cursor-pointer bg-primary text-white dark:text-black px-8 py-2 rounded hover:bg-primary-dark">Importar</button>
+                <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 lg:hidden cursor-pointer bg-primary text-white px-8 py-2 rounded hover:bg-primary-dark">Importar</button>
             </form>
         </div>
         )
