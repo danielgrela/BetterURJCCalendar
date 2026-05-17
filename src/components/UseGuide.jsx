@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 export default function UseGuide() {
     return (
         <main className='px-8 lg:px-0 flex flex-col gap-8'>
-            <article className="p-6 gap-10 w-full max-w-300 rounded-md shadow-md border-2 border-gray-400 bg-gray-200/60 h-fit flex flex-col lg:flex-row">
+            <article className="p-6 gap-10 w-full max-w-300 rounded-md shadow-md border-2 border-gray-400 dark:border-gray-600 bg-gray-200/60 dark:bg-gray-800/60 h-fit flex flex-col lg:flex-row">
                 <div className="min-w-full lg:min-w-1/2 gap-5 flex flex-col">
                     <div className='flex flex-col lg:flex-row items-center justify-center text-center lg:text-start lg:justify-start gap-3'>
                         <IconUserCircle stroke={2} className='bg-primary text-white p-1 size-8 rounded-md min-w-fit'/>

@@ -11,27 +11,33 @@
 	font-family: 'Inter', sans-serif;
 }
 
+.dark {
+	--primary: #FF2D3E;
+	--secundario: #CCCCCC;
+	--tertiary: white;
+}
+
+@theme {
+	--color-primary: var(--primary);
+	--color-secundario: var(--secundario);
+	--color-tertiary: var(--tertiary);
+	--color-neutro: var(--neutro);
+}
+
 body {
 	font-family: 'Inter', sans-serif;
 }
 
-/* Utilities to use CSS variables with Tailwind classes */
-@layer utilities {
-	.bg-primary { background-color: var(--primary) !important; }
-	.bg-secundario { background-color: var(--secundario) !important; }
-	.bg-tertiary { background-color: var(--tertiary) !important; }
-	.bg-neutro { background-color: var(--neutro) !important; }
-
-	.text-primary { color: var(--primary) !important; }
-	.text-secundario { color: var(--secundario) !important; }
-	.text-tertiary { color: var(--tertiary) !important; }
-	.text-neutro { color: var(--neutro) !important; }
-
-	.border-primary { border-color: var(--primary) !important; }
-	.border-r-primary { border-right-color: var(--primary) !important; }
-	.border-l-primary { border-left-color: var(--primary) !important; }
-	.border-secundario { border-color: var(--secundario) !important; }
-	.border-tertiary { border-color: var(--tertiary) !important; }
-	.border-neutro { border-color: var(--neutro) !important; }
+@layer base {
+	body {
+		@apply text-black dark:text-white;
+	}
 }
+
+.no-transitions *,
+.no-transitions *::before,
+.no-transitions *::after {
+	transition: none !important;
+}
+
 

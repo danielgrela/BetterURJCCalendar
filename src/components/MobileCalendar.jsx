@@ -19,9 +19,9 @@ export default function MobileCalendar({ jsonData, year, month }) {
                 {Array.isArray(visibleData) && visibleData.length > 0 ? (visibleData.map((ev, idx) => (
                     <div 
                         key={idx}
-                        className="flex flex-col gap-2 group relative p-5 border-l-5 border-primary text-primary rounded-md shadow-sm bg-white dark:bg-gray-800">
+                        className="flex flex-col gap-2 group relative p-5 border-l-5 border-primary text-primary rounded-md shadow-sm bg-white dark:bg-gray-950">
                         <div className='flex flex-row justify-between items-center'>
-                            <div className='bg-gray-200 dark:bg-gray-600 dark:text-gray-200 rounded-sm py-1 px-4'>
+                            <div className='bg-gray-200 dark:bg-gray-800 dark:text-gray-200 rounded-sm py-1 px-4'>
                                     <span>{ev.Convocatoria}</span>
                             </div>
                             <div className='flex flex-col w-1/2 items-end'>
