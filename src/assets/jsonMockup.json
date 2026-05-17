@@ -1,0 +1,122 @@
+[
+    {
+        "Curso": "3/BT",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "EL ENTORNO ECONOMICO NACIONAL E INTERNACIONAL DE LA EMPRESA (2097013)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097013,
+        "CodigoGrupo": "BT",
+        "Convocatoria": "Mayo",
+        "Fecha": "11-05-2026",
+        "Hora": "17:00 - 19:00",
+        "Aula": "Aulario III - Aula 002"
+    },
+    {
+        "Curso": "3/AT",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "INGENIERIA DEL SOFTWARE (2097021)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097021,
+        "CodigoGrupo": "AT",
+        "Convocatoria": "Mayo",
+        "Fecha": "13-05-2026",
+        "Hora": "15:00 - 18:00",
+        "Aula": "Aulario II - Aula Magna 003"
+    },
+    {
+        "Curso": "1/AM",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "CALCULO (2097010)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097010,
+        "CodigoGrupo": "AM",
+        "Convocatoria": "Mayo",
+        "Fecha": "14-05-2026",
+        "Hora": "12:00 - 15:00",
+        "Aula": "Aulario III - Aula Magna 203"
+    },
+    {
+        "Curso": "3/BT",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "ESTADISTICA EMPRESARIAL II (2097036)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097036,
+        "CodigoGrupo": "BT",
+        "Convocatoria": "Mayo",
+        "Fecha": "18-05-2026",
+        "Hora": "15:00 - 17:00",
+        "Aula": "Aulario III - Aula Magna 203"
+    },
+    {
+        "Curso": "3/BT",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "RECURSOS HUMANOS (2097028)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097028,
+        "CodigoGrupo": "BT",
+        "Convocatoria": "Mayo",
+        "Fecha": "19-05-2026",
+        "Hora": "19:00 - 21:00",
+        "Aula": "Aulario III - Aula 003"
+    },
+    {
+        "Curso": "3/BT",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "DIRECCION ESTRATEGICA Y POLITICA DE EMPRESA II (2097035)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097035,
+        "CodigoGrupo": "BT",
+        "Convocatoria": "Mayo",
+        "Fecha": "20-05-2026",
+        "Hora": "17:00 - 19:00",
+        "Aula": "Aulario III - Aula 002"
+    },
+    {
+        "Curso": "3/BT",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "MACROECONOMIA (2097037)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097037,
+        "CodigoGrupo": "BT",
+        "Convocatoria": "Mayo",
+        "Fecha": "21-05-2026",
+        "Hora": "15:00 - 17:00",
+        "Aula": "Aulario III - Aula 001"
+    },
+    {
+        "Curso": "3/AT",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "DISEÑO Y ANALISIS DE ALGORITMOS (2097038)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097038,
+        "CodigoGrupo": "AT",
+        "Convocatoria": "Mayo",
+        "Fecha": "22-05-2026",
+        "Hora": "12:00 - 15:00",
+        "Aula": "Aulario III - Aula Magna 203"
+    },
+    {
+        "Curso": "3/BT",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "DIRECCION DE MARKETING (2097022)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097022,
+        "CodigoGrupo": "BT",
+        "Convocatoria": "Mayo",
+        "Fecha": "25-05-2026",
+        "Hora": "15:00 - 17:00",
+        "Aula": "Aulario III - Aula 103"
+    },
+    {
+        "Curso": "2/BT",
+        "Plan": "DOBLE GRADO EN ING. INFORMATICA Y ADMON. Y DIRECCION DE EMPRESAS (MOSTOLES) (2097) (MÓSTOLES)",
+        "Asignatura": "CONTABILIDAD FINANCIERA I (2097004)",
+        "CodigoPlan": 2097,
+        "CodigoAsignatura": 2097004,
+        "CodigoGrupo": "BT",
+        "Convocatoria": "Junio",
+        "Fecha": "17-06-2026",
+        "Hora": "18:00 - 21:00",
+        "Aula": "-"
+    }
+]
