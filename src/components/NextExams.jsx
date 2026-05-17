@@ -17,8 +17,17 @@ export default function NextExams() {
                     fechaExamen.setHours(0, 0, 0, 0);
                     return fechaExamen >= hoy;
                 })
-                .slice(0, 3);
+                .slice(0, 5);
         }
+    }
+    function sanitizeDate(dateInt){
+        switch(dateInt){
+            case 0:
+                return "Hoy";
+            case 1:
+                return "Mañana";
+        }
+        return `Quedan ${dateInt} días`;
     }
     return (
         <section className="flex flex-col gap-3">
@@ -35,7 +44,7 @@ export default function NextExams() {
                             <div className="flex flex-col gap-2">
                                 <div className="flex flex-row gap-4 items-center">
                                     <p className="bg-gray-200 rounded-sm py-px px-3 w-fit font-medium">{examen.Convocatoria}</p>
-                                    <p className="text-sm text-primary font-bold">Quedan {Math.floor((parseEventDate(examen.Fecha) - new Date()) / (1000 * 60 * 60 * 24))} días para el examen</p>
+                                    <p className="text-sm text-primary font-bold">{sanitizeDate(Math.floor((parseEventDate(examen.Fecha).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / (1000 * 60 * 60 * 24)))}</p>
                                 </div>
                                 <h2 className="text-xl font-bold">{examen.Asignatura.split('(')[0].trim()}</h2>
                                 <p className="text-sm font-medium">{examen.Plan}</p>

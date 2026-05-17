@@ -43,13 +43,13 @@ export default function Calendar({ jsonData, year, month }) {
                         year === new Date().getFullYear();
 
                     return (
-                        <div key={day} className={`relative h-36 p-2 border-t border-slate-100 transition-colors bg-white hover:bg-slate-50`}>
-                            <span className={`inline-flex items-center justify-center w-8 h-8 text-sm rounded-full mb-2
+                        <div key={day} className={`pb-10 relative max-h-36 p-2 border-t border-slate-100 transition-colors bg-white hover:bg-slate-50`}>
+                            <span className={`inline-flex items-center justify-center w-8 h-8 text-sm rounded-full
                                 ${isToday ? 'bg-indigo-600 text-white font-bold shadow-md shadow-indigo-200' : 'text-slate-600 font-semibold'}`}>
                                 {day}
                             </span>
 
-                            <div className="flex flex-col gap-1.5 overflow-y-auto overflow-x-hidden max-h-25 pr-1 custom-scrollbar pb-2">
+                            <div className="flex flex-col gap-1.5 max-h-full overflow-y-auto overflow-x-hidden pr-1 custom-scrollbar pb-2">
                                 {dayEvents.map((ev, idx) => (
                                     <div 
                                         key={idx}
