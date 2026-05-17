@@ -20,17 +20,17 @@ export default function Calendar({ jsonData, year, month }) {
         });
     };
     return(
-        <div className="grid grid-cols-7 gap-px bg-slate-200 rounded-2xl overflow-hidden shadow-2xl max-w-6xl mx-auto border border-slate-200">
+        <div className="grid grid-cols-7 gap-px bg-slate-200 dark:bg-gray-700 rounded-2xl overflow-hidden shadow-2xl max-w-6xl mx-auto border border-slate-200 dark:border-gray-700">
             {/* Cabecera Días */}
             {['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sáb', 'Dom'].map((d) => (
-                <div key={d} className="text-center text-[11px] font-bold uppercase tracking-widest text-secundario py-4 bg-white">
+                <div key={d} className="text-center text-[11px] font-bold uppercase tracking-widest text-secundario dark:text-gray-400 py-4 bg-white dark:bg-gray-800">
                     {d}
                 </div>
                 ))}
 
                 {/* Huecos mes anterior */}
                 {[...Array(startingDay)].map((_, i) => (
-                    <div key={`empty-${i}`} className="h-36 bg-slate-50/50" />
+                    <div key={`empty-${i}`} className="h-36 bg-slate-50/50 dark:bg-gray-800/50" />
                 ))}
 
                 {/* Días del mes */}
@@ -43,9 +43,9 @@ export default function Calendar({ jsonData, year, month }) {
                         year === new Date().getFullYear();
 
                     return (
-                        <div key={day} className={`pb-10 relative max-h-36 p-2 border-t border-slate-100 transition-colors bg-white hover:bg-slate-50`}>
+                        <div key={day} className={`pb-10 relative max-h-36 p-2 border-t border-slate-100 dark:border-gray-700 transition-colors bg-white dark:bg-gray-800 hover:bg-slate-50 dark:hover:bg-gray-750`}>
                             <span className={`inline-flex items-center justify-center w-8 h-8 text-sm rounded-full
-                                ${isToday ? 'bg-indigo-600 text-white font-bold shadow-md shadow-indigo-200' : 'text-slate-600 font-semibold'}`}>
+                                ${isToday ? 'bg-indigo-600 text-white font-bold shadow-md shadow-indigo-200' : 'text-slate-600 dark:text-slate-300 font-semibold'}`}>
                                 {day}
                             </span>
 
@@ -53,7 +53,7 @@ export default function Calendar({ jsonData, year, month }) {
                                 {dayEvents.map((ev, idx) => (
                                     <div 
                                         key={idx}
-                                        className="group relative p-2 rounded-lg bg-indigo-50 border-l-[3px] border-primary text-primary shadow-sm hover:shadow-md transition-shadow"
+                                        className="group relative p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border-l-[3px] border-primary text-primary shadow-sm hover:shadow-md transition-shadow"
                                     >
                                         <div className="flex items-center gap-1 mb-0.5">
                                             <IconSchool size={10} className="text-tertiary" />

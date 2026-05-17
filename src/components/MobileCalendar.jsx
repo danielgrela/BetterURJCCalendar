@@ -10,7 +10,7 @@ export default function MobileCalendar({ jsonData, year, month }) {
     return (
         <div className="flex flex-col gap-6 max-h-full px-4">
             <header className="flex flex-col mx-auto h-fit items-start justify-between mb-4 w-full">
-                <h1 className="text-3xl font-black text-slate-800 tracking-tight">
+                <h1 className="text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
                     Mis Exámenes
                 </h1>
                 <FiltersCalendar sortedEvents={jsonData} />
@@ -19,9 +19,9 @@ export default function MobileCalendar({ jsonData, year, month }) {
                 {Array.isArray(visibleData) && visibleData.length > 0 ? (visibleData.map((ev, idx) => (
                     <div 
                         key={idx}
-                        className="flex flex-col gap-2 group relative p-5 border-l-5 border-primary text-primary rounded-md shadow-sm">
+                        className="flex flex-col gap-2 group relative p-5 border-l-5 border-primary text-primary rounded-md shadow-sm bg-white dark:bg-gray-800">
                         <div className='flex flex-row justify-between items-center'>
-                            <div className='bg-gray-200 rounded-sm py-1 px-4'>
+                            <div className='bg-gray-200 dark:bg-gray-600 dark:text-gray-200 rounded-sm py-1 px-4'>
                                     <span>{ev.Convocatoria}</span>
                             </div>
                             <div className='flex flex-col w-1/2 items-end'>
