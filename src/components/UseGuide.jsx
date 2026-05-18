@@ -17,14 +17,14 @@ export default function UseGuide() {
                         <h2 className="font-bold">01.</h2>
                         <div>
                             <h2 className="font-bold">Iniciar sesión</h2>
-                            <p className='pl'><a href="https://servicios.urjc.es/examenes/alumno/login" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline">Accede a la plataforma con tus credenciales universitarias </a> para ver tu calendario de exámenes.</p>
+                            <p className='pl'><a href="https://servicios.urjc.es/examenes/alumno/login" target="_blank" rel="noopener noreferrer" className="text-blue-500 active:text-blue-800 hover:underline">Accede a la plataforma con tus credenciales universitarias </a> para ver tu calendario de exámenes.</p>
                         </div>    
                     </div>
                     <div className='flex flex-row gap-4'>
                         <h2 className="font-bold">02.</h2>
                         <div>
                             <h2 className="font-bold">Descargar el archivo excel</h2>
-                            <p className='pl'>Selecciona la opción "Descargar en Excel" para obtener tu calendario de exámenes, también puedes hacerlo tu mismo si cumple con las posiciones de columnas y filas del siguiente<a href="../../public/Examenes.xlsx" download="Examenes.xlsx" className="text-blue-700 hover:underline"> archivo de ejemplo</a>.</p>
+                            <p className='pl'>Selecciona la opción "Descargar en Excel" para obtener tu calendario de exámenes, también puedes hacerlo tu mismo si cumple con las posiciones de columnas y filas del siguiente<a href="../../public/Examenes.xlsx" download="Examenes.xlsx" className="text-blue-500 active:text-blue-800 hover:underline"> archivo de ejemplo</a>.</p>
                         </div>    
                     </div>
                 </div>
@@ -45,7 +45,7 @@ export default function UseGuide() {
                         <h2 className="font-bold">01.</h2>
                         <div>
                             <h2 className="font-bold">Acceder al dashboard</h2>
-                            <p className='pl'>Accede a la <NavLink to="/dashboard/importar" className="text-blue-700 hover:underline">página de importar</NavLink> y añade tu archivo de exámenes. Si el sistema no da ningún error, pulsa el botón de importar y se te guiará directamente a la sección "calendario".</p>
+                            <p className='pl'>Accede a la <NavLink to="/dashboard/importar" className="text-blue-500 active:text-blue-800 hover:underline">página de importar</NavLink> y añade tu archivo de exámenes. Si el sistema no da ningún error, pulsa el botón de importar y se te guiará directamente a la sección "calendario".</p>
                         </div>    
                     </div>
                     <div className='flex flex-row gap-4'>
