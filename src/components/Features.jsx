@@ -2,7 +2,7 @@ import { IconCalendar,IconDownload, IconFileUploadFilled  } from '@tabler/icons-
 export default function Features() {
     return (
         <section className="bg-white dark:bg-gray-950 w-full min-h-2/3 border-t-2 border-gray-300 dark:border-gray-700 px-6 py-15 lg:p-15 lg:pb-30 flex flex-col justify-between">
-            <p className='text-neutro text-lg font-bold text-center mb-6'>Características</p>
+            <p className='text-neutro dark:text-gray-200 text-lg font-bold text-center mb-6'>Características</p>
             <h1 className='text-3xl font-bold text-center hidden lg:block mb-14'>Ahorrate perder el tiempo.</h1>
             <div className='flex flex-col lg:flex-row gap-8 lg:gap-6 w-full'>
                 <article className="border-2 bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-700 border-l-4 border-l-red-500 px-4 py-4 flex-flex-col gap-4 rounded-md">

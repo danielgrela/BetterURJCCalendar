@@ -55,7 +55,7 @@ export default function ImportPage() {
             <h1 className="text-3xl font-bold dark:text-gray-100">Importar Calendario de Exámenes</h1>
             <div className='flex flex-row gap-1 items-center text-center mt-3'>
                 <IconHelpCircle size={16} className="inline-block text-gray-500 dark:text-gray-500 mr-1" />
-                <p className="text-neutro text-sm">¿Tienes dudas? puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-blue-700 hover:underline">guía de uso</NavLink></p>
+                <p className="text-neutro text-sm">¿Tienes dudas? puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-blue-500 active:text-blue-800 hover:underline">guía de uso</NavLink></p>
             </div>
             <form className="relative mt-6 flex flex-col bg-white dark:bg-gray-950 h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded shadow-sm gap-8 lg:gap-10">
             <div className='flex flex-col gap-4'>
@@ -72,7 +72,7 @@ export default function ImportPage() {
                         <IconFileUpload stroke={2} />
                     </div>
                     <p className="font-semibold">Arrastra tu archivo de examenes aqui o haz clic para buscar</p>
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-500">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:underline">examenes</a> </p>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-500">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-blue-500 active:text-blue-800 hover:underline">examenes</a> </p>
                 </label>
                 {file && <p className="text-start text-sm text-secundario font-medium">Archivo seleccionado: {file.name}</p>}
                 {error && <p className="text-start text-sm text-red-500 font-medium">{error}</p>}
@@ -88,7 +88,7 @@ export default function ImportPage() {
                         <IconInfoCircle stroke={2} />
                         <div className='flex flex-col gap-2'>
                             <h4 className="font-semibold">Instrucciones de formato:</h4>
-                            <p>Asegúrate de que el archivo contenga <NavLink to="/dashboard/guia-de-uso" className="text-blue-700 hover:underline">guía de uso</NavLink> y que los datos estén en el formato correcto.</p>
+                            <p>Asegúrate de que el archivo contenga <NavLink to="/dashboard/guia-de-uso" className="text-blue-500 active:text-blue-800 hover:underline">guía de uso</NavLink> y que los datos estén en el formato correcto.</p>
                         </div>
                     </div>
                 </div>
