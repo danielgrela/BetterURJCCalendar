@@ -88,7 +88,7 @@ export default function ImportPage() {
                         <IconInfoCircle stroke={2} />
                         <div className='flex flex-col gap-2'>
                             <h4 className="font-semibold">Instrucciones de formato:</h4>
-                            <p>Asegúrate de que el archivo contenga <NavLink to="/dashboard/guia-de-uso" className="text-blue-500 active:text-blue-800 hover:underline">guía de uso</NavLink> y que los datos estén en el formato correcto.</p>
+                            <p>Asegúrate de que el archivo cumpla la <NavLink to="/dashboard/guia-de-uso" className="text-blue-500 active:text-blue-800 hover:underline">guía de uso</NavLink> y que los datos estén en el formato correcto.</p>
                         </div>
                     </div>
                 </div>
