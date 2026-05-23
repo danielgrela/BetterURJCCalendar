@@ -13,7 +13,7 @@ export default function HeroPage() {
         <Features />
         <Footer />
       </main>
-      <ToggleThemeButton className="block lg:hidden bottom-8 right-8" />
+      <ToggleThemeButton className="fixed block lg:hidden bottom-8 right-8" />
     </>
   );
 };

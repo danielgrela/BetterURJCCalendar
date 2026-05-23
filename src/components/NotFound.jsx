@@ -7,7 +7,7 @@ import ToggleThemeButton from "./ToggleThemeButton.jsx";
 export default function NotFound() {
     return (
         <div className="bg-white dark:bg-gray-950 flex flex-col min-h-screen">
-            <ToggleThemeButton className="block lg:hidden bottom-8 right-8" />
+            <ToggleThemeButton className="fixed block lg:hidden bottom-8 right-8" />
             <Header />
             <main className="text-balance py-20 w-full px-2 lg:w-1/2 flex flex-col items-center justify-center gap-4 mx-auto text-center">
                 <img src={GatoImagen} alt="404 Not Found" className="w-1/2 lg:w-full max-w-md shadow-lg" />

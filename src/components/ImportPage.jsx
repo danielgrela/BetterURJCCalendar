@@ -51,7 +51,7 @@ export default function ImportPage() {
         }
     };
     return (
-        <div className='px-4 lg:px-0 min-h-full flex flex-col'>
+        <div className='min-h-full flex flex-col'>
             <h1 className="text-3xl font-bold dark:text-gray-100">Importar Calendario de Exámenes</h1>
             <div className='flex flex-row gap-1 items-center text-center mt-3'>
                 <IconHelpCircle size={16} className="inline-block text-gray-500 dark:text-gray-500 mr-1" />
