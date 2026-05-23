@@ -8,7 +8,7 @@ export default function MobileCalendar({ jsonData, year, month }) {
     const dataFiltered = useFileStoreJsonFilters((state) => state.dataFiltered);
     const visibleData = dataFiltered ?? jsonData;
     return (
-        <div className="flex flex-col gap-6 max-h-full px-4">
+        <div className="flex flex-col gap-6 max-h-full">
             <header className="flex flex-col mx-auto h-fit items-start justify-between mb-4 w-full">
                 <h1 className="text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
                     Mis Exámenes

@@ -26,7 +26,7 @@ const Root = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-      <ToggleThemeButton className="hidden lg:block bottom-8 right-8" />
+      <ToggleThemeButton className="fixed hidden lg:block bottom-8 right-8" />
     </>
   );
 };
