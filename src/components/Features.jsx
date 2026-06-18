@@ -40,7 +40,7 @@ export default function Features() {
                             Descarga multiformato
                         </h1>
                         <p className='text-neuto'>
-                            Exporta tu calendario finalizado a PDF para imprimir, o a formato iCal (.ics) para sincronizarlo con Google Calendar, Apple o Outlook.
+                            Exporta tu calendario finalizado a Excel, o a formato iCal (.ics) para sincronizarlo con Google Calendar, Apple o Outlook.
                         </p>
                     </div>
                 </article>
