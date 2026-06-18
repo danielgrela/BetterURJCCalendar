@@ -44,6 +44,7 @@ export default function ImportPage() {
         }
         try {
             setJsonData(jsonAuxData);
+            console.log("Archivo importado correctamente:", jsonAuxData);
             navigate('/dashboard/calendario');
         } catch (error) {
             console.error("Error al importar el archivo:", error);
