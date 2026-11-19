@@ -3,8 +3,16 @@ import ExamCard from './ExamCard';
 import { claveExamen } from '../scripts/examen';
 import type { FiltersCalendarProps } from './FiltersCalendar';
 import type { Examen } from '../types/examen';
+import type { ReactNode } from 'react';
 
-export default function MobileCalendar({ visibleData, filtersProps }: { visibleData: Examen[], filtersProps: FiltersCalendarProps }) {
+interface Props {
+    visibleData: Examen[];
+    filtersProps: FiltersCalendarProps;
+    /** Lo que se pinta si no hay exámenes que mostrar */
+    estadoVacio: ReactNode;
+}
+
+export default function MobileCalendar({ visibleData, filtersProps, estadoVacio }: Props) {
     return (
         <div className="flex flex-col gap-6 max-h-full">
             <header className="flex flex-col mx-auto h-fit items-start justify-between mb-4 w-full">
@@ -14,11 +22,9 @@ export default function MobileCalendar({ visibleData, filtersProps }: { visibleD
                 <FiltersCalendar {...filtersProps} />
             </header>
             <div className="flex flex-col gap-4 overflow-y-auto custom-scrollbar pb-2">
-                {Array.isArray(visibleData) && visibleData.length > 0 ? (visibleData.map((ev) => (
+                {estadoVacio ?? visibleData.map((ev) => (
                     <ExamCard key={claveExamen(ev)} examen={ev} variant="list" />
-                    )))
-                    : <p className='font-medium text-center'>No hay nada aquí. Si crees que es un error recarga la página o asegúrate de haber importado tus exámenes</p>
-                }
+                ))}
             </div>
         </div>
     )

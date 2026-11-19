@@ -8,6 +8,7 @@ import {
 } from '@tabler/icons-react';
 import type { FiltersCalendarProps } from './FiltersCalendar';
 import type { Examen } from '../types/examen';
+import type { ReactNode } from 'react';
 
 interface Props {
     date: Date;
@@ -16,9 +17,11 @@ interface Props {
     filtersProps: FiltersCalendarProps;
     year: number;
     month: number;
+    /** Aviso si no hay exámenes que mostrar (sin datos o sin resultados con los filtros) */
+    estadoVacio: ReactNode;
 }
 
-export default function PCCalendar({date, setDate, visibleData, filtersProps, year, month }: Props) {
+export default function PCCalendar({date, setDate, visibleData, filtersProps, year, month, estadoVacio }: Props) {
     const prevMonth = () => setDate(new Date(year, month - 1, 1));
     const nextMonth = () => setDate(new Date(year, month + 1, 1));
     const mesVacio = Array.isArray(visibleData) && visibleData.length > 0 && !hayExamenesEnMes(visibleData, year, month);
@@ -51,6 +54,7 @@ export default function PCCalendar({date, setDate, visibleData, filtersProps, ye
                     </button>
                 </div>
             )}
+            {estadoVacio && <div className="max-w-6xl mx-auto mb-5">{estadoVacio}</div>}
             <Calendar jsonData={visibleData} year={year} month={month} />
         </>
     );

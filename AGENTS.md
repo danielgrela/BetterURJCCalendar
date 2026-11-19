@@ -18,9 +18,10 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `src/App.tsx` → layout del dashboard: en móvil `flex-col-reverse` (la `SideBar` pasa a barra inferior y aparece `ReturnMobile` arriba); en `lg:` barra lateral fija a la izquierda
 - `src/components/` (un componente por archivo, nombre en PascalCase):
   - Portada: `HeroPage` (Header + HeroPageMain + Features + Footer), `HeroPageMain` (titular, CTAs y `Calendar` en modo `compact` con `assets/jsonMockup.json`)
-  - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (`NavLink` con `isActive`), `ReturnMobile`, `HomePage` (`DashboardHeader`, que incluye `ButtonsExportDashboard` y en móvil lo baja al final con `display: contents` + `order`, y `NextExams`)
+  - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (`NavLink` con `isActive`), `ReturnMobile`, `HomePage` (`DashboardHeader`, que incluye `ButtonsExportDashboard` —solo con datos— y en móvil lo baja al final con `display: contents` + `order`, y `NextExams`)
   - Calendario: `CalendarPage` decide con `useMediaQuery('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes) y `MobileCalendar` (lista); ambos usan `FiltersCalendar`
   - `ExamCard`: tarjeta de examen con variantes `full` (`NextExams`), `list` (`MobileCalendar`) y `compact` (celdas de `Calendar`)
+  - `EmptyState` (estado vacío o sin resultados: icono, título, texto y siguiente paso; en `NextExams` y `CalendarPage`, que decide entre «Importar Excel» con `ImportButton` y «Quitar filtros») 
   - `PageMeta` (`<title>`, `description`, `canonical` y `og:title`/`og:description`/`og:url`, `twitter:*` y `noindex` por página con las etiquetas nativas de React 19; va dentro de cada página, no en `root.tsx`)
   - `AvisoActualizacion` (en `root.tsx`: registra el service worker y, tras un despliegue, avisa de que hay versión nueva con «Actualizar»/«Ahora no»; nunca recarga sola)
   - `ImportPage` (subida y validación del Excel), `UseGuide` (guía con capturas `assets/fotoguia0*.{png,jpg}`), `NotFound`, `ToggleThemeButton`

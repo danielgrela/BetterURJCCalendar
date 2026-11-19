@@ -1,7 +1,9 @@
 import { useMemo } from "react";
 import useFileStore from "../hooks/useFileStore";
 import parseEventDate, { sortedEvents } from "../scripts/sortEvents";
-import { IconExclamationCircle, IconCircleCheck } from "@tabler/icons-react";
+import { IconCalendarOff, IconCircleCheck } from "@tabler/icons-react";
+import ImportButton from "./ImportButton";
+import EmptyState from "./EmptyState";
 import ExamCard from "./ExamCard";
 import { claveExamen } from "../scripts/examen";
 import { NavLink } from 'react-router';
@@ -25,19 +27,14 @@ export default function NextExams() {
         <section className="flex flex-col gap-3">
             <h2 className="text-2xl font-bold">Próximos exámenes</h2>
             {!proximos ?
-                <div className="flex flex-row gap-2 text-primary items-center justify-center">              
-                    <IconExclamationCircle className="min-w-fit" stroke={2} />  
-                    <h3 className="text-xl font-bold text-center">Aún no hay exámenes</h3>
-                </div>
+                <EmptyState icono={<IconCalendarOff size={32} stroke={2} />} titulo="Aún no hay exámenes" texto="Importa el Excel de exámenes de la URJC y aquí verás los próximos.">
+                    <ImportButton />
+                </EmptyState>
                 : proximos.length === 0 ?
                 // Hay exámenes importados pero ya han pasado todos
-                <div className="flex flex-col gap-2 items-center text-center py-6">
-                    <div className="flex flex-col lg:flex-row gap-2 items-center text-texto">
-                        <IconCircleCheck className="min-w-fit text-primary" stroke={2} />
-                        <h3 className="text-xl font-bold">No te quedan exámenes pendientes</h3>
-                    </div>
+                <EmptyState icono={<IconCircleCheck size={32} stroke={2} />} titulo="No te quedan exámenes pendientes" texto="Los que ya han pasado siguen en el calendario.">
                     <NavLink to="/dashboard/calendario" className="min-h-11 inline-flex items-center px-2 font-semibold text-enlace hover:underline">Ver el calendario completo</NavLink>
-                </div>
+                </EmptyState>
                 : 
                 <div className="flex flex-col gap-4">
                     {proximos.map((examen) => (

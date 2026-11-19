@@ -112,7 +112,12 @@ export default function ImportPage() {
                     <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">exámenes</a></p>
                 </label>
                 {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
-                {error && <p className="text-start text-sm text-error font-medium">{error}</p>}
+                {error && (
+                    <p role="alert" className="flex flex-row gap-2 items-start text-start text-sm text-error font-medium">
+                        <IconExclamationCircle size={20} stroke={2} className="min-w-5" aria-hidden="true" />
+                        <span>{error} Si no sabes de dónde sacarlo, mira la <NavLink to="/dashboard/guia-de-uso" className="underline underline-offset-2 hover:decoration-2">guía de uso</NavLink>.</span>
+                    </p>
+                )}
                 </div>
                 <div className='flex flex-col gap-6'>
                     {jsonDataState && jsonDataState.length > 0 && (
