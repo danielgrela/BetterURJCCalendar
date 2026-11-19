@@ -29,6 +29,9 @@
 	/* Texto */
 	--texto: #111827;           /* gray-900 */
 	--texto-suave: #4B5563;     /* gray-600: descripciones y datos de apoyo */
+	/* Controles nativos (<select>, selector de archivo, scroll, autocompletado) con el tema y el rojo */
+	color-scheme: light;
+	accent-color: var(--primary);
 	font-family: 'Inter', sans-serif;
 }
 
@@ -45,6 +48,7 @@
 	--borde: #1F2937;           /* gray-800 */
 	--texto: #F3F4F6;           /* gray-100 */
 	--texto-suave: #9CA3AF;     /* gray-400 */
+	color-scheme: dark;
 }
 
 @theme {
