@@ -1,7 +1,4 @@
-import {
-    IconSchool,
-    IconClock,
-    IconMapPin} from '@tabler/icons-react';
+import ExamCard from './ExamCard';
 
 // today: día que se resalta (por defecto, hoy) · compact: versión reducida para la portada
 export default function Calendar({ jsonData, year, month, today = new Date(), compact = false }) {
@@ -52,26 +49,7 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
 
                             <div className="flex flex-col gap-1.5 max-h-full overflow-y-auto overflow-x-hidden pr-1 custom-scrollbar pb-2">
                                 {dayEvents.map((ev, idx) => (
-                                    <div 
-                                        key={idx}
-                                        className="group relative p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border-l-[3px] border-primary text-primary shadow-sm hover:shadow-md transition-shadow"
-                                    >
-                                        <div className="flex items-center gap-1 mb-0.5">
-                                            <IconSchool size={10} className="text-tertiary" />
-                                            <p className="text-[10px] font-bold leading-tight truncate uppercase">
-                                                {ev.Asignatura.split('(')[0].trim()}
-                                            </p>
-                                        </div>
-                                        
-                                        <div className="flex items-center gap-1 text-[9px] text-tertiary font-medium">
-                                            <IconClock size={10} className="min-w-fit" />
-                                            <span>{ev.Hora}</span>
-                                        </div>
-                                        <div className="flex items-center gap-1 text-[9px] text-tertiary font-medium">
-                                            <IconMapPin size={10} className='min-w-fit'/>
-                                            <span>{ev.Aula}</span>
-                                        </div>
-                                    </div>
+                                    <ExamCard key={idx} examen={ev} variant="compact" />
                                 ))}
                             </div>
                         </div>

@@ -15,11 +15,13 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - Portada: `HeroPage` (Header + HeroPageMain + Features + Footer), `HeroPageMain` (titular, CTAs y `Calendar` en modo `compact` con `assets/jsonMockup.json`)
   - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (resaltado por último segmento de la ruta), `ReturnMobile`, `HomePage` (`DashboardHeader` + `NextExams` + `ButtonsExportDashboard`)
   - Calendario: `CalendarPage` decide por `matchMedia('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes) y `MobileCalendar` (lista); ambos usan `FiltersCalendar`
+  - `ExamCard`: tarjeta de examen con variantes `full` (`NextExams`), `list` (`MobileCalendar`) y `compact` (celdas de `Calendar`)
   - `ImportPage` (subida y validación del Excel), `UseGuide` (guía con capturas `assets/fotoguia0*.{png,jpg}`), `NotFound`, `ToggleThemeButton`
 - `src/SocialIcons/Github.jsx` → icono SVG de GitHub (Tabler no trae logos de marca)
 - `src/hooks/` → stores de Zustand: `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (persistido en `dark-mode`, añade/quita `.dark` en `<html>`)
 - `src/scripts/` → lógica sin UI:
   - `handleExcel.js` → `excelTojson(file)`: lee la hoja 1 con ExcelJS, ignora las 2 primeras filas y mapea las columnas 1–10
+  - `examen.js` → `nombreAsignatura(ev)` (corta en el primer `(`) y `diasHasta(fecha)`
   - `sortEvents.js` → `parseEventDate('DD-MM-YYYY')` (default) y `sortedEvents(json)` (por fecha y hora)
   - `filtersCalendar.js` → `filtrarExamenes(examenes, filtros)` (convocatoria y "Pendientes") y `convocatoriasDe(examenes)`; el estado de los filtros vive en `CalendarPage`
   - `generateExcel.js` / `generateICS.js` → descargas `horario_examenes.xlsx` / `.ics` con `descargarBlob(blob, nombre)` de `descargarBlob.js`
@@ -32,7 +34,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 Objeto con `Curso, Plan, Asignatura, CodigoPlan, CodigoAsignatura, CodigoGrupo, Convocatoria, Fecha, Hora, Aula`, tal y como sale de `handleExcel`.
 - `Fecha` = `"DD-MM-YYYY"` (texto, no `Date`); parsear siempre con `parseEventDate`
 - `Hora` = `"HH:MM - HH:MM"`; `Aula` puede ser `"-"` (sin asignar)
-- `Asignatura` trae el código entre paréntesis; para mostrar se corta en el primer `(`
+- `Asignatura` trae el código entre paréntesis; para mostrar, `nombreAsignatura(ev)`
 - Convocatorias conocidas: Septiembre, Enero, Mayo, Junio
 - Si cambia el formato del Excel de la URJC, se toca **solo** `handleExcel` (y la validación de `ImportPage`); el resto de la app consume el objeto anterior
 
