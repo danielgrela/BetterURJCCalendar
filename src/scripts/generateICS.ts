@@ -1,12 +1,8 @@
 import * as ics from 'ics';
 import { descargarBlob } from './descargarBlob';
 import type { Examen } from '../types/examen';
-export const descargarCalendarioICS = (examenesJSON: Examen[] | null | undefined): void => {
-  if (!examenesJSON || examenesJSON.length === 0) {
-    console.warn("El JSON de exámenes está vacío o no es válido.");
-    return;
-  }
-  const eventosParaICS = examenesJSON.map((examen): ics.EventAttributes => {
+// Un evento de calendario por examen (hora local del navegador, que ics pasa a UTC)
+export const eventosICS = (examenes: Examen[]): ics.EventAttributes[] => examenes.map((examen): ics.EventAttributes => {
     const [dia, mes, anio] = examen.Fecha.split('-').map(Number);
     const [horaInicioStr, horaFinStr] = examen.Hora.split(' - ');
     const [horaInicio, minInicio] = horaInicioStr.split(':').map(Number);
@@ -20,7 +16,13 @@ export const descargarCalendarioICS = (examenesJSON: Examen[] | null | undefined
       end: [anio, mes, dia, horaFin, minFin],
     };
   });
-  ics.createEvents(eventosParaICS, (error, value) => {
+
+export const descargarCalendarioICS = (examenesJSON: Examen[] | null | undefined): void => {
+  if (!examenesJSON || examenesJSON.length === 0) {
+    console.warn("El JSON de exámenes está vacío o no es válido.");
+    return;
+  }
+  ics.createEvents(eventosICS(examenesJSON), (error, value) => {
     if (error || !value) {
       console.error("Error al generar el archivo ICS:", error);
       return;

@@ -7,7 +7,8 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `npm run build` → `dist/client` (estático; prerenderiza `/` y `/dashboard/guia-de-uso`) · `npm run preview` → http://localhost:4173, responde como Vercel (lee `vercel.json`: reescrituras y 404 real)
 - `npm run lint` → ESLint sobre `.js`/`.jsx`/`.ts`/`.tsx` (ignora `dist/`, `.claude/` y `.react-router/`)
 - `npm run typecheck` → `react-router typegen` + `tsc` (genera en `.react-router/types` los tipos `./+types/<ruta>` de los módulos de ruta)
-- No hay tests. La verificación es `npm run build` + `npm run typecheck` + `npm run lint` + revisar en el navegador
+- `npm test` → Vitest (`vitest.config.ts`, entorno Node) sobre `src/**/*.test.ts`: solo lógica de `src/scripts/`, junto a cada archivo; `examenDePrueba.ts` da un `Examen` de ejemplo. Las fechas «de hoy» se pasan como parámetro (`hoy`), nunca se usa el reloj real en un test
+- Verificación: `npm run build` + `npm run typecheck` + `npm run lint` + `npm test` + revisar en el navegador
 
 ## Mapa (solo lo que importa)
 - `react-router.config.ts` → `appDirectory: 'src'`, `buildDirectory: 'dist'`, `ssr: false`, `prerender` (`/` y `/dashboard/guia-de-uso`) y `buildEnd`, que copia `__spa-fallback.html` a `404.html`. **Una página nueva pública va en `prerender`**
@@ -20,7 +21,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (`NavLink` con `isActive`), `ReturnMobile`, `HomePage` (`DashboardHeader`, que incluye `ButtonsExportDashboard` y en móvil lo baja al final con `display: contents` + `order`, y `NextExams`)
   - Calendario: `CalendarPage` decide con `useMediaQuery('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes) y `MobileCalendar` (lista); ambos usan `FiltersCalendar`
   - `ExamCard`: tarjeta de examen con variantes `full` (`NextExams`), `list` (`MobileCalendar`) y `compact` (celdas de `Calendar`)
-  - `PageMeta` (`<title>`, `description`, `canonical` y `og:title`/`og:description`/`og:url`, `twitter:*` y `noindex` por página con las etiquetas nativas de React 19; va dentro de cada página, no en `root.jsx`)
+  - `PageMeta` (`<title>`, `description`, `canonical` y `og:title`/`og:description`/`og:url`, `twitter:*` y `noindex` por página con las etiquetas nativas de React 19; va dentro de cada página, no en `root.tsx`)
   - `ImportPage` (subida y validación del Excel), `UseGuide` (guía con capturas `assets/fotoguia0*.{png,jpg}`), `NotFound`, `ToggleThemeButton`
 - `src/SocialIcons/Github.tsx` → icono SVG de GitHub (Tabler no trae logos de marca)
 - `src/types/examen.ts` → tipos `Examen` (ver «Modelo de datos») y `FiltrosCalendario`
@@ -30,6 +31,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - `examen.ts` → `nombreAsignatura(ev)` (corta en el primer `(`), `diasHasta(fecha)` y `claveExamen(ev)` (`key` de listas)
   - `sortEvents.ts` → `parseEventDate('DD-MM-YYYY')` (default) y `sortedEvents(json)` (por fecha y hora)
   - `filtersCalendar.ts` → `filtrarExamenes(examenes, filtros)` (convocatoria y "Pendientes") y `convocatoriasDe(examenes)`; el estado de los filtros vive en `CalendarPage`
+  - `generateICS.ts` → `eventosICS(examenes)` (pura, con tests) y la descarga
   - `generateExcel.ts` / `generateICS.ts` → descargas `horario_examenes.xlsx` / `.ics` con `descargarBlob(blob, nombre)` de `descargarBlob.ts`
 - `src/index.css` → Tailwind, variante `dark` por clase `.dark`, fuente Inter autoalojada (`@fontsource-variable/inter`, solo latin, precargada en `root.tsx`) y tokens de color (ver DESIGN.md)
 - `public/Examenes.xlsx` → Excel de ejemplo que se ofrece en la guía de uso
