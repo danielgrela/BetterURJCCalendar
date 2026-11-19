@@ -1,7 +1,8 @@
 import { descargarBlob } from './descargarBlob';
+import type { Row } from 'write-excel-file/browser';
 import type { Examen } from '../types/examen';
 
-const COLUMNAS_EXCEL = [
+const COLUMNAS_EXCEL: { header: string; key: keyof Examen; width: number }[] = [
   { header: 'Curso', key: 'Curso', width: 14 },
   { header: 'Plan', key: 'Plan', width: 18 },
   { header: 'Asignatura', key: 'Asignatura', width: 34 },
@@ -20,47 +21,23 @@ export const descargarCalendarioExcel = async (examenesJSON: Examen[] | null | u
     return;
   }
 
-  // ExcelJS pesa ~900 kB: se carga solo al exportar, en un chunk aparte
-  const { default: ExcelJS } = await import('exceljs');
-  const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet('Examenes');
+  // write-excel-file se carga solo al exportar, en un chunk aparte
+  const { default: writeExcelFile } = await import('write-excel-file/browser');
 
-  worksheet.columns = COLUMNAS_EXCEL;
+  const titulo: Row = [
+    { value: 'Examenes', columnSpan: COLUMNAS_EXCEL.length, fontWeight: 'bold', fontSize: 14, align: 'center', alignVertical: 'center', height: 22 },
+  ];
+  const cabecera: Row = COLUMNAS_EXCEL.map(({ header }) => ({ value: header, fontWeight: 'bold', align: 'center', alignVertical: 'center', wrap: true }));
+  const filas: Row[] = examenesJSON.map((examen) => COLUMNAS_EXCEL.map(({ key }) => ({
+    value: examen[key] ?? '',
+    align: 'left',
+    alignVertical: 'center',
+    wrap: true,
+  })));
 
-  worksheet.insertRow(1, ['Examenes']);
-  worksheet.mergeCells(1, 1, 1, COLUMNAS_EXCEL.length);
-  worksheet.getRow(1).font = { bold: true, size: 14 };
-  worksheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
-  worksheet.getRow(1).height = 22;
-
-  const headerRow = worksheet.getRow(2);
-  headerRow.font = { bold: true };
-  headerRow.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
-
-  examenesJSON.forEach((examen) => {
-    worksheet.addRow({
-      Curso: examen.Curso ?? '',
-      Plan: examen.Plan ?? '',
-      Asignatura: examen.Asignatura ?? '',
-      CodigoPlan: examen.CodigoPlan ?? '',
-      CodigoAsignatura: examen.CodigoAsignatura ?? '',
-      CodigoGrupo: examen.CodigoGrupo ?? '',
-      Convocatoria: examen.Convocatoria ?? '',
-      Fecha: examen.Fecha ?? '',
-      Hora: examen.Hora ?? '',
-      Aula: examen.Aula ?? '',
-    });
-  });
-
-  worksheet.eachRow((row, rowNumber) => {
-    if (rowNumber > 2) {
-      row.alignment = { vertical: 'middle', horizontal: 'left', wrapText: true };
-    }
-  });
-
-  const buffer = await workbook.xlsx.writeBuffer();
-  const blob = new Blob([buffer], {
-    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  });
+  const blob = await writeExcelFile([titulo, cabecera, ...filas], {
+    sheet: 'Examenes',
+    columns: COLUMNAS_EXCEL.map(({ width }) => ({ width })),
+  }).toBlob();
   descargarBlob(blob, 'horario_examenes.xlsx');
 };

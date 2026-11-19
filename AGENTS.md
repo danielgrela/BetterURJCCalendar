@@ -27,11 +27,12 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `src/types/examen.ts` → tipos `Examen` (ver «Modelo de datos») y `FiltrosCalendario`
 - `src/hooks/` → stores de Zustand (tipados con `create<Store>()`): `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (persistido en `dark-mode`, añade/quita `.dark` en `<html>`) · `useMediaQuery(query)` (hook de React, no store)
 - `src/scripts/` → lógica sin UI:
-  - `handleExcel.ts` → `excelTojson(file)`: lee la hoja 1 con ExcelJS, ignora las 2 primeras filas y mapea las columnas 1–10
+  - `handleExcel.ts` → `excelTojson(file)`: lee la hoja 1 con `read-excel-file` (cargado con `import()` solo al importar), ignora las 2 primeras filas y mapea las columnas 1–10
   - `examen.ts` → `nombreAsignatura(ev)` (corta en el primer `(`), `diasHasta(fecha)` y `claveExamen(ev)` (`key` de listas)
   - `sortEvents.ts` → `parseEventDate('DD-MM-YYYY')` (default) y `sortedEvents(json)` (por fecha y hora)
   - `filtersCalendar.ts` → `filtrarExamenes(examenes, filtros)` (convocatoria y "Pendientes") y `convocatoriasDe(examenes)`; el estado de los filtros vive en `CalendarPage`
   - `generateICS.ts` → `eventosICS(examenes)` (pura, con tests) y la descarga
+  - `generateExcel.ts` → exporta con `write-excel-file` (cargado con `import()` solo al exportar); probado con un test de ida y vuelta con `handleExcel`
   - `generateExcel.ts` / `generateICS.ts` → descargas `horario_examenes.xlsx` / `.ics` con `descargarBlob(blob, nombre)` de `descargarBlob.ts`
 - `src/index.css` → Tailwind, variante `dark` por clase `.dark`, fuente Inter autoalojada (`@fontsource-variable/inter`, solo latin, precargada en `root.tsx`) y tokens de color (ver DESIGN.md)
 - `public/Examenes.xlsx` → Excel de ejemplo que se ofrece en la guía de uso
@@ -76,8 +77,7 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 - **Tras el push**: comprobar el despliegue de Vercel unos minutos después (la portada y una ruta profunda como `/dashboard/calendario` deben responder 200).
 
 ## Deuda conocida (candidatos a refactor, ver ROADMAP)
-- `README.md` es la plantilla de Vite (habla de TypeScript).
-- ExcelJS (930 kB) ya se carga aparte con `import()` dinámico (F4.1); F4.8 valorará cambiarlo por una librería más ligera.
+- `README.md` es la plantilla de Vite (F7.1).
 
 ## Trabajo pendiente
 Seguir [ROADMAP.md](ROADMAP.md) por fases: cada petición de «seguir con el roadmap» cubre la fase entera (F4, no solo F4.2), con un commit por tarea y preguntando al usuario en cuanto surja una duda. Marcar tareas `[x]` al terminar. Guía visual en [DESIGN.md](DESIGN.md).

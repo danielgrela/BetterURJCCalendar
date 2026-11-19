@@ -14,10 +14,6 @@ describe('normalizarFecha', () => {
     expect(normalizarFecha(46153)).toBe('11-05-2026');
   });
 
-  it('acepta texto enriquecido y resultados de fórmula', () => {
-    expect(normalizarFecha({ richText: [{ text: '11-05-' }, { text: '2026' }] })).toBe('11-05-2026');
-    expect(normalizarFecha({ formula: 'A1', result: '11-05-2026' })).toBe('11-05-2026');
-  });
 
   it('devuelve null si no es una fecha válida', () => {
     expect(normalizarFecha('2026-05-11')).toBeNull();
