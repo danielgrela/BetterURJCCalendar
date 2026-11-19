@@ -13,15 +13,15 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `src/App.jsx` → layout del dashboard: en móvil `flex-col-reverse` (la `SideBar` pasa a barra inferior y aparece `ReturnMobile` arriba); en `lg:` barra lateral fija a la izquierda
 - `src/components/` (un componente por archivo, nombre en PascalCase):
   - Portada: `HeroPage` (Header + HeroPageMain + Features + Footer), `HeroPageMain` (titular, CTAs y `Calendar` en modo `compact` con `assets/jsonMockup.json`)
-  - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (resaltado por último segmento de la ruta), `ReturnMobile`, `HomePage` (`DashboardHeader` + `NextExams` + `ButtonsExportDashboard`)
-  - Calendario: `CalendarPage` decide por `matchMedia('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes) y `MobileCalendar` (lista); ambos usan `FiltersCalendar`
+  - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (`NavLink` con `isActive`), `ReturnMobile`, `HomePage` (`DashboardHeader`, que incluye `ButtonsExportDashboard` y en móvil lo baja al final con `display: contents` + `order`, y `NextExams`)
+  - Calendario: `CalendarPage` decide con `useMediaQuery('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes) y `MobileCalendar` (lista); ambos usan `FiltersCalendar`
   - `ExamCard`: tarjeta de examen con variantes `full` (`NextExams`), `list` (`MobileCalendar`) y `compact` (celdas de `Calendar`)
   - `ImportPage` (subida y validación del Excel), `UseGuide` (guía con capturas `assets/fotoguia0*.{png,jpg}`), `NotFound`, `ToggleThemeButton`
 - `src/SocialIcons/Github.jsx` → icono SVG de GitHub (Tabler no trae logos de marca)
-- `src/hooks/` → stores de Zustand: `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (persistido en `dark-mode`, añade/quita `.dark` en `<html>`)
+- `src/hooks/` → stores de Zustand: `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (persistido en `dark-mode`, añade/quita `.dark` en `<html>`) · `useMediaQuery(query)` (hook de React, no store)
 - `src/scripts/` → lógica sin UI:
   - `handleExcel.js` → `excelTojson(file)`: lee la hoja 1 con ExcelJS, ignora las 2 primeras filas y mapea las columnas 1–10
-  - `examen.js` → `nombreAsignatura(ev)` (corta en el primer `(`) y `diasHasta(fecha)`
+  - `examen.js` → `nombreAsignatura(ev)` (corta en el primer `(`), `diasHasta(fecha)` y `claveExamen(ev)` (`key` de listas)
   - `sortEvents.js` → `parseEventDate('DD-MM-YYYY')` (default) y `sortedEvents(json)` (por fecha y hora)
   - `filtersCalendar.js` → `filtrarExamenes(examenes, filtros)` (convocatoria y "Pendientes") y `convocatoriasDe(examenes)`; el estado de los filtros vive en `CalendarPage`
   - `generateExcel.js` / `generateICS.js` → descargas `horario_examenes.xlsx` / `.ics` con `descargarBlob(blob, nombre)` de `descargarBlob.js`

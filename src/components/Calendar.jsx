@@ -1,4 +1,5 @@
 import ExamCard from './ExamCard';
+import { claveExamen } from '../scripts/examen';
 
 // today: día que se resalta (por defecto, hoy) · compact: versión reducida para la portada
 export default function Calendar({ jsonData, year, month, today = new Date(), compact = false }) {
@@ -48,8 +49,8 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
                             </span>
 
                             <div className="flex flex-col gap-1.5 max-h-full overflow-y-auto overflow-x-hidden pr-1 custom-scrollbar pb-2">
-                                {dayEvents.map((ev, idx) => (
-                                    <ExamCard key={idx} examen={ev} variant="compact" />
+                                {dayEvents.map((ev) => (
+                                    <ExamCard key={claveExamen(ev)} examen={ev} variant="compact" />
                                 ))}
                             </div>
                         </div>

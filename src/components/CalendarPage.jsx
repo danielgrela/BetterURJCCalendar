@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import useFileStore from '../hooks/useFileStore';
+import useMediaQuery from '../hooks/useMediaQuery';
 import MobileCalendar from './MobileCalendar';
 import PCCalendar from './PCCalendar';
 import { sortedEvents, mesDelProximoExamen } from '../scripts/sortEvents';
@@ -12,37 +13,12 @@ export default function CalendarPage() {
     const convocatorias = useMemo(() => convocatoriasDe(examenes), [examenes]);
     const visibleData = useMemo(() => filtrarExamenes(examenes, filtros), [examenes, filtros]);
     const filtersProps = { filtros, setFiltros, convocatorias };
-    const [isLg, setIsLg] = useState(() => window.matchMedia('(min-width: 1024px)').matches);
+    const isLg = useMediaQuery('(min-width: 1024px)');
     const year = date.getFullYear();
     const month = date.getMonth();
-    function isLgBreakpoint() {
-        return isLg;
-    }
-    useEffect(() => {
-        if (typeof window === 'undefined') {
-            return;
-        }
-
-        const media = window.matchMedia('(min-width: 1024px)');
-        const handleChange = (event) => setIsLg(event.matches);
-
-        if (media.addEventListener) {
-            media.addEventListener('change', handleChange);
-        } else {
-            media.addListener(handleChange);
-        }
-
-        return () => {
-            if (media.removeEventListener) {
-                media.removeEventListener('change', handleChange);
-            } else {
-                media.removeListener(handleChange);
-            }
-        };
-    }, []);
     return (
         <>
-        {isLgBreakpoint() ? (
+        {isLg ? (
             <PCCalendar date={date} setDate={setDate} visibleData={visibleData} filtersProps={filtersProps} year={year} month={month} />
             ) :
                 <MobileCalendar visibleData={visibleData} filtersProps={filtersProps} />

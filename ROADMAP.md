@@ -102,7 +102,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 - [x] **F2.3** `CalendarMainMockup` reutiliza `Calendar` (props `today` y `compact`) en vez de duplicarlo; quitar `zoom` en línea.
 - [x] **F2.4** `FiltersCalendar` con estado controlado (sin `document.getElementById`), filtros calculados con `useMemo` en `CalendarPage` y convocatorias sacadas de los datos. dep: F1.1
 - [x] **F2.5** Componente `ExamCard` (variantes `full` y `compact`) para `NextExams`, `MobileCalendar` y `Calendar`; helper `nombreAsignatura(ev)` para el corte en `(`. Hecho con una tercera variante `list` para la lista móvil, que no se parece a ninguna de las otras dos (refactor sin cambio visual); unificarlas queda para F6.3.
-- [ ] **F2.6** Limpieza React: renombrar la función interna de `NextExams` (`proximosExamenes`), `key` estable (`CodigoAsignatura + Fecha + Hora`), `useMemo` para `sortedEvents`, hook `useMediaQuery` sin `addListener` ni estado `loading`, `NavLink` con `isActive` en `ButtonNavBar`, `children` como hijos JSX, un solo botón «Importar» responsive.
+- [x] **F2.6** Limpieza React: renombrar la función interna de `NextExams` (`proximosExamenes`), `key` estable (`CodigoAsignatura + Fecha + Hora`), `useMemo` para `sortedEvents`, hook `useMediaQuery` sin `addListener` ni estado `loading`, `NavLink` con `isActive` en `ButtonNavBar`, `children` como hijos JSX, un solo botón «Importar» responsive.
 
 ## F3 · SEO
 - [ ] **F3.1** `index.html`: `lang="es"`, `<title>` y `meta description` en español con las búsquedas reales («calendario de exámenes de la URJC»), `theme-color` claro y oscuro (`media="(prefers-color-scheme: …)"`).
