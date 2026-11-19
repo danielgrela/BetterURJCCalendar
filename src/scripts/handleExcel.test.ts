@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
-import excelTojson, { normalizarFecha, normalizarHora } from './handleExcel';
+import excelTojson, { normalizarAula, normalizarFecha, normalizarHora } from './handleExcel';
 
 describe('normalizarFecha', () => {
   it('acepta texto con -, / o . y rellena con ceros', () => {
@@ -35,6 +35,28 @@ describe('normalizarHora', () => {
     expect(normalizarHora('17:00')).toBeNull();
     expect(normalizarHora('25:00 - 26:00')).toBeNull();
     expect(normalizarHora(undefined)).toBeNull();
+  });
+});
+
+describe('normalizarAula', () => {
+  it('separa las aulas pegadas y quita las repetidas', () => {
+    expect(normalizarAula('Aulario II - Aula 102Aulario II - Aula 103')).toBe('Aulario II - Aula 102, Aulario II - Aula 103');
+    expect(normalizarAula('Aulario I - Aula 005Aulario I - Aula 005')).toBe('Aulario I - Aula 005');
+    expect(normalizarAula('Aulario III - Aula Magna 203Laboratorios Polivalentes III - Aula Informática 109'))
+      .toBe('Aulario III - Aula Magna 203, Laboratorios Polivalentes III - Aula Informática 109');
+  });
+
+  it('deja igual un aula sola, aunque lleve mayúsculas pegadas', () => {
+    expect(normalizarAula('Laboratorios Polivalentes I - Seminario 204')).toBe('Laboratorios Polivalentes I - Seminario 204');
+    expect(normalizarAula('Aulario I - Aula 1A')).toBe('Aulario I - Aula 1A');
+  });
+
+  it('es idempotente y da "-" sin aula', () => {
+    const una = normalizarAula('Aulario II - Aula 102Aulario II - Aula 103');
+    expect(normalizarAula(una)).toBe(una);
+    expect(normalizarAula('-')).toBe('-');
+    expect(normalizarAula('')).toBe('-');
+    expect(normalizarAula(null)).toBe('-');
   });
 });
 

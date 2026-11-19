@@ -45,6 +45,23 @@ export function normalizarHora(valor: Celda): string | null {
   return `${dosCifras(hi)}:${dosCifras(mi)} - ${dosCifras(hf)}:${dosCifras(mf)}`;
 }
 
+// La URJC pega las aulas de un examen sin separador ("Aulario II - Aula 102Aulario II - Aula 103")
+// y repite la misma si la comparten varios grupos. Se cortan donde empieza otra "Edificio - Sala"
+// (minúscula o cifra seguida de mayúscula), se quitan las repetidas y se unen con ", ".
+// Devuelve "-" si no hay aula. Idempotente: vale para lo que ya está normalizado
+export function normalizarAula(valor: Celda): string {
+  const aulas = textoCelda(valor).split(/\s*[,;\n]\s*/).flatMap((linea) => {
+    const partes: string[] = [];
+    for (const trozo of linea.split(/(?<=[\p{Ll}\d])(?=\p{Lu})/u)) {
+      // Un trozo sin " - " no es un aula completa (p. ej. "Aula 1A"): se vuelve a pegar al anterior
+      if (partes.length > 0 && !trozo.includes(' - ')) partes[partes.length - 1] += trozo;
+      else partes.push(trozo);
+    }
+    return partes.map((aula) => aula.trim());
+  }).filter((aula) => aula && aula !== '-');
+  return aulas.length > 0 ? [...new Set(aulas)].join(', ') : '-';
+}
+
 const codigo = (valor: Celda): number | string => (typeof valor === 'number' ? valor : textoCelda(valor));
 
 // Convierte una fila de la hoja (columnas 1–10) en examen; null si no tiene asignatura, fecha y hora válidas
@@ -65,7 +82,7 @@ function filaAExamen(fila: Row): Examen | null {
     Convocatoria: textoCelda(celda(7)),
     Fecha: fecha,
     Hora: hora,
-    Aula: textoCelda(celda(10)) || '-',
+    Aula: normalizarAula(celda(10)),
   };
 }
 
