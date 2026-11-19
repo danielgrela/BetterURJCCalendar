@@ -12,9 +12,9 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 
 ## Mapa (solo lo que importa)
 - `react-router.config.ts` → `appDirectory: 'src'`, `buildDirectory: 'dist'`, `ssr: false`, `prerender` (`/` y `/dashboard/guia-de-uso`) y `buildEnd`, que copia `__spa-fallback.html` a `404.html`. **Una página nueva pública va en `prerender`**
-- `src/root.tsx` → documento HTML (`Layout`: script en línea `SCRIPT_TEMA_INICIAL` que aplica `.dark` antes de pintar, `lang`, favicons, manifest, `preload` de Inter, `theme-color` y `og`/`twitter` comunes), `ToggleThemeButton` flotante de escritorio y `HydrateFallback` (título de respaldo en las rutas no prerenderizadas). No hay `index.html` ni `main.jsx`
+- `src/root.tsx` → documento HTML (`Layout`: script en línea `SCRIPT_TEMA_INICIAL` que aplica `.dark` y `data-tema` antes de pintar, `lang`, favicons, manifest, `preload` de Inter, `theme-color` y `og`/`twitter` comunes), `ToggleThemeButton` flotante de escritorio y `HydrateFallback` (título de respaldo en las rutas no prerenderizadas). No hay `index.html` ni `main.jsx`
 - `src/routes.ts` → rutas, cada una en su chunk: `/` → `HeroPage` (portada) · `/dashboard` → `App` (layout con `SideBar` + `<Outlet>`) con hijas index → `HomePage`, `calendario` → `CalendarPage`, `importar` → `ImportPage`, `guia-de-uso` → `UseGuide` · `*` → `NotFound`. Importar de `react-router` (no `react-router-dom`)
-- Prerender: lo prerenderizado se ejecuta en Node y luego se hidrata; no leer `window`/`localStorage` ni stores persistidos para decidir qué se pinta en `HeroPage`, `UseGuide`, `App`/`SideBar`, `root` (mismo HTML en Node y en el navegador, o habrá errores de hidratación). Por eso `ToggleThemeButton` elige el icono con `dark:` y `useMediaQuery` devuelve `false` en el servidor
+- Prerender: lo prerenderizado se ejecuta en Node y luego se hidrata; no leer `window`/`localStorage` ni stores persistidos para decidir qué se pinta en `HeroPage`, `UseGuide`, `App`/`SideBar`, `root` (mismo HTML en Node y en el navegador, o habrá errores de hidratación). Por eso `ToggleThemeButton` elige el icono con `data-tema` en `<html>` (CSS) y lee el tema con `useSyncExternalStore` y `'sistema'` como valor del servidor, y `useMediaQuery` devuelve `false` en el servidor
 - `src/App.tsx` → layout del dashboard: en móvil `flex-col-reverse` (la `SideBar` pasa a barra inferior y aparece `ReturnMobile` arriba); en `lg:` barra lateral fija a la izquierda
 - `src/components/` (un componente por archivo, nombre en PascalCase):
   - Portada: `HeroPage` (Header + HeroPageMain + Features + Footer), `HeroPageMain` (titular, CTAs y `Calendar` en modo `compact` con `assets/jsonMockup.json`)
@@ -26,7 +26,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - `ImportPage` (subida y validación del Excel), `UseGuide` (guía con capturas `assets/fotoguia0*.{png,jpg}`), `NotFound`, `ToggleThemeButton`
 - `src/SocialIcons/Github.tsx` → icono SVG de GitHub (Tabler no trae logos de marca)
 - `src/types/examen.ts` → tipos `Examen` (ver «Modelo de datos») y `FiltrosCalendario`
-- `src/hooks/` → stores de Zustand (tipados con `create<Store>()`): `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (persistido en `dark-mode`, añade/quita `.dark` en `<html>`) · `useMediaQuery(query)` (hook de React, no store)
+- `src/hooks/` → stores de Zustand (tipados con `create<Store>()`): `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (tema `sistema`/`claro`/`oscuro`, persistido en `dark-mode` v1 con migración del `{ isDark }` antiguo; pone `.dark` y `data-tema` en `<html>` y en `sistema` sigue los cambios de `prefers-color-scheme`) · `useMediaQuery(query)` (hook de React, no store)
 - `src/scripts/` → lógica sin UI:
   - `handleExcel.ts` → `excelTojson(file)`: lee la hoja 1 con `read-excel-file` (cargado con `import()` solo al importar), ignora las 2 primeras filas y mapea las columnas 1–10
   - `examen.ts` → `nombreAsignatura(ev)` (corta en el primer `(`), `diasHasta(fecha)` y `claveExamen(ev)` (`key` de listas)
@@ -34,7 +34,8 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - `filtersCalendar.ts` → `filtrarExamenes(examenes, filtros)` (convocatoria y "Pendientes") y `convocatoriasDe(examenes)`; el estado de los filtros vive en `CalendarPage`
   - `generateICS.ts` → `eventosICS(examenes)` (pura, con tests) y la descarga
   - `generateExcel.ts` → exporta con `write-excel-file` (cargado con `import()` solo al exportar); probado con un test de ida y vuelta con `handleExcel`
-  - `temaInicial.ts` → texto del script del `<head>` que aplica el tema guardado (o el del sistema) antes de hidratar
+  - `tema.ts` → tipo `Tema`, `siguienteTema`, `esOscuro` y `temaDeEstado` (lee lo guardado, incluido el formato antiguo)
+  - `temaInicial.ts` → texto del script del `<head>` (misma lógica que `temaDeEstado`; el test lo ejecuta) que aplica el tema guardado (o el del sistema) antes de hidratar
   - `generateExcel.ts` / `generateICS.ts` → descargas `horario_examenes.xlsx` / `.ics` con `descargarBlob(blob, nombre)` de `descargarBlob.ts`
 - `src/index.css` → Tailwind, variante `dark` por clase `.dark`, fuente Inter autoalojada (`@fontsource-variable/inter`, solo latin, precargada en `root.tsx`) y tokens de color (ver DESIGN.md)
 - `public/Examenes.xlsx` → Excel de ejemplo que se ofrece en la guía de uso

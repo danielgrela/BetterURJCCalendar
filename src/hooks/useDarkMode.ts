@@ -1,37 +1,51 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { esOscuro, siguienteTema, temaDeEstado, type Tema } from '../scripts/tema';
 
-interface DarkModeStore {
-  isDark: boolean;
-  toggle: () => void;
+interface TemaStore {
+  tema: Tema;
+  cambiarTema: () => void;
 }
 
-// El script del <head> (scripts/temaInicial.ts) ya ha puesto o quitado .dark antes de pintar:
-// si no hay nada guardado, se parte de lo que decidió (prefers-color-scheme)
-const oscuroAlCargar = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
+const CONSULTA_OSCURO = '(prefers-color-scheme: dark)';
 
-const useDarkMode = create<DarkModeStore>()(persist(
+// Pone o quita .dark y data-tema en <html> (el script del <head> ya lo ha hecho al cargar)
+function aplicarTema(tema: Tema) {
+  const root = document.documentElement;
+  root.classList.add('no-transitions');
+  root.classList.toggle('dark', esOscuro(tema, window.matchMedia(CONSULTA_OSCURO).matches));
+  root.dataset.tema = tema;
+  window.setTimeout(() => {
+    root.classList.remove('no-transitions');
+  }, 0);
+}
+
+const useDarkMode = create<TemaStore>()(persist(
   (set) => ({
-    isDark: oscuroAlCargar,
-    toggle: () => set((state) => {
-      const next = !state.isDark;
-      const root = document.documentElement;
-      root.classList.add('no-transitions');
-      document.documentElement.classList.toggle('dark', next);
-      window.setTimeout(() => {
-        root.classList.remove('no-transitions');
-      }, 0);
-      return { isDark: next };
+    tema: 'sistema',
+    cambiarTema: () => set((state) => {
+      const tema = siguienteTema(state.tema);
+      aplicarTema(tema);
+      return { tema };
     }),
   }),
   {
     name: 'dark-mode',
+    // v0 guardaba { isDark }; v1 guarda { tema }
+    version: 1,
+    migrate: (estado) => ({ tema: temaDeEstado(estado) }),
+    partialize: (state) => ({ tema: state.tema }),
     onRehydrateStorage: () => (state) => {
-      if (state) {
-        document.documentElement.classList.toggle('dark', state.isDark);
-      }
+      if (state) aplicarTema(state.tema);
     },
   }
 ));
+
+// En 'sistema', seguir los cambios del sistema operativo sin recargar
+if (typeof window !== 'undefined') {
+  window.matchMedia(CONSULTA_OSCURO).addEventListener('change', () => {
+    if (useDarkMode.getState().tema === 'sistema') aplicarTema('sistema');
+  });
+}
 
 export default useDarkMode;
