@@ -82,7 +82,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 ---
 
 ## F0 · Arreglos base
-- [ ] **F0.1 Lint**: instalar `typescript-eslint` (se migra a TS en F4.6) y ampliar `files` a `**/*.{js,jsx,ts,tsx}` para que revise ya el código actual. `npm run lint` debe pasar o dejar solo avisos acordados.
+- [x] **F0.1 Lint**: instalar `typescript-eslint` (se migra a TS en F4.6) y ampliar `files` a `**/*.{js,jsx,ts,tsx}` para que revise ya el código actual. `npm run lint` debe pasar o dejar solo avisos acordados.
 - [ ] **F0.2 Rutas de `public/`**: en `index.html` y en el enlace de `UseGuide` a `Examenes.xlsx`, usar `/favicon…`, `/site.webmanifest`, `/Examenes.xlsx`. Comprobar en `npm run preview` que cargan y que el favicon ya no sale en `dist/assets`.
 - [ ] **F0.3 Clases rotas**: `text-neuto`/`text-neutral` → `text-neutro`; `flex-flex-col` → `flex flex-col`; quitar `hover:bg-primary-dark`; revisar `w-38`; `color='#E4002B'` → `className="text-primary"`.
 - [ ] **F0.4 Dependencias y assets muertos**: quitar `glob`, `rimraf`, `uuid`, `@types/node`; confirmar con grep y borrar `src/assets/{hero.png,react.svg,vite.svg}` y `public/icons.svg`. Preguntar antes de borrar.

@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import useFileStore from '../hooks/useFileStore';
 import MobileCalendar from './MobileCalendar';
 import PCCalendar from './PCCalendar';
-import parseEventDate, { sortedEvents } from '../scripts/sortEvents';
+import { sortedEvents } from '../scripts/sortEvents';
 export default function CalendarPage() {
     const [date, setDate] = useState(new Date());
-    const [isLg, setIsLg] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [isLg, setIsLg] = useState(() => window.matchMedia('(min-width: 1024px)').matches);
     const jsonData = useFileStore((state) => state.jsonData);
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -20,9 +19,6 @@ export default function CalendarPage() {
 
         const media = window.matchMedia('(min-width: 1024px)');
         const handleChange = (event) => setIsLg(event.matches);
-        setLoading(false);
-
-        handleChange(media);
 
         if (media.addEventListener) {
             media.addEventListener('change', handleChange);
@@ -40,14 +36,10 @@ export default function CalendarPage() {
     }, []);
     return (
         <>
-        {loading ? (
-            <div className="flex items-center justify-center p-8">
-                <p className="text-lg text-gray-600 dark:text-gray-400">Cargando calendario...</p>
-            </div>
-        ) : isLgBreakpoint() ? (
+        {isLgBreakpoint() ? (
             <PCCalendar date={date} setDate={setDate} jsonData={sortedEvents(jsonData)} year={year} month={month} />
-            ) : 
-                <MobileCalendar jsonData={sortedEvents(jsonData)} year={year} month={month} />
+            ) :
+                <MobileCalendar jsonData={sortedEvents(jsonData)} />
             }
         </>
     );

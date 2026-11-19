@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import Header from "./Header";
 import HeroPageMain from "./HeroPageMain";
 import Features from "./Features";

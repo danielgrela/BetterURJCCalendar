@@ -4,7 +4,7 @@ import {
 } from '@tabler/icons-react';
 import FiltersCalendar from './FiltersCalendar';
 import { useFileStoreJsonFilters } from '../hooks/useFileStore';
-export default function MobileCalendar({ jsonData, year, month }) {
+export default function MobileCalendar({ jsonData }) {
     const dataFiltered = useFileStoreJsonFilters((state) => state.dataFiltered);
     const visibleData = dataFiltered ?? jsonData;
     return (

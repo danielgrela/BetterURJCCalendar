@@ -5,7 +5,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 ## Comandos
 - `npm run dev` → http://localhost:5173 · `npm run host` → igual, expuesto en la red local (para probar en el móvil)
 - `npm run build` / `npm run preview`
-- `npm run lint` → **roto ahora mismo** (ver Deuda). No hay tests. La verificación es `npm run build` + revisar en el navegador
+- `npm run lint` → ESLint sobre `.js`/`.jsx` (ignora `dist/` y `.claude/`). No hay tests. La verificación es `npm run build` + revisar en el navegador
 
 ## Mapa (solo lo que importa)
 - `index.html` → raíz de Vite, monta `src/main.jsx`; favicons y manifest
@@ -63,7 +63,6 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 - **Tras el push**: comprobar el despliegue de Vercel unos minutos después (la portada y una ruta profunda como `/dashboard/calendario` deben responder 200).
 
 ## Deuda conocida (candidatos a refactor, ver ROADMAP)
-- `npm run lint` falla: `eslint.config.js` importa `typescript-eslint` (no instalado) y solo mira `**/*.{ts,tsx}`, así que nunca revisaría los `.jsx`.
 - `README.md` es la plantilla de Vite (habla de TypeScript).
 - `index.html` y `UseGuide` enlazan a `public/…` (en Vite, lo de `public/` se sirve en `/`); `<html lang="en">` y `<title>` sin cuidar.
 - Clases inexistentes o con erratas: `text-neuto`, `text-neutral`, `flex-flex-col`, `hover:bg-primary-dark`, `w-38`. Hex suelto en `HeroPageMain` (`color='#E4002B'`).

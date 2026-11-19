@@ -8,7 +8,6 @@ import ImportPage from './components/ImportPage.jsx'
 import HeroPage from './components/HeroPage.jsx'
 import UseGuide from './components/UseGuide.jsx'
 import NotFound from './components/NotFound.jsx'
-import useDarkMode from './hooks/useDarkMode.js';
 import ToggleThemeButton from './components/ToggleThemeButton.jsx'
 
 const Root = () => {

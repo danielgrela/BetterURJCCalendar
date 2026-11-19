@@ -20,11 +20,9 @@ export default function ImportPage() {
                 setJsonAuxData(data);
                 if(data.length === 0) {
                     throw new Error("El archivo no contiene elementos. Por favor verifica el formato del archivo.");
-                    return;
                 }
                 if(!data[0].Fecha || !data[0].Hora || !data[0].Asignatura || !data[0].Plan || !data[0].Aula || !data[0].Convocatoria) {
                     throw new Error("El formato del archivo es incorrecto. Asegúrate de que el archivo tenga las columnas: Fecha, Hora, Asignatura, Plan, Aula y Convocatoria.");
-                    return;
                 }
                 setError(null);
                 setDisabled(false);
