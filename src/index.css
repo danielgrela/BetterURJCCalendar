@@ -38,8 +38,9 @@
 	--tertiary: #38BDF8;        /* sky-400 */
 	--enlace: #60A5FA;          /* blue-400 */
 	--error: #F87171;           /* red-400 */
-	--lienzo: #111827;          /* gray-900 */
-	--superficie: #030712;      /* gray-950 */
+	/* En oscuro, cuanto más elevado, más claro; sin sombras (no se ven sobre negro): bordes */
+	--lienzo: #030712;          /* gray-950 */
+	--superficie: #111827;      /* gray-900 */
 	--superficie-alta: #1F2937; /* gray-800 */
 	--borde: #1F2937;           /* gray-800 */
 	--texto: #F3F4F6;           /* gray-100 */

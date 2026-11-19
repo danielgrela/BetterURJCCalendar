@@ -26,7 +26,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#f3f4f6" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#1f2937" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Better URJC Calendar" />
         <meta property="og:locale" content="es_ES" />

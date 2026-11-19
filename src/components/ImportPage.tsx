@@ -91,7 +91,7 @@ export default function ImportPage() {
                 <IconHelpCircle size={16} className="inline-block text-texto-suave mr-1" />
                 <p className="text-texto-suave text-sm">¿Tienes dudas? puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-enlace hover:underline">guía de uso</NavLink></p>
             </div>
-            <form className="relative mt-6 flex flex-col bg-superficie h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded shadow-sm gap-8 lg:gap-10">
+            <form className="relative mt-6 flex flex-col bg-superficie h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded border border-borde shadow-sm dark:shadow-none gap-8 lg:gap-10">
             <div className='flex flex-col gap-4'>
                 <input
                 onChange={handleFileChange}
@@ -141,7 +141,7 @@ export default function ImportPage() {
                 <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 disabled:cursor-not-allowed hover:brightness-90 hidden lg:block cursor-pointer bg-primary self-end w-38 text-sobre-primary px-8 py-2 rounded">Importar</button>
                 <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 lg:hidden cursor-pointer bg-primary text-sobre-primary px-8 py-2 rounded">Importar</button>
             </form>
-            <dialog ref={dialogBorrarRef} onClose={handleCerrarDialogo} aria-labelledby="borrar-titulo" aria-describedby="borrar-descripcion" className="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-superficie text-texto border border-borde p-6 shadow-lg overscroll-contain backdrop:bg-black/50 backdrop:overflow-hidden backdrop:overscroll-contain">
+            <dialog ref={dialogBorrarRef} onClose={handleCerrarDialogo} aria-labelledby="borrar-titulo" aria-describedby="borrar-descripcion" className="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-superficie text-texto border border-borde p-6 shadow-lg dark:shadow-none overscroll-contain backdrop:bg-black/50 backdrop:overflow-hidden backdrop:overscroll-contain">
                 <h2 id="borrar-titulo" className="text-lg font-bold">¿Borrar el calendario?</h2>
                 <p id="borrar-descripcion" className="mt-2 text-sm text-texto-suave">Se eliminarán los exámenes guardados en este navegador. Para recuperarlos tendrás que volver a importar el Excel.</p>
                 <form method="dialog" className="mt-6 flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">

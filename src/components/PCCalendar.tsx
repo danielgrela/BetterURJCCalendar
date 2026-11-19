@@ -32,7 +32,7 @@ export default function PCCalendar({date, setDate, visibleData, filtersProps, ye
                 <h1 className="text-5xl font-black text-texto tracking-tight">
                     {sanitizeDate(date)}
                 </h1>
-                <div className="flex gap-2 bg-superficie p-1.5 rounded-2xl shadow-sm border border-borde">
+                <div className="flex gap-2 bg-superficie p-1.5 rounded-2xl shadow-sm dark:shadow-none border border-borde">
                     <button onClick={prevMonth} className="cursor-pointer p-2 hover:bg-superficie-alta rounded-xl transition-all text-texto-suave">
                         <IconChevronLeft size={24} />
                     </button>

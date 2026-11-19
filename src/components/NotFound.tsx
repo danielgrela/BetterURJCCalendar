@@ -12,11 +12,11 @@ export default function NotFound() {
             <ToggleThemeButton className="fixed block lg:hidden bottom-8 right-8" />
             <Header />
             <main className="text-balance py-20 w-full px-2 lg:w-1/2 flex flex-col items-center justify-center gap-4 mx-auto text-center">
-                <img src={GatoImagen} alt="" className="w-1/2 lg:w-full max-w-md shadow-lg" />
+                <img src={GatoImagen} alt="" className="w-1/2 lg:w-full max-w-md shadow-lg dark:shadow-none" />
                 <h1 className="text-3xl lg:text-5xl font-bold">¡Ups! Parece que te has perdido</h1>
                 <p className="text-base lg:text-xl text-texto-suave">La página que buscas no existe o ha sido movida a una nueva ubicación dentro del sitio web.</p>
                 <div className="flex flex-col lg:flex-row items-center gap-8 mt-8">
-                    <NavLink to="/dashboard" className="inline-block px-9 py-7 hover:brightness-80 bg-primary text-sobre-primary rounded-lg shadow-md transition-colors">
+                    <NavLink to="/dashboard" className="inline-block px-9 py-7 hover:brightness-80 bg-primary text-sobre-primary rounded-lg shadow-md dark:shadow-none transition-colors">
                         <IconLayoutDashboard className="inline-block mr-2" />
                         Volver al dashboard
                     </NavLink>

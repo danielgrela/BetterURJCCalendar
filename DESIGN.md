@@ -11,9 +11,9 @@ colors:                   # tokens de src/index.css (claro / oscuro)
   enlace: "#1D4ED8"       # blue-700
   enlace-dark: "#60A5FA"  # blue-400
   lienzo: "#F3F4F6"       # gray-100
-  lienzo-dark: "#111827"  # gray-900
+  lienzo-dark: "#030712"  # gray-950
   superficie: "#FFFFFF"
-  superficie-dark: "#030712"  # gray-950
+  superficie-dark: "#111827"  # gray-900
   superficie-alta: "#E5E7EB"  # gray-200
   superficie-alta-dark: "#1F2937"  # gray-800
   borde: "#E5E7EB"        # gray-200
@@ -75,6 +75,7 @@ Herramienta de estudiante para estudiantes ("De Daniel para Daniel (y amigos)").
 - **`sobre-primary`**: texto e iconos encima de `bg-primary` (nunca `text-white` a mano). Blanco en claro y casi negro en oscuro: el rojo oscuro tiene que ser claro para leerse como texto, y entonces el blanco encima no llega a AA. Igual en todos los botones rojos.
 - **`texto` / `texto-suave`**: texto principal y de apoyo (descripciones, plan, metadatos).
 - **Superficies**: `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios, avisos sobre el lienzo) < `superficie-alta` (chips, hovers y lo que va encima de una superficie). `borde` para todos los bordes.
+- **Elevación**: en claro, sombras suaves (`shadow-sm`/`md`); en oscuro, cada nivel es un escalón más claro (`gray-950` → `gray-900` → `gray-800`) y las sombras se quitan (`dark:shadow-none`, no se ven sobre negro): lo que se eleva lleva `border border-borde` en los dos temas.
 - **Enlaces de texto**: `text-enlace hover:underline`.
 - **Errores**: `text-error` (no confundir con `primary`: un error no es una acción).
 - Los tokens viven en `src/index.css` (`:root` y `.dark` → `@theme`) y ya cambian con el tema: en `className` van sin pareja `dark:`. Un color nuevo = un token nuevo ahí, nunca un hex ni un `gray-*` con su `dark:` en `className`.

@@ -10,7 +10,7 @@ export default function UseGuide() {
         <div className='px-8 lg:px-0 flex flex-col gap-8'>
             <h1 className="sr-only">Guía de uso</h1>
             <PageMeta titulo="Guía de uso" ruta="/dashboard/guia-de-uso" descripcion="Cómo descargar el Excel de exámenes desde la web de la URJC e importarlo en Better URJC Calendar para tener tu calendario de exámenes en segundos." />
-            <article className="p-6 gap-10 w-full max-w-300 rounded-md shadow-md border-2 border-borde bg-superficie h-fit flex flex-col lg:flex-row">
+            <article className="p-6 gap-10 w-full max-w-300 rounded-md shadow-md dark:shadow-none border-2 border-borde bg-superficie h-fit flex flex-col lg:flex-row">
                 <div className="min-w-full lg:min-w-1/2 gap-5 flex flex-col">
                     <div className='flex flex-col lg:flex-row items-center justify-center text-center lg:text-start lg:justify-start gap-3'>
                         <IconUserCircle stroke={2} className='bg-primary text-sobre-primary p-1 size-8 rounded-md min-w-fit'/>

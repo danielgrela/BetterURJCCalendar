@@ -38,7 +38,7 @@ export default function ExamCard({ examen, variant = 'full' }: { examen: Examen,
 
     if (variant === 'list') {
         return (
-            <div className="flex flex-col gap-2 group relative p-5 border-l-5 border-primary text-primary rounded-md shadow-sm bg-superficie">
+            <div className="flex flex-col gap-2 group relative p-5 border border-borde border-l-5 border-l-primary text-primary rounded-md shadow-sm dark:shadow-none bg-superficie">
                 <div className='flex flex-row justify-between items-center'>
                     <div className='bg-superficie-alta rounded-sm py-1 px-4'>
                             <span>{examen.Convocatoria}</span>
@@ -71,7 +71,7 @@ export default function ExamCard({ examen, variant = 'full' }: { examen: Examen,
     }
 
     return (
-        <div className="flex flex-col lg:flex-row gap-4 justify-between items-center w-full shadow-sm border border-borde border-l-6 p-4 lg:p-8 border-l-primary bg-superficie">
+        <div className="flex flex-col lg:flex-row gap-4 justify-between items-center w-full shadow-sm dark:shadow-none border border-borde border-l-6 p-4 lg:p-8 border-l-primary bg-superficie">
             <div className="flex flex-col gap-2">
                 <div className="flex flex-row gap-4 items-center">
                     <p className="bg-superficie-alta rounded-sm py-px px-3 w-fit font-medium">{examen.Convocatoria}</p>

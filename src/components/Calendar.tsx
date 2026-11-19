@@ -29,7 +29,7 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
         });
     };
     return(
-        <div className={`grid grid-cols-7 gap-px bg-borde rounded-2xl overflow-hidden shadow-2xl max-w-6xl mx-auto border border-borde ${compact ? '[zoom:0.75]' : ''}`}>
+        <div className={`grid grid-cols-7 gap-px bg-borde rounded-2xl overflow-hidden shadow-2xl dark:shadow-none max-w-6xl mx-auto border border-borde ${compact ? '[zoom:0.75]' : ''}`}>
             {/* Cabecera Días */}
             {['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sáb', 'Dom'].map((d) => (
                 <div key={d} className="text-center text-[11px] font-bold uppercase tracking-widest text-texto-suave py-4 bg-superficie">
