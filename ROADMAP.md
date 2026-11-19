@@ -99,7 +99,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 ## F2 · Refactor sin cambio visual
 - [x] **F2.1** `scripts/handleExcel` → `handleExcel.js` y actualizar el import de `ImportPage`.
 - [x] **F2.2** Helper único de descarga (`descargarBlob(blob, nombre)`) usado por `generateExcel.js` y `generateICS.js`.
-- [ ] **F2.3** `CalendarMainMockup` reutiliza `Calendar` (props `today` y `compact`) en vez de duplicarlo; quitar `zoom` en línea.
+- [x] **F2.3** `CalendarMainMockup` reutiliza `Calendar` (props `today` y `compact`) en vez de duplicarlo; quitar `zoom` en línea.
 - [ ] **F2.4** `FiltersCalendar` con estado controlado (sin `document.getElementById`), filtros calculados con `useMemo` en `CalendarPage` y convocatorias sacadas de los datos. dep: F1.1
 - [ ] **F2.5** Componente `ExamCard` (variantes `full` y `compact`) para `NextExams`, `MobileCalendar` y `Calendar`; helper `nombreAsignatura(ev)` para el corte en `(`.
 - [ ] **F2.6** Limpieza React: renombrar la función interna de `NextExams` (`proximosExamenes`), `key` estable (`CodigoAsignatura + Fecha + Hora`), `useMemo` para `sortedEvents`, hook `useMediaQuery` sin `addListener` ni estado `loading`, `NavLink` con `isActive` en `ButtonNavBar`, `children` como hijos JSX, un solo botón «Importar» responsive.

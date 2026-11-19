@@ -1,6 +1,6 @@
 import { IconSpeakerphone, IconArrowRight, IconFileUpload  } from '@tabler/icons-react';
 import { NavLink } from "react-router-dom";
-import CalendarMainMockup from './CalendarMainMockup.jsx';
+import Calendar from './Calendar.jsx';
 import jsonMockup from '../assets/jsonMockup.json'
 export default function HeroPageMain() {
     return (
@@ -17,7 +17,7 @@ export default function HeroPageMain() {
                 </div>
             </section>
             <section className="w-1/2 hidden lg:flex items-center justify-center">
-                <CalendarMainMockup jsonData={jsonMockup} year={new Date(2026, 0, 5).getFullYear()} month={new Date(2026,5,0).getMonth()} />
+                <Calendar jsonData={jsonMockup} year={2026} month={4} today={new Date(2026, 4, 18)} compact />
             </section>
         </section>
     );

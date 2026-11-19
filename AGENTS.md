@@ -12,7 +12,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `src/main.jsx` → rutas (`BrowserRouter`): `/` → `HeroPage` (portada) · `/dashboard` → `App` (layout con `SideBar` + `<Outlet>`) con hijas `""` → `HomePage`, `calendario` → `CalendarPage`, `importar` → `ImportPage`, `guia-de-uso` → `UseGuide` · `*` → `NotFound`. También pinta el `ToggleThemeButton` flotante de escritorio
 - `src/App.jsx` → layout del dashboard: en móvil `flex-col-reverse` (la `SideBar` pasa a barra inferior y aparece `ReturnMobile` arriba); en `lg:` barra lateral fija a la izquierda
 - `src/components/` (un componente por archivo, nombre en PascalCase):
-  - Portada: `HeroPage` (Header + HeroPageMain + Features + Footer), `HeroPageMain` (titular, CTAs y `CalendarMainMockup` con `assets/jsonMockup.json`)
+  - Portada: `HeroPage` (Header + HeroPageMain + Features + Footer), `HeroPageMain` (titular, CTAs y `Calendar` en modo `compact` con `assets/jsonMockup.json`)
   - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (resaltado por último segmento de la ruta), `ReturnMobile`, `HomePage` (`DashboardHeader` + `NextExams` + `ButtonsExportDashboard`)
   - Calendario: `CalendarPage` decide por `matchMedia('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes) y `MobileCalendar` (lista); ambos usan `FiltersCalendar`
   - `ImportPage` (subida y validación del Excel), `UseGuide` (guía con capturas `assets/fotoguia0*.{png,jpg}`), `NotFound`, `ToggleThemeButton`
@@ -65,7 +65,7 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 ## Deuda conocida (candidatos a refactor, ver ROADMAP)
 - `README.md` es la plantilla de Vite (habla de TypeScript).
 - `index.html`: `<html lang="en">` y `<title>` sin cuidar, sin meta de SEO (F3).
-- `CalendarMainMockup` es casi una copia de `Calendar`; `FiltersCalendar` lee el DOM por `id` en vez de estado.
+- `FiltersCalendar` lee el DOM por `id` en vez de estado.
 - Bundle de 1,3 MB (ExcelJS entero en el chunk principal): candidato a `import()` dinámico al importar/exportar.
 
 ## Trabajo pendiente
