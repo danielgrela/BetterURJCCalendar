@@ -115,7 +115,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 - [x] **F3.8** 404 real: en Vercel, servir `index.html` solo para rutas conocidas y devolver 404 en el resto (o, como mínimo, `noindex` en `NotFound`). Comprobar con `curl -I` tras el despliegue. Implementado (`vercel.json` con rutas concretas, `trailingSlash: false` y `404.html` generado en el build); Comprobado en producción el 2026-11-19: rutas del dashboard 200, `/no-existe` y `/dashboard/no-existe` 404 con `NotFound`, `/dashboard/` → 308 a `/dashboard`.
 
 ## F4 · Stack y rendimiento
-- [ ] **F4.1** ExcelJS con `import()` dinámico solo al importar/exportar; el chunk inicial debe bajar claramente de 1,3 MB (anotar antes/después).
+- [x] **F4.1** ExcelJS con `import()` dinámico solo al importar/exportar; el chunk inicial debe bajar claramente de 1,3 MB (anotar antes/después). Hecho en `handleExcel.js` y `generateExcel.js`: chunk inicial de 1.286,18 kB (367,59 kB gzip) a 356,11 kB (110,86 kB gzip); ExcelJS va aparte en `exceljs.min-*.js` (929,91 kB, 256,42 kB gzip) y solo se descarga al importar o exportar a Excel.
 - [ ] **F4.2** Tailwind con `@tailwindcss/vite` en lugar de PostCSS; quitar `autoprefixer` y `postcss.config.js`. Mismo CSS resultante.
 - [ ] **F4.3** Inter autoalojada (`@fontsource-variable/inter`, solo latin) con `font-display: swap` y `preload`; fuera el `@import` de Google Fonts (rendimiento y privacidad).
 - [ ] **F4.4** React Router en modo framework (`ssr: false`, `prerender: ["/", "/dashboard/guia-de-uso"]`), rutas en `app/routes.js`, `meta` por ruta y carga diferida por página. Verificar que el HTML de `dist` contiene el texto de la portada. dep: F2, F3.3

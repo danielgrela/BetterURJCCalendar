@@ -71,7 +71,7 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 ## Deuda conocida (candidatos a refactor, ver ROADMAP)
 - `README.md` es la plantilla de Vite (habla de TypeScript).
 - `index.html`: Open Graph global (apunta a `/` en todas las rutas); `description`, `canonical` y el JSON-LD de la portada solo existen tras ejecutar JS hasta el prerender (F4.4).
-- Bundle de 1,3 MB (ExcelJS entero en el chunk principal): candidato a `import()` dinámico al importar/exportar.
+- ExcelJS (930 kB) ya se carga aparte con `import()` dinámico (F4.1); F4.8 valorará cambiarlo por una librería más ligera.
 
 ## Trabajo pendiente
 Seguir [ROADMAP.md](ROADMAP.md) por fases. Marcar tareas `[x]` al terminar. Guía visual en [DESIGN.md](DESIGN.md).

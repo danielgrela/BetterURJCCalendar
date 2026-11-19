@@ -1,5 +1,3 @@
-import ExcelJS from 'exceljs';
-
 const ERROR_FORMATO = "No se ha encontrado ningún examen en el archivo. Asegúrate de que es el Excel original de la web de exámenes de la URJC, con las columnas Asignatura, Plan, Convocatoria, Fecha, Hora y Aulas.";
 
 const dosCifras = (n) => String(n).padStart(2, '0');
@@ -75,6 +73,8 @@ function filaAExamen(row) {
 }
 
 export default async function excelTojson(excelFile) {
+  // ExcelJS pesa ~900 kB: se carga solo al importar, en un chunk aparte
+  const { default: ExcelJS } = await import('exceljs');
   const workbook = new ExcelJS.Workbook();
   try {
     await workbook.xlsx.load(await excelFile.arrayBuffer());

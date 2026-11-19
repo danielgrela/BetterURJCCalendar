@@ -1,4 +1,3 @@
-import ExcelJS from 'exceljs';
 import { descargarBlob } from './descargarBlob';
 
 const COLUMNAS_EXCEL = [
@@ -20,6 +19,8 @@ export const descargarCalendarioExcel = async (examenesJSON) => {
     return;
   }
 
+  // ExcelJS pesa ~900 kB: se carga solo al exportar, en un chunk aparte
+  const { default: ExcelJS } = await import('exceljs');
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Examenes');
 
