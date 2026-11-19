@@ -1,6 +1,6 @@
 # ROADMAP — Better URJC Calendar
 
-Hoja de ruta para agentes. Parte de un análisis del código a fecha 2026-11-19 (commit `532cb92`). Es una propuesta: el usuario puede reordenar o descartar tareas. Las tareas marcadas **❓** necesitan una decisión del usuario antes de empezar (ver «Decisiones pendientes»).
+Hoja de ruta para agentes. Parte de un análisis del código a fecha 2026-11-19 (commit `532cb92`). Es una propuesta: el usuario puede reordenar o descartar tareas. Las decisiones de alcance ya están tomadas (ver «Decisiones tomadas»).
 
 ## Reglas de ejecución
 - **Git** (ver `AGENTS.md` › Git): un commit por tarea terminada y verificada, en español (`Se añade…`), incluyendo el `[x]` de aquí. **Push solo con permiso del usuario** (`main` despliega en Vercel).
@@ -8,7 +8,7 @@ Hoja de ruta para agentes. Parte de un análisis del código a fecha 2026-11-19 
 - **Si hay dudas, preguntar al usuario** antes de decidir; no suponer.
 - Respetar el orden de fases; dentro de una fase, las tareas sin `dep:` son independientes.
 - **Responsive mobile-first y modo oscuro** (ver `AGENTS.md` › Convenciones): todo cambio visual se comprueba a 375, 768 y ≥1024 px, en claro y oscuro, con y sin datos importados.
-- Antes de cerrar: `npm run build` sin errores (y `npm run lint` cuando F0.1 esté hecho; `npm test` cuando F4.6 esté hecho).
+- Antes de cerrar: `npm run build` sin errores (y `npm run lint` cuando F0.1 esté hecho; `npm run typecheck` cuando F4.6 esté hecho; `npm test` cuando F4.7 esté hecho).
 - Si cambia la estructura de archivos, actualizar el mapa de `AGENTS.md`.
 - No cambiar contenido ni copy salvo que la tarea lo diga. Refactor = mismo resultado visual.
 - Skills: `modern-web-guidance` antes de escribir HTML/CSS/JS de cliente; `impeccable <cmd>` y `unslop` donde se indique (nunca los dos en la misma pasada).
@@ -32,15 +32,15 @@ La portada es lo único que debería posicionar (buscan «calendario exámenes U
 | Pieza | Estado | Veredicto |
 |---|---|---|
 | React 19 + Vite 8 | Correcto y actual | Mantener |
-| React Router 7 (modo librería, `BrowserRouter`) | Funciona, pero sin code-splitting ni prerender | **Pasar a modo framework con `ssr: false` + `prerender`** ❓: misma librería, genera HTML estático de `/` y `/dashboard/guia-de-uso` para SEO, carga cada ruta por separado y da `meta` por ruta. Es el salto más pequeño con más beneficio |
+| React Router 7 (modo librería, `BrowserRouter`) | Funciona, pero sin code-splitting ni prerender | **Pasar a modo framework con `ssr: false` + `prerender`** (decidido): misma librería, genera HTML estático de `/` y `/dashboard/guia-de-uso` para SEO, carga cada ruta por separado y da `meta` por ruta. Es el salto más pequeño con más beneficio |
 | Zustand 5 | Bien elegido para este tamaño | Mantener; corregir el uso (ver Refactor) |
 | Tailwind 4 vía PostCSS + `autoprefixer` | `autoprefixer` sobra (Tailwind 4 ya prefija) | Pasar a `@tailwindcss/vite` (más rápido) y quitar `autoprefixer` |
-| ExcelJS (lectura y escritura) | ~900 kB minificados para leer 10 columnas | Primero `import()` dinámico; después valorar `read-excel-file` + `write-excel-file` (decenas de kB) ❓ |
+| ExcelJS (lectura y escritura) | ~900 kB minificados para leer 10 columnas | Primero `import()` dinámico; después probar `read-excel-file` + `write-excel-file` (decenas de kB) y decidir con cifras |
 | `ics` | Correcto | Mantener; fijar zona `Europe/Madrid` o dejar hora flotante documentada |
 | `glob`, `rimraf`, `uuid`, `@types/node` | Sin uso en `src/` | Quitar |
-| JavaScript sin tipos | Proyecto pequeño, un solo autor | No migrar a TS ahora ❓; como mínimo JSDoc en `scripts/` para el modelo de examen |
+| JavaScript sin tipos | El modelo de examen y los parseos no tienen ninguna comprobación | **Migrar a TypeScript** (decidido), de forma gradual y después del modo framework, que genera los tipos de rutas |
 | Sin tests | La lógica crítica (parseo, orden, ICS) no tiene red | Añadir Vitest solo para `src/scripts/` |
-| PWA | Ya hay manifest y todo es local | Service worker (`vite-plugin-pwa`) para usarla sin conexión el día del examen ❓ |
+| PWA | Ya hay manifest y todo es local | Service worker (`vite-plugin-pwa`) para usarla sin conexión el día del examen (decidido) |
 
 Alternativas descartadas: Next.js (no hay backend; añade servidor y peso), Astro + isla React (separar portada y app duplica layout y tema; solo compensaría si la portada creciera mucho), Svelte/Vue (reescritura completa sin ganancia para el usuario).
 
@@ -62,7 +62,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 - **Portada**: píldora con megáfono («De Daniel para Daniel»), rejilla de 3 tarjetas con cuadrado de icono de color (`bg-red-200`, `bg-blue-100`, sin variante oscura), iconos que crecen al pasar el ratón (`hover:scale-120`), mockup del calendario con `zoom: 0.75`.
 - **Modo oscuro** (el punto más flojo):
   - Contraste: blanco sobre `primary` oscuro (`#FF2D3E`) da ~3,7:1, no llega a AA en texto normal (botones «Exportar a .ics», «Importar», CTAs). `neutro` (`#717171`) no cambia en oscuro: ~3,6:1 sobre `gray-900`, falla. `tertiary` pasa a blanco y pierde su función de acento.
-  - Elevación invertida: las tarjetas (`gray-950`) son más oscuras que el lienzo (`gray-900`); en oscuro lo elevado debería ser más claro, no más hundido. ❓
+  - Elevación invertida: las tarjetas (`gray-950`) son más oscuras que el lienzo (`gray-900`); en oscuro lo elevado debería ser más claro, no más hundido.
   - Arranque: el tema se aplica cuando carga el JS (destello blanco al abrir en oscuro) y la primera vez ignora `prefers-color-scheme`. No se declara `color-scheme`, así que los `<select>`, el selector de archivo y las barras de scroll nativas siguen en claro.
   - Inconsistencias: el botón activo de la navegación usa texto negro sobre rojo en oscuro y el resto de botones rojos texto blanco; `Header` en `gray-800` y la sección siguiente en `gray-900`; `hover:dark:bg-gray-700` en la zona de subida sobre un fondo `gray-950`.
   - Cada componente repite pares `bg-white dark:bg-gray-950`, `border-gray-200 dark:border-gray-800`…: fácil olvidar uno (ya pasa en `Features` y en el selector de archivo).
@@ -70,19 +70,19 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 
 ---
 
-## Decisiones pendientes (preguntar antes de la fase correspondiente)
-1. **Dominio de producción** (para `canonical`, `og:url` y `sitemap.xml`): ¿`*.vercel.app` o dominio propio?
-2. **Prerender**: ¿migrar React Router a modo framework (F4.4) o una solución más ligera (script de build con `renderToString` solo para `/`)?
-3. **Excel**: ¿cambiar ExcelJS por `read-excel-file`/`write-excel-file` si el `import()` dinámico no basta?
-4. **Tokens semánticos de superficie** (F5.1): cambian la convención de `AGENTS.md` («grises de Tailwind con su pareja `dark:`»). ¿Se aprueba?
-5. **Modelo de elevación en oscuro**: tarjetas más claras que el fondo (recomendado) o mantener las actuales.
-6. **Copy de funciones que no existen** (solapamientos, arrastrar): ¿implementarlas (F1.2, F6.6) o ajustar el texto?
-7. **PWA sin conexión** y **TypeScript**: ¿se quieren?
+## Decisiones tomadas (2026-11-19)
+1. **Dominio de producción**: `https://betterurjccalendar.danielgrela.com/` (para `canonical`, `og:url`, `sitemap.xml` y `robots.txt`).
+2. **Prerender**: React Router 7 en modo framework con `ssr: false` + `prerender` (F4.4).
+3. **Excel**: primero `import()` dinámico; después probar `read-excel-file`/`write-excel-file` y decidir con cifras (F4.1, F4.8).
+4. **Tokens semánticos de superficie**: aprobados; cambian la convención de `AGENTS.md` (F5.1, F7.3).
+5. **Elevación en oscuro**: tarjetas más claras que el fondo, bordes finos en lugar de sombras (F5.3).
+6. **Funciones prometidas**: se implementan las dos, arrastrar y soltar (F1.2) y aviso de solapamientos (F6.6).
+7. **Extras**: migración a TypeScript (F4.6) y PWA sin conexión (F4.9).
 
 ---
 
 ## F0 · Arreglos base
-- [ ] **F0.1 Lint**: `eslint.config.js` para `**/*.{js,jsx}` sin `typescript-eslint`. `npm run lint` debe pasar o dejar solo avisos acordados.
+- [ ] **F0.1 Lint**: instalar `typescript-eslint` (se migra a TS en F4.6) y ampliar `files` a `**/*.{js,jsx,ts,tsx}` para que revise ya el código actual. `npm run lint` debe pasar o dejar solo avisos acordados.
 - [ ] **F0.2 Rutas de `public/`**: en `index.html` y en el enlace de `UseGuide` a `Examenes.xlsx`, usar `/favicon…`, `/site.webmanifest`, `/Examenes.xlsx`. Comprobar en `npm run preview` que cargan y que el favicon ya no sale en `dist/assets`.
 - [ ] **F0.3 Clases rotas**: `text-neuto`/`text-neutral` → `text-neutro`; `flex-flex-col` → `flex flex-col`; quitar `hover:bg-primary-dark`; revisar `w-38`; `color='#E4002B'` → `className="text-primary"`.
 - [ ] **F0.4 Dependencias y assets muertos**: quitar `glob`, `rimraf`, `uuid`, `@types/node`; confirmar con grep y borrar `src/assets/{hero.png,react.svg,vite.svg}` y `public/icons.svg`. Preguntar antes de borrar.
@@ -90,7 +90,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 
 ## F1 · Bugs funcionales
 - [ ] **F1.1** Limpiar `dataFiltered` al importar un archivo nuevo (y al borrar el calendario).
-- [ ] **F1.2 ❓** Zona de subida: arrastrar y soltar real (`dragover`/`drop` con estado visual) o quitar «Arrastra» del texto. `accept=".xlsx"` solamente.
+- [ ] **F1.2** Zona de subida con arrastrar y soltar real (`dragover`/`dragleave`/`drop`, estado visual con borde `primary`, mismo flujo de validación que el selector). `accept=".xlsx"` solamente.
 - [ ] **F1.3** Validación de importación en `handleExcel`: normalizar `Fecha` a `DD-MM-YYYY` y `Hora` a `HH:MM - HH:MM` aunque la celda sea fecha o texto enriquecido; descartar filas vacías; error claro si ninguna fila es válida. Sustituir `alert()` por el mensaje de error en línea.
 - [ ] **F1.4** `PCCalendar` abre en el mes del próximo examen (o del último, si ya pasaron todos) y avisa cuando el mes visible no tiene exámenes.
 - [ ] **F1.5** Botón «Borrar calendario» (con confirmación) en Importar o en el dashboard: el alumno debe poder eliminar sus datos del navegador.
@@ -102,13 +102,12 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 - [ ] **F2.4** `FiltersCalendar` con estado controlado (sin `document.getElementById`), filtros calculados con `useMemo` en `CalendarPage` y convocatorias sacadas de los datos. dep: F1.1
 - [ ] **F2.5** Componente `ExamCard` (variantes `full` y `compact`) para `NextExams`, `MobileCalendar` y `Calendar`; helper `nombreAsignatura(ev)` para el corte en `(`.
 - [ ] **F2.6** Limpieza React: renombrar la función interna de `NextExams` (`proximosExamenes`), `key` estable (`CodigoAsignatura + Fecha + Hora`), `useMemo` para `sortedEvents`, hook `useMediaQuery` sin `addListener` ni estado `loading`, `NavLink` con `isActive` en `ButtonNavBar`, `children` como hijos JSX, un solo botón «Importar» responsive.
-- [ ] **F2.7** JSDoc del tipo `Examen` en `src/scripts/` (sirve de documentación y autocompletado sin migrar a TS).
 
 ## F3 · SEO
 - [ ] **F3.1** `index.html`: `lang="es"`, `<title>` y `meta description` en español con las búsquedas reales («calendario de exámenes de la URJC»), `theme-color` claro y oscuro (`media="(prefers-color-scheme: …)"`).
-- [ ] **F3.2 ❓** Open Graph y Twitter Card (`og:title`, `og:description`, `og:image` 1200×630 hecha con una captura real del calendario, `og:url`, `og:locale=es_ES`) y `canonical`. dep: decisión 1
+- [ ] **F3.2** Open Graph y Twitter Card (`og:title`, `og:description`, `og:image` 1200×630 hecha con una captura real del calendario, `og:url`, `og:locale=es_ES`) y `canonical` con `https://betterurjccalendar.danielgrela.com/`.
 - [ ] **F3.3** Título y descripción por ruta con los `<title>`/`<meta>` nativos de React 19 dentro de cada página; `noindex` en `/dashboard`, `/dashboard/calendario`, `/dashboard/importar` y en `NotFound`.
-- [ ] **F3.4** `public/robots.txt` y `public/sitemap.xml` (solo `/` y `/dashboard/guia-de-uso`). dep: decisión 1
+- [ ] **F3.4** `public/robots.txt` y `public/sitemap.xml` (solo `/` y `/dashboard/guia-de-uso`, con el dominio `betterurjccalendar.danielgrela.com`; línea `Sitemap:` en `robots.txt`).
 - [ ] **F3.5** Datos estructurados JSON-LD `WebApplication` (nombre, descripción, `applicationCategory: EducationalApplication`, `offers` gratis, `inLanguage: es`) en la portada.
 - [ ] **F3.6** Semántica: un `h1` por página (los de `SideBar`, `Features`, `Footer` pasan a `p`/`h2`; en `UseGuide` los pasos son `h2`/`h3`), un solo `<main>`, `<header>`/`<nav>`/`<footer>` donde corresponda, `alt` descriptivos en las capturas.
 - [ ] **F3.7** `site.webmanifest`: `name: "Better URJC Calendar"`, `lang: "es"`, `start_url: "/dashboard"`, icono `any` además de `maskable`.
@@ -118,16 +117,18 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 - [ ] **F4.1** ExcelJS con `import()` dinámico solo al importar/exportar; el chunk inicial debe bajar claramente de 1,3 MB (anotar antes/después).
 - [ ] **F4.2** Tailwind con `@tailwindcss/vite` en lugar de PostCSS; quitar `autoprefixer` y `postcss.config.js`. Mismo CSS resultante.
 - [ ] **F4.3** Inter autoalojada (`@fontsource-variable/inter`, solo latin) con `font-display: swap` y `preload`; fuera el `@import` de Google Fonts (rendimiento y privacidad).
-- [ ] **F4.4 ❓** React Router en modo framework (`ssr: false`, `prerender: ["/", "/dashboard/guia-de-uso"]`), rutas en `app/routes.js`, `meta` por ruta y carga diferida por página. Verificar que el HTML de `dist` contiene el texto de la portada. dep: F2, F3.3
-- [ ] **F4.5 ❓** Si tras F4.1 el chunk de Excel sigue siendo enorme: probar `read-excel-file`/`write-excel-file` con `public/Examenes.xlsx` y comparar tamaño y resultado.
-- [ ] **F4.6** Vitest para `src/scripts/` (`parseEventDate`, `sortedEvents`, filtros, normalización de `handleExcel`, eventos ICS) y script `npm test`.
-- [ ] **F4.7 ❓** PWA sin conexión (`vite-plugin-pwa`, precache del shell; los datos ya están en `localStorage`).
-- [ ] **F4.8** Lighthouse móvil de `/` antes y después de F3–F4; objetivo ≥ 95 en Rendimiento, Accesibilidad, Buenas prácticas y SEO. Anotar cifras aquí.
+- [ ] **F4.4** React Router en modo framework (`ssr: false`, `prerender: ["/", "/dashboard/guia-de-uso"]`), rutas en `app/routes.js`, `meta` por ruta y carga diferida por página. Verificar que el HTML de `dist` contiene el texto de la portada. dep: F2, F3.3
+- [ ] **F4.5** Comprobar en Vercel tras F4.4: portada y guía servidas como HTML estático, rutas del dashboard funcionando al recargar y 404 real (F3.8). Ajustar `vercel.json` si hace falta. dep: F4.4
+- [ ] **F4.6** Migración gradual a TypeScript: `tsconfig` con `allowJs` + `strict`, script `npm run typecheck` (`tsc --noEmit`) y tipo `Examen` en `src/types`. Orden: `src/scripts/` → stores de `src/hooks/` → componentes (de hoja a raíz) → rutas, un commit por bloque. Sin `any` salvo en la frontera con la librería de Excel, comentado. Al terminar, quitar `allowJs`. dep: F2, F4.4
+- [ ] **F4.7** Vitest para `src/scripts/` (`parseEventDate`, `sortedEvents`, filtros, normalización de `handleExcel`, eventos ICS, detección de solapamientos) y script `npm test`. Si F4.6 ya está, los tests en `.ts`.
+- [ ] **F4.8** Si tras F4.1 el chunk de Excel sigue siendo enorme: probar `read-excel-file`/`write-excel-file` con `public/Examenes.xlsx`, comparar tamaño y resultado (incluido el Excel exportado) y presentar las cifras al usuario antes de cambiar. dep: F4.1
+- [ ] **F4.9** PWA sin conexión (`vite-plugin-pwa`, precache del shell y de las rutas prerenderizadas; los datos ya están en `localStorage`). Aviso discreto de «nueva versión disponible», sin recargar sola. Probar en móvil en modo avión. dep: F4.4
+- [ ] **F4.10** Lighthouse móvil de `/` antes y después de F3–F4; objetivo ≥ 95 en Rendimiento, Accesibilidad, Buenas prácticas y SEO. Anotar cifras aquí.
 
 ## F5 · Modo claro y oscuro
-- [ ] **F5.1 ❓** Tokens semánticos en `index.css` que cambian con el tema: `lienzo`, `superficie`, `superficie-alta`, `borde`, `texto`, `texto-suave`, `sobre-primary`. Sustituir los pares `bg-white dark:bg-gray-950` repetidos. Actualizar la convención de `AGENTS.md` y `DESIGN.md`. dep: decisión 4
+- [ ] **F5.1** Tokens semánticos en `index.css` que cambian con el tema: `lienzo`, `superficie`, `superficie-alta`, `borde`, `texto`, `texto-suave`, `sobre-primary`. Sustituir los pares `bg-white dark:bg-gray-950` repetidos. Actualizar la convención de `AGENTS.md` y `DESIGN.md`.
 - [ ] **F5.2** Contraste AA en ambos temas: valor oscuro de `primary` que dé ≥ 4,5:1 con su texto (o texto oscuro sobre rojo en oscuro, igual en todos los botones), `neutro` propio en oscuro (≥ 4,5:1 sobre lienzo y superficie), `tertiary` oscuro que siga siendo un azul. Medir y apuntar los ratios en `DESIGN.md`.
-- [ ] **F5.3 ❓** Elevación en oscuro: lienzo más oscuro, tarjetas un escalón más claras, bordes sutiles en lugar de sombras (las sombras no se ven sobre negro). dep: F5.1, decisión 5
+- [ ] **F5.3** Elevación en oscuro: lienzo más oscuro, tarjetas un escalón más claras, bordes sutiles en lugar de sombras (las sombras no se ven sobre negro). dep: F5.1
 - [ ] **F5.4** Sin destello al cargar: script en línea en `<head>` que aplica `.dark` antes de pintar, leyendo `dark-mode` de `localStorage` o `prefers-color-scheme`.
 - [ ] **F5.5** Tres estados en `ToggleThemeButton`: sistema / claro / oscuro (por defecto sistema, escuchando cambios del SO); `aria-label` con el estado actual; mismo comportamiento en portada, dashboard y 404.
 - [ ] **F5.6** `color-scheme: light dark` en `:root` y `.dark` para que `<select>`, selector de archivo, barras de scroll y autocompletado sigan el tema; `accent-color: var(--primary)`.
@@ -139,11 +140,11 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 - [ ] **F6.3** Calendario móvil: agrupar por mes con cabecera fija, fecha legible («lun 12 ene») en vez de `12-01-2026`, marcar los exámenes pasados como atenuados y saltar al próximo.
 - [ ] **F6.4** Portada (`unslop`, respetando contenido y orden de secciones): quitar la píldora con megáfono o convertirla en texto normal, los cuadrados de icono de color y el `hover:scale`; mockup del calendario como captura real a tamaño nativo. dep: F6.1
 - [ ] **F6.5** Estados vacíos y de error con siguiente paso claro (sin datos → «Importar Excel»; filtro sin resultados → «Quitar filtros»; mes vacío → «Ir al próximo examen»).
-- [ ] **F6.6 ❓** Aviso de solapamiento (dos exámenes el mismo día o con horas que se cruzan) en `NextExams` y el calendario, o quitar esa frase de `Features`. dep: decisión 6
+- [ ] **F6.6** Aviso de solapamiento: helper puro `detectarSolapamientos(examenes)` en `src/scripts/` (horas que se cruzan = conflicto; mismo día sin cruce = aviso suave) y marca visible en `NextExams`, el calendario de escritorio y la lista móvil, con texto y no solo color. dep: F2.5
 - [ ] **F6.7** Accesibilidad: zonas táctiles ≥ 44 px (footer, «Volver al inicio», navegación), `focus-visible` con anillo `primary` en todos los controles, `label` (visible o `sr-only`) en los `<select>`, `aria-current="page"` en la navegación, `prefers-reduced-motion`.
 - [ ] **F6.8** Copy: tildes que faltan («exámenes», «aquí», «Ahórrate», «Olvídate», «céntrate», «asegúrate»), mayúsculas coherentes en botones y textos de ayuda en el mismo tono.
 
 ## F7 · Documentación
 - [ ] **F7.1** `README.md` propio: qué es, captura, cómo se usa, `npm run dev`, privacidad (todo en local), créditos.
 - [ ] **F7.2** `DESIGN.md` al día con los tokens, ratios de contraste y componentes que cambien en F5–F6. dep: F5, F6
-- [ ] **F7.3** `AGENTS.md`: mapa, comandos (`npm test`), convención de tokens y deuda resuelta. dep: F2, F4, F5
+- [ ] **F7.3** `AGENTS.md`: mapa (estructura del modo framework), comandos (`npm test`, `npm run typecheck`), «TypeScript» en lugar de «JavaScript, no TypeScript», convención de tokens y deuda resuelta. Se va actualizando en cada commit que lo cambie; esta tarea es la revisión final. dep: F2, F4, F5
