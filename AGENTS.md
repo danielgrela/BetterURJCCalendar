@@ -29,6 +29,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `src/index.css` → Tailwind, variante `dark` por clase `.dark`, fuente Inter (Google Fonts) y tokens de color (ver DESIGN.md)
 - `public/Examenes.xlsx` → Excel de ejemplo que se ofrece en la guía de uso
 - `public/og-image.png` → imagen 1200×630 para Open Graph/Twitter (captura real del calendario)
+- `public/robots.txt` y `public/sitemap.xml` → solo `/` y `/dashboard/guia-de-uso`; si se añade una ruta pública, añadirla al sitemap
 - `src/assets/` y `public/*.png|ico` → imágenes (no leer, binarios)
 - `vercel.json` → reescribe todo a `/index.html` (necesario para las rutas de la SPA)
 
