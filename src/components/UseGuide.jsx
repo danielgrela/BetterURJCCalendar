@@ -24,7 +24,7 @@ export default function UseGuide() {
                         <h2 className="font-bold">02.</h2>
                         <div>
                             <h2 className="font-bold">Descargar el archivo excel</h2>
-                            <p className='pl'>Selecciona la opción "Descargar en Excel" para obtener tu calendario de exámenes, también puedes hacerlo tu mismo si cumple con las posiciones de columnas y filas del siguiente<a href="../../public/Examenes.xlsx" download="Examenes.xlsx" className="text-blue-500 active:text-blue-800 hover:underline"> archivo de ejemplo</a>.</p>
+                            <p className='pl'>Selecciona la opción "Descargar en Excel" para obtener tu calendario de exámenes, también puedes hacerlo tu mismo si cumple con las posiciones de columnas y filas del siguiente<a href="/Examenes.xlsx" download="Examenes.xlsx" className="text-blue-500 active:text-blue-800 hover:underline"> archivo de ejemplo</a>.</p>
                         </div>    
                     </div>
                 </div>
