@@ -1,7 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { Examen } from '../types/examen';
 
-const useFileStore = create(persist((set) => ({
+interface FileStore {
+  jsonData: Examen[] | null;
+  setJsonData: (data: Examen[]) => void;
+  clearJsonData: () => void;
+}
+
+const useFileStore = create<FileStore>()(persist((set) => ({
   jsonData: null,
   setJsonData: (data) => set({ jsonData: data }),
   clearJsonData: () => set({ jsonData: null })}),

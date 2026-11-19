@@ -1,4 +1,4 @@
-import useDarkMode from '../hooks/useDarkMode.js';
+import useDarkMode from '../hooks/useDarkMode';
 import { IconSun, IconMoon } from '@tabler/icons-react';
 
 export default function ToggleThemeButton({ className = '' }) {

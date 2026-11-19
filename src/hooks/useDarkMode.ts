@@ -1,7 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const useDarkMode = create(persist(
+interface DarkModeStore {
+  isDark: boolean;
+  toggle: () => void;
+}
+
+const useDarkMode = create<DarkModeStore>()(persist(
   (set) => ({
     isDark: false,
     toggle: () => set((state) => {
