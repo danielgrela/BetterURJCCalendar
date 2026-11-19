@@ -11,8 +11,11 @@ export default {
   prerender: ['/', '/dashboard/guia-de-uso'],
   // Vercel sirve dist/client/404.html con estado 404 en las rutas que no reescribe (vercel.json):
   // es una copia del fallback para que React Router pinte NotFound.
-  async buildEnd({ reactRouterConfig }) {
+  async buildEnd({ reactRouterConfig, viteConfig }) {
     const cliente = join(reactRouterConfig.buildDirectory, 'client')
     await copyFile(join(cliente, '__spa-fallback.html'), join(cliente, '404.html'))
+    // El service worker se regenera ahora que existen los HTML prerenderizados (ver vite.config.ts)
+    const pwa = viteConfig.plugins.find((plugin) => plugin.name === 'vite-plugin-pwa')
+    await (pwa?.api as { generateSW: () => Promise<void> } | undefined)?.generateSW()
   },
 } satisfies Config

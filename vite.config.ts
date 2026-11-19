@@ -1,6 +1,7 @@
 import { defineConfig, type Plugin } from 'vite'
 import { reactRouter } from '@react-router/dev/vite'
 import tailwindcss from '@tailwindcss/vite'
+import { VitePWA } from 'vite-plugin-pwa'
 import { existsSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -38,6 +39,28 @@ function previewComoVercel(): Plugin {
   }
 }
 
+// Service worker para usar la app sin conexión. React Router prerenderiza después del build del cliente,
+// así que react-router.config.ts vuelve a generarlo en buildEnd para que entren los HTML prerenderizados.
+const pwa = VitePWA({
+  registerType: 'prompt', // no se recarga sola: AvisoActualizacion pregunta al usuario
+  injectRegister: false,
+  manifest: false, // se usa public/site.webmanifest
+  outDir: 'dist/client',
+  workbox: {
+    globPatterns: ['**/*.{js,css,html,woff2,png,jpg,svg,ico,webmanifest}'],
+    // og-image solo sirve para redes sociales; 404.html es una copia del fallback
+    globIgnores: ['og-image.png', '404.html'],
+    // /dashboard/guia-de-uso está prerenderizada en dashboard/guia-de-uso/index.html
+    manifestTransforms: [async (entradas) => ({
+      manifest: entradas.map((e) => ({ ...e, url: e.url.replace(/(.+)\/index\.html$/, '$1') })),
+      warnings: [],
+    })],
+    // Rutas sin HTML propio (dashboard, 404): el fallback, que pinta la ruta en el navegador
+    navigateFallback: '/__spa-fallback.html',
+    cleanupOutdatedCaches: true,
+  },
+})
+
 export default defineConfig({
-  plugins: [tailwindcss(), reactRouter(), previewComoVercel()],
+  plugins: [tailwindcss(), reactRouter(), pwa, previewComoVercel()],
 })

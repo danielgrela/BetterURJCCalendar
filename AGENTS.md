@@ -22,6 +22,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - Calendario: `CalendarPage` decide con `useMediaQuery('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes) y `MobileCalendar` (lista); ambos usan `FiltersCalendar`
   - `ExamCard`: tarjeta de examen con variantes `full` (`NextExams`), `list` (`MobileCalendar`) y `compact` (celdas de `Calendar`)
   - `PageMeta` (`<title>`, `description`, `canonical` y `og:title`/`og:description`/`og:url`, `twitter:*` y `noindex` por página con las etiquetas nativas de React 19; va dentro de cada página, no en `root.tsx`)
+  - `AvisoActualizacion` (en `root.tsx`: registra el service worker y, tras un despliegue, avisa de que hay versión nueva con «Actualizar»/«Ahora no»; nunca recarga sola)
   - `ImportPage` (subida y validación del Excel), `UseGuide` (guía con capturas `assets/fotoguia0*.{png,jpg}`), `NotFound`, `ToggleThemeButton`
 - `src/SocialIcons/Github.tsx` → icono SVG de GitHub (Tabler no trae logos de marca)
 - `src/types/examen.ts` → tipos `Examen` (ver «Modelo de datos») y `FiltrosCalendario`
@@ -40,7 +41,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `public/robots.txt` y `public/sitemap.xml` → solo `/` y `/dashboard/guia-de-uso`; si se añade una ruta pública, añadirla al sitemap
 - `src/assets/` y `public/*.png|ico` → imágenes (no leer, binarios)
 - `vercel.json` → `outputDirectory: dist/client`; reescribe a `/__spa-fallback.html` **solo** las rutas conocidas del dashboard (los archivos prerenderizados ganan a las reescrituras); el resto recibe `404.html` con estado 404. **Si se añade una ruta en `routes.ts`, añadirla también aquí** o dará 404 al recargar
-- `vite.config.ts` → plugins de Tailwind, React Router y `previewComoVercel` (solo para `npm run preview`)
+- `vite.config.ts` → plugins de Tailwind, React Router, PWA (`vite-plugin-pwa`, `generateSW`: precache de todo `dist/client` menos `og-image.png` y `404.html`; navegación sin HTML propio → `__spa-fallback.html`) y `previewComoVercel` (solo para `npm run preview`). `buildEnd` de `react-router.config.ts` regenera el service worker tras el prerender para que entren esos HTML. El service worker no funciona en `npm run dev`; probarlo con `npm run build` + `npm run preview`
 
 ## Modelo de datos (examen)
 Objeto con `Curso, Plan, Asignatura, CodigoPlan, CodigoAsignatura, CodigoGrupo, Convocatoria, Fecha, Hora, Aula`, tal y como sale de `handleExcel`.

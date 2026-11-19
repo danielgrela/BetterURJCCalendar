@@ -4,6 +4,7 @@ import type { Route } from './+types/root'
 import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url'
 import './index.css'
 import ToggleThemeButton from './components/ToggleThemeButton.tsx'
+import AvisoActualizacion from './components/AvisoActualizacion.tsx'
 
 const DOMINIO = 'https://betterurjccalendar.danielgrela.com'
 
@@ -52,6 +53,7 @@ export default function Root() {
     <>
       <Outlet />
       <ToggleThemeButton className="fixed hidden lg:block bottom-8 right-8" />
+      <AvisoActualizacion />
     </>
   )
 }
