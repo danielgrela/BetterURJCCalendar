@@ -28,8 +28,8 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA_INICIAL }} />
-        <meta name="theme-color" content="#f3f4f6" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#f5f5f4" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0c0a09" media="(prefers-color-scheme: dark)" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Better URJC Calendar" />
         <meta property="og:locale" content="es_ES" />
