@@ -32,8 +32,8 @@ export default function UseGuide() {
                     </div>
                 </div>
                 <div className="min-w-full lg:min-w-1/3 gap-8 flex flex-col justify-center">
-                    <img src={fotoguia02} width={833} height={546} decoding="async" alt="Inicio de sesión único (SSO) de la URJC con las opciones Credenciales y Sistema Cl@ve" className="rounded-md border border-borde w-full h-auto object-contain" />
-                    <img src={fotoguia01} width={340} height={182} loading="lazy" decoding="async" alt="Apartado Exámenes de la web de la URJC con los botones Descargar en PDF y Descargar en Excel" className="rounded-md border border-borde w-full h-auto object-contain" />
+                    <img src={fotoguia02} width={833} height={592} decoding="async" alt="Inicio de sesión único (SSO) de la URJC con la opción Credenciales marcada, junto a Sistema Cl@ve" className="rounded-md border border-borde w-full h-auto object-contain" />
+                    <img src={fotoguia01} width={680} height={401} loading="lazy" decoding="async" alt="Apartado Exámenes de la web de la URJC con el botón Descargar en Excel marcado, junto a Descargar en PDF" className="rounded-md border border-borde w-full h-auto object-contain" />
                 </div>
             </article>
             <article className="p-6 gap-10 w-full max-w-300 h-fit flex flex-col-reverse lg:flex-row">
