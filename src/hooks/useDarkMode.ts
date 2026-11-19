@@ -6,9 +6,13 @@ interface DarkModeStore {
   toggle: () => void;
 }
 
+// El script del <head> (scripts/temaInicial.ts) ya ha puesto o quitado .dark antes de pintar:
+// si no hay nada guardado, se parte de lo que decidió (prefers-color-scheme)
+const oscuroAlCargar = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
+
 const useDarkMode = create<DarkModeStore>()(persist(
   (set) => ({
-    isDark: false,
+    isDark: oscuroAlCargar,
     toggle: () => set((state) => {
       const next = !state.isDark;
       const root = document.documentElement;
@@ -23,8 +27,8 @@ const useDarkMode = create<DarkModeStore>()(persist(
   {
     name: 'dark-mode',
     onRehydrateStorage: () => (state) => {
-      if (state?.isDark) {
-        document.documentElement.classList.add('dark');
+      if (state) {
+        document.documentElement.classList.toggle('dark', state.isDark);
       }
     },
   }

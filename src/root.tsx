@@ -5,6 +5,7 @@ import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.w
 import './index.css'
 import ToggleThemeButton from './components/ToggleThemeButton.tsx'
 import AvisoActualizacion from './components/AvisoActualizacion.tsx'
+import { SCRIPT_TEMA_INICIAL } from './scripts/temaInicial.ts'
 
 const DOMINIO = 'https://betterurjccalendar.danielgrela.com'
 
@@ -21,10 +22,12 @@ export const links: Route.LinksFunction = () => [
 // los pone cada página con PageMeta; aquí solo va lo que es igual en todo el sitio.
 export function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang="es">
+    // suppressHydrationWarning: SCRIPT_TEMA_INICIAL cambia la clase de <html> antes de hidratar
+    <html lang="es" suppressHydrationWarning>
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA_INICIAL }} />
         <meta name="theme-color" content="#f3f4f6" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)" />
         <meta property="og:type" content="website" />
