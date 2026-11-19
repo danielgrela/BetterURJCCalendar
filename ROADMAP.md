@@ -86,7 +86,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 - [x] **F0.2 Rutas de `public/`**: en `index.html` y en el enlace de `UseGuide` a `Examenes.xlsx`, usar `/favicon…`, `/site.webmanifest`, `/Examenes.xlsx`. Comprobar en `npm run preview` que cargan y que el favicon ya no sale en `dist/assets`.
 - [x] **F0.3 Clases rotas**: `text-neuto`/`text-neutral` → `text-neutro`; `flex-flex-col` → `flex flex-col`; quitar `hover:bg-primary-dark`; `w-38` es válida en Tailwind 4 (se deja); `color='#E4002B'` → `className="text-primary"`. Para que el texto que pasa a `neutro` no pierda contraste en oscuro, `neutro` ya tiene valor oscuro (`#9CA3AF`); F5.2 revisará el resto.
 - [x] **F0.4 Dependencias y assets muertos**: quitar `glob`, `rimraf`, `uuid`, `@types/node`; confirmar con grep y borrar `src/assets/{hero.png,react.svg,vite.svg}` y `public/icons.svg`. Preguntar antes de borrar.
-- [ ] **F0.5 Datos del alumno fuera de la consola**: quitar los `console.log` con el contenido del Excel.
+- [x] **F0.5 Datos del alumno fuera de la consola**: quitar los `console.log` con el contenido del Excel.
 
 ## F1 · Bugs funcionales
 - [ ] **F1.1** Limpiar `dataFiltered` al importar un archivo nuevo (y al borrar el calendario).
