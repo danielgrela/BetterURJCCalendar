@@ -1,125 +1,99 @@
-import { IconAlertTriangle, IconCalendar, IconCalendarEvent, IconClock, IconMapPin, IconSchool } from '@tabler/icons-react';
-import { nombreAsignatura, diasHasta } from '../scripts/examen';
+import { IconAlertTriangle, IconCalendarEvent, IconClock, IconMapPin } from '@tabler/icons-react';
+import { aulaLegible, diasHasta, fechaLarga, horaInicio, horaLegible, nombreLegible, partesFecha } from '../scripts/examen';
 import type { Examen } from '../types/examen';
 import type { Solapamiento } from '../scripts/solapamientos';
 
 function textoDias(dias: number) {
-    switch (dias) {
-        case 0:
-            return 'Hoy';
-        case 1:
-            return 'Mañana';
-    }
+    if (dias < 0) return 'Ya pasó';
+    if (dias === 0) return 'Hoy';
+    if (dias === 1) return 'Mañana';
     return `Quedan ${dias} días`;
 }
 
 function textoSolapamiento({ tipo, con }: Solapamiento) {
-    const otros = con.map((ev) => `${nombreAsignatura(ev)} (${ev.Hora})`).join(', ');
+    const otros = con.map((ev) => `${nombreLegible(ev)} (${horaLegible(ev.Hora)})`).join(', ');
     return tipo === 'conflicto' ? `Se solapa con ${otros}` : `Mismo día que ${otros}`;
 }
 
 // Aviso con texto (no solo color): conflicto de horas en color de error, mismo día en gris
-function AvisoSolapamiento({ solapamiento, corto = false }: { solapamiento: Solapamiento, corto?: boolean }) {
+function AvisoSolapamiento({ solapamiento }: { solapamiento: Solapamiento }) {
     const conflicto = solapamiento.tipo === 'conflicto';
     const Icono = conflicto ? IconAlertTriangle : IconCalendarEvent;
-    const texto = textoSolapamiento(solapamiento);
     return (
-        <p title={corto ? texto : undefined} className={`flex items-start gap-1 font-semibold ${corto ? 'text-[10px]' : 'text-sm'} ${conflicto ? 'text-error' : 'text-texto-suave'}`}>
-            <Icono size={corto ? 10 : 16} stroke={2} className="min-w-fit mt-px" aria-hidden="true" />
-            {corto ? <><span aria-hidden="true">{conflicto ? 'Se solapa' : 'Mismo día'}</span><span className="sr-only">{texto}</span></> : <span>{texto}</span>}
+        <p className={`flex items-start gap-1.5 text-sm font-semibold ${conflicto ? 'text-error' : 'text-texto-suave'}`}>
+            <Icono size={16} stroke={2} className="min-w-fit mt-0.5" aria-hidden="true" />
+            <span>{textoSolapamiento(solapamiento)}</span>
         </p>
     );
 }
 
 interface Props {
     examen: Examen;
-    /** "full" (Próximos exámenes), "list" (calendario móvil), "compact" (celda de la rejilla) */
-    variant?: 'full' | 'list' | 'compact';
+    /** "card": tarjeta completa (Próximos exámenes, lista móvil, detalle del día) · "line": línea de la rejilla */
+    variant?: 'card' | 'line';
     /** Si coincide con otro examen ese día (detectarSolapamientos) */
     solapamiento?: Solapamiento;
+    /** Solo en "line": abre el detalle del día. Sin él la línea no es interactiva (mockup de la portada) */
+    onSelect?: () => void;
+    /** Para calcular «Quedan N días» y atenuar los pasados */
+    hoy?: Date;
 }
 
-export default function ExamCard({ examen, variant = 'full', solapamiento }: Props) {
-    if (variant === 'compact') {
-        return (
-            <div className="group relative p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border-l-[3px] border-primary text-primary shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-1 mb-0.5">
-                    <IconSchool size={10} className="text-tertiary" />
-                    <p className="text-[10px] font-bold leading-tight truncate uppercase">
-                        {nombreAsignatura(examen)}
-                    </p>
-                </div>
-                
-                <div className="flex items-center gap-1 text-[9px] text-tertiary font-medium">
-                    <IconClock size={10} className="min-w-fit" />
-                    <span>{examen.Hora}</span>
-                </div>
-                <div className="flex items-center gap-1 text-[9px] text-tertiary font-medium">
-                    <IconMapPin size={10} className='min-w-fit'/>
-                    <span>{examen.Aula}</span>
-                </div>
-                {solapamiento && <AvisoSolapamiento solapamiento={solapamiento} corto />}
-            </div>
+export default function ExamCard({ examen, variant = 'card', solapamiento, onSelect, hoy = new Date() }: Props) {
+    const nombre = nombreLegible(examen);
+
+    if (variant === 'line') {
+        const conflicto = solapamiento?.tipo === 'conflicto';
+        const contenido = (
+            <>
+                <span className="flex items-center gap-1 font-semibold tabular-nums text-texto-suave">
+                    {horaInicio(examen.Hora)}
+                    {conflicto && <IconAlertTriangle size={12} stroke={2.5} className="text-error" aria-hidden="true" />}
+                </span>
+                <span className="line-clamp-2 font-medium text-texto">{nombre}</span>
+                {conflicto && <span className="sr-only">. {textoSolapamiento(solapamiento)}</span>}
+            </>
         );
+        const clases = 'flex flex-col w-full text-start text-xs leading-snug rounded-sm px-1.5 py-1 bg-superficie-alta';
+        return onSelect
+            ? <button type="button" onClick={onSelect} className={`${clases} cursor-pointer hover:bg-borde-fuerte transition-colors`}>{contenido}</button>
+            : <div className={clases}>{contenido}</div>;
     }
 
-    if (variant === 'list') {
-        return (
-            <div className="flex flex-col gap-2 group relative p-5 border border-borde border-l-5 border-l-primary text-primary rounded-md shadow-sm dark:shadow-none bg-superficie">
-                <div className='flex flex-row justify-between items-center'>
-                    <div className='bg-superficie-alta rounded-sm py-1 px-4'>
-                            <span>{examen.Convocatoria}</span>
-                    </div>
-                    <div className='flex flex-col w-1/2 items-end'>
-                        <div className="flex items-center gap-1 text-lg font-bold text-primary">
-                            <IconClock size={15} className='min-w-fit' />
-                            <span>{examen.Hora}</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-xs font-bold text-primary">
-                            <span>{examen.Fecha}</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex items-center gap-2 mb-0.5 overflow-hidden">
-                    <IconSchool size={22} className="text-primary min-w-fit" />
-                    <p className="text-lg font-bold leading-tight truncate uppercase">
-                        {nombreAsignatura(examen)}
-                    </p>
-                </div>
-                <div className="flex items-center gap-1 text-sm text-tertiary font-medium">
-                    <span className='line-clamp-2'>{examen.Plan}</span>
-                </div>
-                <div className="flex items-center gap-1 text-sm text-tertiary font-medium">
-                    <IconMapPin size={16} className='min-w-fit'/>
-                    <span>{examen.Aula}</span>
-                </div>
-                {solapamiento && <AvisoSolapamiento solapamiento={solapamiento} />}
-            </div>
-        );
-    }
-
+    const dias = diasHasta(examen.Fecha, hoy);
+    const pasado = dias < 0;
+    const { dia, diaSemana, mes } = partesFecha(examen.Fecha);
     return (
-        <div className="flex flex-col lg:flex-row gap-4 justify-between items-center w-full shadow-sm dark:shadow-none border border-borde border-l-6 p-4 lg:p-8 border-l-primary bg-superficie">
-            <div className="flex flex-col gap-2">
-                <div className="flex flex-row gap-4 items-center">
-                    <p className="bg-superficie-alta rounded-sm py-px px-3 w-fit font-medium">{examen.Convocatoria}</p>
-                    <p className="text-sm text-primary font-bold">{textoDias(diasHasta(examen.Fecha))}</p>
-                </div>
-                <h3 className="text-xl font-bold">{nombreAsignatura(examen)}</h3>
-                <p className="text-sm font-medium text-texto-suave">{examen.Plan}</p>
+        <article className={`flex flex-row gap-4 p-4 lg:p-5 rounded-md border border-borde ${pasado ? 'bg-lienzo' : 'bg-superficie shadow-sm dark:shadow-none'}`}>
+            {/* Bloque de fecha como en una agenda; la fecha completa va en texto para lectores de pantalla */}
+            <div aria-hidden="true" className={`flex flex-col items-center justify-center shrink-0 w-14 py-2 rounded-sm ${pasado ? 'border border-borde' : 'bg-superficie-alta'}`}>
+                <span className="text-xs font-medium text-texto-suave">{diaSemana}</span>
+                <span className={`text-2xl font-bold leading-tight tabular-nums ${pasado ? 'text-texto-suave' : 'text-texto'}`}>{dia}</span>
+                <span className="text-xs font-medium text-texto-suave">{mes}</span>
+            </div>
+            <div className="flex flex-col gap-1 min-w-0">
+                <h3 className={`text-base lg:text-lg font-bold leading-snug ${pasado ? 'text-texto-suave' : 'text-texto'}`}>
+                    {nombre}
+                    <span className="sr-only">, {fechaLarga(examen.Fecha)}</span>
+                </h3>
+                <p className="flex flex-row flex-wrap gap-x-4 gap-y-1 text-sm font-medium text-texto">
+                    <span className="inline-flex items-center gap-1.5 tabular-nums">
+                        <IconClock size={16} stroke={2} className="min-w-fit text-texto-suave" aria-hidden="true" />
+                        {horaLegible(examen.Hora)}
+                    </span>
+                    <span className="inline-flex items-start gap-1.5">
+                        <IconMapPin size={16} stroke={2} className="min-w-fit mt-0.5 text-texto-suave" aria-hidden="true" />
+                        {aulaLegible(examen.Aula)}
+                    </span>
+                </p>
+                <p className="text-sm text-texto-suave">
+                    {examen.Convocatoria}
+                    {' · '}
+                    <span className={pasado ? '' : 'font-semibold text-primary'}>{textoDias(dias)}</span>
+                </p>
+                <p className="text-sm text-texto-suave">{examen.Plan}</p>
                 {solapamiento && <AvisoSolapamiento solapamiento={solapamiento} />}
             </div>
-            <div className="flex flex-col gap-2 w-full lg:items-end">
-                <div className="flex flex-row items-center gap-2">
-                    <IconCalendar />
-                    <p>{examen.Fecha},</p>
-                    <p>{examen.Hora}</p>
-                </div>
-                <div className="flex flex-row items-center gap-2">
-                    <IconMapPin />
-                    <p>{examen.Aula}</p>
-                </div>
-            </div>
-        </div>
+        </article>
     );
 }

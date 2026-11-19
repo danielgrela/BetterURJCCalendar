@@ -12,19 +12,23 @@ export default function FiltersCalendar({ filtros, setFiltros, convocatorias, cl
     const id = useId();
     const handleChange = (e: ChangeEvent<HTMLSelectElement>) => setFiltros({ ...filtros, [e.target.name]: e.target.value });
     return (
-        <form onSubmit={(e) => e.preventDefault()} className={`w-full mt-4 flex flex-row gap-1 ${className}`}>
-            <label htmlFor={`${id}-convocatoria`} className="sr-only">Convocatoria</label>
-            <select id={`${id}-convocatoria`} name="convocatoria" value={filtros.convocatoria} onChange={handleChange} className="w-48 px-2 py-3 rounded-lg border border-borde-fuerte bg-superficie shadow-sm dark:shadow-none">
-                <option value="">Convocatoria</option>
-                {convocatorias.map((c) => (
-                    <option key={c} value={c}>{c}</option>
-                ))}
-            </select>
-            <label htmlFor={`${id}-fecha`} className="sr-only">Exámenes que se muestran</label>
-            <select id={`${id}-fecha`} name="fecha" value={filtros.fecha} onChange={handleChange} className="w-32 p-3 rounded-lg border border-borde-fuerte bg-superficie shadow-sm dark:shadow-none">
-                <option value="Todos">Todos</option>
-                <option value="Pendientes">Pendientes</option>
-            </select>
+        <form onSubmit={(e) => e.preventDefault()} className={`w-full grid grid-cols-2 gap-3 lg:flex lg:flex-row ${className}`}>
+            <div className="flex flex-col gap-1 min-w-0">
+                <label htmlFor={`${id}-convocatoria`} className="text-sm font-medium text-texto-suave">Convocatoria</label>
+                <select id={`${id}-convocatoria`} name="convocatoria" value={filtros.convocatoria} onChange={handleChange} className="w-full lg:w-48 min-h-11 px-3 rounded-sm border border-borde-fuerte bg-superficie shadow-sm dark:shadow-none">
+                    <option value="">Todas</option>
+                    {convocatorias.map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                    ))}
+                </select>
+            </div>
+            <div className="flex flex-col gap-1 min-w-0">
+                <label htmlFor={`${id}-fecha`} className="text-sm font-medium text-texto-suave">Mostrar</label>
+                <select id={`${id}-fecha`} name="fecha" value={filtros.fecha} onChange={handleChange} className="w-full lg:w-48 min-h-11 px-3 rounded-sm border border-borde-fuerte bg-superficie shadow-sm dark:shadow-none">
+                    <option value="Todos">Todos</option>
+                    <option value="Pendientes">Solo pendientes</option>
+                </select>
+            </div>
         </form>
     );
 }

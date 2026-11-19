@@ -19,8 +19,8 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `src/components/` (un componente por archivo, nombre en PascalCase):
   - Portada: `HeroPage` (Header + HeroPageMain + Features + Footer), `HeroPageMain` (titular, CTAs y `Calendar` en modo `compact` con `assets/jsonMockup.json`)
   - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (`NavLink` con `isActive`), `ReturnMobile`, `HomePage` (`DashboardHeader`, que incluye `ButtonsExportDashboard` —solo con datos— y en móvil lo baja al final con `display: contents` + `order`, y `NextExams`)
-  - Calendario: `CalendarPage` decide con `useMediaQuery('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes) y `MobileCalendar` (lista); ambos usan `FiltersCalendar`
-  - `ExamCard`: tarjeta de examen con variantes `full` (`NextExams`), `list` (`MobileCalendar`) y `compact` (celdas de `Calendar`)
+  - Calendario: `CalendarPage` decide con `useMediaQuery('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes, «Hoy» y `<dialog>` con el detalle del día) y `MobileCalendar` (lista por meses con cabecera fija); ambos usan `FiltersCalendar`
+  - `ExamCard`: el examen en dos formas, `card` (tarjeta con bloque de fecha: `NextExams`, `MobileCalendar` y detalle del día) y `line` (celda de `Calendar`, botón que abre el detalle)
   - `EmptyState` (estado vacío o sin resultados: icono, título, texto y siguiente paso; en `NextExams` y `CalendarPage`, que decide entre «Importar Excel» con `ImportButton` y «Quitar filtros») 
   - `PageMeta` (`<title>`, `description`, `canonical` y `og:title`/`og:description`/`og:url`, `twitter:*` y `noindex` por página con las etiquetas nativas de React 19; va dentro de cada página, no en `root.tsx`)
   - `AvisoActualizacion` (en `root.tsx`: registra el service worker y, tras un despliegue, avisa de que hay versión nueva con «Actualizar»/«Ahora no»; nunca recarga sola)
@@ -30,7 +30,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `src/hooks/` → stores de Zustand (tipados con `create<Store>()`): `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (tema `sistema`/`claro`/`oscuro`, persistido en `dark-mode` v1 con migración del `{ isDark }` antiguo; pone `.dark` y `data-tema` en `<html>` y en `sistema` sigue los cambios de `prefers-color-scheme`) · `useMediaQuery(query)` (hook de React, no store)
 - `src/scripts/` → lógica sin UI:
   - `handleExcel.ts` → `excelTojson(file)`: lee la hoja 1 con `read-excel-file` (cargado con `import()` solo al importar), ignora las 2 primeras filas y mapea las columnas 1–10
-  - `examen.ts` → `nombreAsignatura(ev)` (corta en el primer `(`), `diasHasta(fecha)` y `claveExamen(ev)` (`key` de listas)
+  - `examen.ts` → `nombreAsignatura(ev)` (corta en el primer `(`), `diasHasta(fecha)`, `claveExamen(ev)` (`key` de listas) y el formato para mostrar: `nombreLegible`, `partesFecha`, `fechaCorta`, `fechaLarga`, `horaLegible`, `horaInicio`, `aulaLegible`
   - `sortEvents.ts` → `parseEventDate('DD-MM-YYYY')` (default) y `sortedEvents(json)` (por fecha y hora)
   - `filtersCalendar.ts` → `filtrarExamenes(examenes, filtros)` (convocatoria y "Pendientes") y `convocatoriasDe(examenes)`; el estado de los filtros vive en `CalendarPage`
   - `solapamientos.ts` → `detectarSolapamientos(examenes)` (pura, con tests): `Map` por `claveExamen` con `conflicto` (horas que se cruzan) o `mismoDia`; el mismo examen en otro grupo no cuenta. Se calcula en `NextExams` y `CalendarPage` sobre todos los exámenes y llega a `ExamCard` como `solapamiento`

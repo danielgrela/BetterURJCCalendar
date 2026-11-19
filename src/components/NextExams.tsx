@@ -40,7 +40,7 @@ export default function NextExams() {
                 : 
                 <div className="flex flex-col gap-4">
                     {proximos.map((examen) => (
-                        <ExamCard key={claveExamen(examen)} examen={examen} variant="full" solapamiento={solapamientos.get(claveExamen(examen))} />
+                        <ExamCard key={claveExamen(examen)} examen={examen} solapamiento={solapamientos.get(claveExamen(examen))} />
                 ))}
                 </div>
                 }

@@ -26,6 +26,8 @@ interface Props {
 export default function PCCalendar({date, setDate, visibleData, filtersProps, year, month, estadoVacio, solapamientos }: Props) {
     const prevMonth = () => setDate(new Date(year, month - 1, 1));
     const nextMonth = () => setDate(new Date(year, month + 1, 1));
+    const hoy = new Date();
+    const esMesActual = year === hoy.getFullYear() && month === hoy.getMonth();
     const mesVacio = Array.isArray(visibleData) && visibleData.length > 0 && !hayExamenesEnMes(visibleData, year, month);
     function sanitizeDate(date: Date) {
         const aux = date.toLocaleString('es-ES', { month: 'long', year: 'numeric' }).replace(' de ', ' ');
@@ -33,25 +35,30 @@ export default function PCCalendar({date, setDate, visibleData, filtersProps, ye
     }
     return (
         <>
-            <header className="flex flex-row items-center justify-between max-w-6xl mx-auto mb-8">
-                <h1 className="text-5xl font-black text-texto tracking-tight">
+            <header className="flex flex-row items-center justify-between gap-4 max-w-6xl mx-auto mb-6">
+                <h1 className="text-4xl font-bold text-texto" aria-live="polite">
                     {sanitizeDate(date)}
                 </h1>
-                <div className="flex gap-2 bg-superficie p-1.5 rounded-2xl shadow-sm dark:shadow-none border border-borde">
-                    <button type="button" onClick={prevMonth} aria-label="Mes anterior" className="cursor-pointer size-11 flex items-center justify-center hover:bg-superficie-alta rounded-xl transition-all text-texto-suave">
-                        <IconChevronLeft size={24} aria-hidden="true" />
+                <div className="flex flex-row items-center gap-2">
+                    <button type="button" onClick={() => setDate(new Date(hoy.getFullYear(), hoy.getMonth(), 1))} disabled={esMesActual} className="min-h-11 px-4 rounded-sm border border-borde-fuerte bg-superficie font-medium cursor-pointer hover:bg-superficie-alta transition-colors disabled:cursor-default disabled:text-texto-suave disabled:hover:bg-superficie">
+                        Hoy
                     </button>
-                    <button type="button" onClick={nextMonth} aria-label="Mes siguiente" className="cursor-pointer size-11 flex items-center justify-center hover:bg-superficie-alta rounded-xl transition-all text-texto-suave">
-                        <IconChevronRight size={24} aria-hidden="true" />
-                    </button>
+                    <div className="flex rounded-sm border border-borde-fuerte bg-superficie overflow-hidden">
+                        <button type="button" onClick={prevMonth} aria-label="Mes anterior" className="cursor-pointer size-11 flex items-center justify-center hover:bg-superficie-alta transition-colors text-texto">
+                            <IconChevronLeft size={22} aria-hidden="true" />
+                        </button>
+                        <button type="button" onClick={nextMonth} aria-label="Mes siguiente" className="cursor-pointer size-11 flex items-center justify-center border-l border-borde-fuerte hover:bg-superficie-alta transition-colors text-texto">
+                            <IconChevronRight size={22} aria-hidden="true" />
+                        </button>
+                    </div>
                 </div>
             </header>
             <FiltersCalendar {...filtersProps} className="max-w-6xl mx-auto mb-5" />
             {mesVacio && (
                 <div className="max-w-6xl mx-auto mb-5 text-sm text-texto border border-borde bg-superficie rounded-sm px-4 py-1 gap-4 flex flex-row items-center">
-                    <IconInfoCircle className="min-w-5" stroke={2} />
+                    <IconInfoCircle className="min-w-5 text-texto-suave" stroke={2} aria-hidden="true" />
                     <p>No hay exámenes en este mes.</p>
-                    <button type="button" onClick={() => setDate(mesDelProximoExamen(visibleData))} className="ml-auto min-h-11 px-2 cursor-pointer font-semibold text-primary hover:underline">
+                    <button type="button" onClick={() => setDate(mesDelProximoExamen(visibleData))} className="ml-auto min-h-11 px-2 cursor-pointer font-semibold text-enlace hover:underline">
                         Ir al próximo examen
                     </button>
                 </div>

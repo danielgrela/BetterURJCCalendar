@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { claveExamen, diasHasta, nombreAsignatura } from './examen';
+import { aulaLegible, claveExamen, diasHasta, fechaCorta, fechaLarga, horaInicio, horaLegible, nombreAsignatura, nombreLegible, partesFecha } from './examen';
 import { examen } from './examenDePrueba';
 
 describe('nombreAsignatura', () => {
@@ -29,5 +29,30 @@ describe('diasHasta', () => {
 describe('claveExamen', () => {
   it('distingue grupos del mismo examen', () => {
     expect(claveExamen(examen({ CodigoGrupo: 'AT' }))).not.toBe(claveExamen(examen({ CodigoGrupo: 'BT' })));
+  });
+});
+
+describe('formato legible', () => {
+  it('pasa el nombre a tipo frase y respeta los números romanos', () => {
+    expect(nombreLegible(examen())).toBe('Bases de datos');
+    expect(nombreLegible({ Asignatura: 'ESTADISTICA EMPRESARIAL II (2097)' })).toBe('Estadistica empresarial II');
+    expect(nombreLegible({ Asignatura: 'DISEÑO Y ANALISIS DE ALGORITMOS (1)' })).toBe('Diseño y analisis de algoritmos');
+    expect(nombreLegible({ Asignatura: 'FISICA IV (1)' })).toBe('Fisica IV');
+  });
+
+  it('da la fecha como en una agenda', () => {
+    expect(partesFecha('19-05-2026')).toEqual({ dia: 19, diaSemana: 'mar', mes: 'may' });
+    expect(fechaCorta('12-01-2026')).toBe('lun 12 ene');
+    expect(fechaLarga('19-05-2026')).toBe('martes, 19 de mayo');
+  });
+
+  it('da la hora con raya de intervalo y la de inicio', () => {
+    expect(horaLegible('12:00 - 14:00')).toBe('12:00–14:00');
+    expect(horaInicio('12:00 - 14:00')).toBe('12:00');
+  });
+
+  it('dice que el aula no está asignada cuando viene "-"', () => {
+    expect(aulaLegible('-')).toBe('Aula sin asignar');
+    expect(aulaLegible('Aulario I - Aula 005')).toBe('Aulario I - Aula 005');
   });
 });
