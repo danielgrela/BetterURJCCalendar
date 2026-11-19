@@ -27,6 +27,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - `generateExcel.js` / `generateICS.js` → descargas `horario_examenes.xlsx` / `.ics` con `descargarBlob(blob, nombre)` de `descargarBlob.js`
 - `src/index.css` → Tailwind, variante `dark` por clase `.dark`, fuente Inter (Google Fonts) y tokens de color (ver DESIGN.md)
 - `public/Examenes.xlsx` → Excel de ejemplo que se ofrece en la guía de uso
+- `public/og-image.png` → imagen 1200×630 para Open Graph/Twitter (captura real del calendario)
 - `src/assets/` y `public/*.png|ico` → imágenes (no leer, binarios)
 - `vercel.json` → reescribe todo a `/index.html` (necesario para las rutas de la SPA)
 
@@ -66,7 +67,7 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 
 ## Deuda conocida (candidatos a refactor, ver ROADMAP)
 - `README.md` es la plantilla de Vite (habla de TypeScript).
-- `index.html`: sin Open Graph, `canonical` ni datos estructurados (F3.2–F3.5).
+- `index.html`: `canonical` y Open Graph globales (apuntan a `/` en todas las rutas) y sin datos estructurados (F3.3–F3.5).
 - Bundle de 1,3 MB (ExcelJS entero en el chunk principal): candidato a `import()` dinámico al importar/exportar.
 
 ## Trabajo pendiente

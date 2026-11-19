@@ -106,8 +106,8 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 
 ## F3 · SEO
 - [x] **F3.1** `index.html`: `lang="es"`, `<title>` y `meta description` en español con las búsquedas reales («calendario de exámenes de la URJC»), `theme-color` claro y oscuro (`media="(prefers-color-scheme: …)"`).
-- [ ] **F3.2** Open Graph y Twitter Card (`og:title`, `og:description`, `og:image` 1200×630 hecha con una captura real del calendario, `og:url`, `og:locale=es_ES`) y `canonical` con `https://betterurjccalendar.danielgrela.com/`.
-- [ ] **F3.3** Título y descripción por ruta con los `<title>`/`<meta>` nativos de React 19 dentro de cada página; `noindex` en `/dashboard`, `/dashboard/calendario`, `/dashboard/importar` y en `NotFound`.
+- [x] **F3.2** Open Graph y Twitter Card (`og:title`, `og:description`, `og:image` 1200×630 hecha con una captura real del calendario, `og:url`, `og:locale=es_ES`) y `canonical` con `https://betterurjccalendar.danielgrela.com/`. Imagen en `public/og-image.png` (calendario de mayo de 2026 con `public/Examenes.xlsx`, tema claro); rehacerla tras F6.9.
+- [ ] **F3.3** Título y descripción por ruta con los `<title>`/`<meta>` nativos de React 19 dentro de cada página; `noindex` en `/dashboard`, `/dashboard/calendario`, `/dashboard/importar` y en `NotFound`. Ojo: el `canonical` y las `og:*` de `index.html` apuntan a `/` en todas las rutas; la guía necesita los suyos (y quitar o sustituir los globales, que React no reemplaza).
 - [ ] **F3.4** `public/robots.txt` y `public/sitemap.xml` (solo `/` y `/dashboard/guia-de-uso`, con el dominio `betterurjccalendar.danielgrela.com`; línea `Sitemap:` en `robots.txt`).
 - [ ] **F3.5** Datos estructurados JSON-LD `WebApplication` (nombre, descripción, `applicationCategory: EducationalApplication`, `offers` gratis, `inLanguage: es`) en la portada.
 - [ ] **F3.6** Semántica: un `h1` por página (los de `SideBar`, `Features`, `Footer` pasan a `p`/`h2`; en `UseGuide` los pasos son `h2`/`h3`), un solo `<main>`, `<header>`/`<nav>`/`<footer>` donde corresponda, `alt` descriptivos en las capturas.
