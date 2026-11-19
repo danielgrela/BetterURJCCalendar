@@ -32,13 +32,13 @@ export default function UseGuide() {
                     </div>
                 </div>
                 <div className="min-w-full lg:min-w-1/3 gap-8 flex flex-col justify-center">
-                    <img src={fotoguia02} alt="Inicio de sesión único (SSO) de la URJC con las opciones Credenciales y Sistema Cl@ve" className="rounded-md border border-borde w-full h-auto object-contain" />
-                    <img src={fotoguia01} alt="Apartado Exámenes de la web de la URJC con los botones Descargar en PDF y Descargar en Excel" className="rounded-md border border-borde w-full h-auto object-contain" />
+                    <img src={fotoguia02} width={833} height={546} decoding="async" alt="Inicio de sesión único (SSO) de la URJC con las opciones Credenciales y Sistema Cl@ve" className="rounded-md border border-borde w-full h-auto object-contain" />
+                    <img src={fotoguia01} width={340} height={182} loading="lazy" decoding="async" alt="Apartado Exámenes de la web de la URJC con los botones Descargar en PDF y Descargar en Excel" className="rounded-md border border-borde w-full h-auto object-contain" />
                 </div>
             </article>
             <article className="p-6 gap-10 w-full max-w-300 h-fit flex flex-col-reverse lg:flex-row">
                 <div className="min-w-full lg:min-w-1/2 gap-8 flex flex-col justify-center">
-                    <img src={fotoguia03} alt="Página Importar de Better URJC Calendar con el archivo Examenes.xlsx seleccionado y el botón Importar" className="rounded-md border border-borde w-full h-auto object-contain" />                </div>
+                    <img src={fotoguia03} width={968} height={695} loading="lazy" decoding="async" alt="Página Importar de Better URJC Calendar con el archivo Examenes.xlsx seleccionado y el botón Importar" className="rounded-md border border-borde w-full h-auto object-contain" />                </div>
                 <div className="min-w-full lg:min-w-1/2 gap-5 flex flex-col justify-center">
                     <div className='flex flex-col lg:flex-row items-center justify-center text-center lg:text-start lg:justify-start gap-3'>
                         <IconFileUpload stroke={2} className='text-primary size-8 min-w-fit' aria-hidden='true'/>
