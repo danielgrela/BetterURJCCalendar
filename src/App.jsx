@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router'
-import SideBar from './components/SideBar.jsx'
-import ReturnMobile from './components/ReturnMobile.jsx';
+import SideBar from './components/SideBar.tsx'
+import ReturnMobile from './components/ReturnMobile.tsx';
 function App() {
   return (
     <div className="flex flex-col-reverse lg:flex-row w-full h-dvh">

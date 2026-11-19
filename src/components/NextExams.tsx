@@ -5,8 +5,9 @@ import { IconExclamationCircle, IconCircleCheck } from "@tabler/icons-react";
 import ExamCard from "./ExamCard";
 import { claveExamen } from "../scripts/examen";
 import { NavLink } from 'react-router';
+import type { Examen } from '../types/examen';
 // Los 5 primeros exámenes desde hoy; null si no hay datos importados
-function proximosExamenes(examenes) {
+function proximosExamenes(examenes: Examen[]): Examen[] | null {
     if(!examenes || examenes?.length === 0){
         return null;
     }

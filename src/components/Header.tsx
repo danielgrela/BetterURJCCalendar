@@ -1,4 +1,4 @@
-import { GitHub } from "../SocialIcons/Github.jsx";
+import { GitHub } from "../SocialIcons/Github.tsx";
 import portfolioicon from "../assets/portfolioicon.png";
 import { NavLink } from 'react-router';
 export default function Header() {

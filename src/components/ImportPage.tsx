@@ -1,22 +1,24 @@
 import { IconFileUpload, IconInfoCircle, IconExclamationCircle, IconHelpCircle, IconTrash } from '@tabler/icons-react';
 import useFileStore from '../hooks/useFileStore';
 import { useRef, useState } from 'react';
+import type { ChangeEvent, DragEvent, MouseEvent, SyntheticEvent } from 'react';
+import type { Examen } from '../types/examen';
 import excelToJson from '../scripts/handleExcel';
 import { NavLink, useNavigate } from 'react-router';
-import PageMeta from './PageMeta.jsx';
+import PageMeta from './PageMeta.tsx';
 export default function ImportPage() {
-    const [file, setFile] = useState(null);
-    const [error, setError] = useState(null);
-    const [jsonAuxData, setJsonAuxData] = useState(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [jsonAuxData, setJsonAuxData] = useState<Examen[] | null>(null);
     const [disabled, setDisabled] = useState(true);
     const [dragging, setDragging] = useState(false);
     const setJsonData = useFileStore((state) => state.setJsonData);
     const jsonDataState = useFileStore((state) => state.jsonData);
     const clearJsonData = useFileStore((state) => state.clearJsonData);
     const [borrado, setBorrado] = useState(false);
-    const dialogBorrarRef = useRef(null);
+    const dialogBorrarRef = useRef<HTMLDialogElement>(null);
     // El diálogo devuelve el botón pulsado en returnValue; Esc o el gesto atrás lo dejan vacío
-    const handleCerrarDialogo = (e) => {
+    const handleCerrarDialogo = (e: SyntheticEvent<HTMLDialogElement>) => {
         const dialog = e.currentTarget;
         if (dialog.returnValue === 'borrar') {
             clearJsonData();
@@ -29,7 +31,7 @@ export default function ImportPage() {
         dialog.returnValue = '';
     };
     const navigate = useNavigate();
-    const processFile = async (file) => {
+    const processFile = async (file: File | null) => {
         if (file) {
             setFile(file);
             try{
@@ -44,39 +46,41 @@ export default function ImportPage() {
             }
             catch(error) {
                 console.error("Error al procesar el archivo:", error);
-                setError("ERROR: " + error.message);
+                setError("ERROR: " + (error instanceof Error ? error.message : String(error)));
                 setDisabled(true);
             }
         }
     };
-    const handleFileChange = (e) => processFile(e.target.files ? e.target.files[0] : null);
-    const handleDragOver = (e) => {
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => processFile(e.target.files?.[0] ?? null);
+    const handleDragOver = (e: DragEvent<HTMLLabelElement>) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'copy';
         setDragging(true);
     };
-    const handleDragLeave = (e) => {
+    const handleDragLeave = (e: DragEvent<HTMLLabelElement>) => {
         // Al pasar por encima de un hijo también salta dragleave: solo cuenta si se sale de la zona
-        if (e.currentTarget.contains(e.relatedTarget)) return;
+        if (e.currentTarget.contains(e.relatedTarget as Node | null)) return;
         setDragging(false);
     };
-    const handleDrop = (e) => {
+    const handleDrop = (e: DragEvent<HTMLLabelElement>) => {
         e.preventDefault();
         setDragging(false);
         processFile(e.dataTransfer.files[0] ?? null);
     };
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (!file) {
             setError("ERROR: Por favor, selecciona un archivo antes de importar.");
             return;
         }
+        // Sin datos válidos el botón está desactivado; se comprueba también para el tipo
+        if (!jsonAuxData) return;
         try {
             setJsonData(jsonAuxData);
             navigate('/dashboard/calendario');
         } catch (error) {
             console.error("Error al importar el archivo:", error);
-            setError("ERROR: " + error.message );
+            setError("ERROR: " + (error instanceof Error ? error.message : String(error)));
         }
     };
     return (
@@ -116,7 +120,7 @@ export default function ImportPage() {
                             <IconExclamationCircle className="min-w-5 h-full" stroke={2} />
                             <div className='flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between w-full'>
                                 <p>Ya tiene un calendario, importar otro lo sobreescribirá.</p>
-                                <button type="button" onClick={() => { setBorrado(false); dialogBorrarRef.current.showModal(); }} className="self-start lg:self-auto shrink-0 min-h-11 inline-flex items-center gap-2 px-4 rounded border border-primary text-primary font-semibold cursor-pointer hover:bg-white dark:hover:bg-gray-800 transition-colors">
+                                <button type="button" onClick={() => { setBorrado(false); dialogBorrarRef.current?.showModal(); }} className="self-start lg:self-auto shrink-0 min-h-11 inline-flex items-center gap-2 px-4 rounded border border-primary text-primary font-semibold cursor-pointer hover:bg-white dark:hover:bg-gray-800 transition-colors">
                                     <IconTrash size={18} stroke={2} />
                                     Borrar calendario
                                 </button>

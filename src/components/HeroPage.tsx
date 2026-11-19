@@ -2,8 +2,8 @@ import Header from "./Header";
 import HeroPageMain from "./HeroPageMain";
 import Features from "./Features";
 import Footer from "./Footer";
-import ToggleThemeButton from "./ToggleThemeButton.jsx";
-import PageMeta from "./PageMeta.jsx";
+import ToggleThemeButton from "./ToggleThemeButton.tsx";
+import PageMeta from "./PageMeta.tsx";
 
 const DESCRIPCION = "Convierte el Excel oficial de exámenes de la URJC en tu calendario personal: próximos exámenes, filtros y exportación a Excel e iCal. Gratis y en tu navegador.";
 

@@ -1,7 +1,8 @@
 import { IconCalendar, IconClock, IconMapPin, IconSchool } from '@tabler/icons-react';
 import { nombreAsignatura, diasHasta } from '../scripts/examen';
+import type { Examen } from '../types/examen';
 
-function textoDias(dias) {
+function textoDias(dias: number) {
     switch (dias) {
         case 0:
             return 'Hoy';
@@ -12,7 +13,7 @@ function textoDias(dias) {
 }
 
 // variant: "full" (Próximos exámenes), "list" (calendario móvil), "compact" (celda de la rejilla)
-export default function ExamCard({ examen, variant = 'full' }) {
+export default function ExamCard({ examen, variant = 'full' }: { examen: Examen, variant?: 'full' | 'list' | 'compact' }) {
     if (variant === 'compact') {
         return (
             <div className="group relative p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border-l-[3px] border-primary text-primary shadow-sm hover:shadow-md transition-shadow">

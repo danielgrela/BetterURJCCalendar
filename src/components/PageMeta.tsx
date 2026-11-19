@@ -3,7 +3,16 @@ const DOMINIO = 'https://betterurjccalendar.danielgrela.com';
 
 // React 19 sube <title>, <meta> y <link> al <head> (también en el HTML prerenderizado) y los quita
 // al cambiar de ruta. Lo común a todo el sitio (og:image, twitter:card…) está en root.jsx
-export default function PageMeta({ titulo, descripcion, ruta, noindex = false }) {
+interface Props {
+    /** Sin título: el de la portada */
+    titulo?: string;
+    descripcion?: string;
+    /** Ruta para canonical y og:url (solo páginas indexables) */
+    ruta?: string;
+    noindex?: boolean;
+}
+
+export default function PageMeta({ titulo, descripcion, ruta, noindex = false }: Props) {
     const tituloCompleto = titulo ? `${titulo} · ${SITIO}` : `${SITIO} · Calendario de exámenes de la URJC`;
     return (
         <>

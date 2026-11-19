@@ -1,7 +1,7 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
 import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url'
 import './index.css'
-import ToggleThemeButton from './components/ToggleThemeButton.jsx'
+import ToggleThemeButton from './components/ToggleThemeButton.tsx'
 
 const DOMINIO = 'https://betterurjccalendar.danielgrela.com'
 

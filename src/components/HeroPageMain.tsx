@@ -1,6 +1,6 @@
 import { IconSpeakerphone, IconArrowRight, IconFileUpload  } from '@tabler/icons-react';
 import { NavLink } from 'react-router';
-import Calendar from './Calendar.jsx';
+import Calendar from './Calendar.tsx';
 import jsonMockup from '../assets/jsonMockup.json'
 export default function HeroPageMain() {
     return (

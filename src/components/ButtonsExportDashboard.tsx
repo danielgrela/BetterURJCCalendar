@@ -6,7 +6,7 @@ import { IconCalendarDown } from '@tabler/icons-react';
 import { IconCirclePlus } from '@tabler/icons-react';
 import useFileStore from "../hooks/useFileStore";
 
-export default function ButtonsExportDashboard({ className }) {
+export default function ButtonsExportDashboard({ className = '' }: { className?: string }) {
     const jsonData = useFileStore((state) => state.jsonData);
     return (
         <>

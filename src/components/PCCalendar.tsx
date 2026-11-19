@@ -6,12 +6,24 @@ import {
     IconChevronRight, 
     IconInfoCircle,
 } from '@tabler/icons-react';
-export default function PCCalendar({date, setDate, visibleData, filtersProps, year, month }) {
+import type { FiltersCalendarProps } from './FiltersCalendar';
+import type { Examen } from '../types/examen';
+
+interface Props {
+    date: Date;
+    setDate: (date: Date) => void;
+    visibleData: Examen[];
+    filtersProps: FiltersCalendarProps;
+    year: number;
+    month: number;
+}
+
+export default function PCCalendar({date, setDate, visibleData, filtersProps, year, month }: Props) {
     const prevMonth = () => setDate(new Date(year, month - 1, 1));
     const nextMonth = () => setDate(new Date(year, month + 1, 1));
     const mesVacio = Array.isArray(visibleData) && visibleData.length > 0 && !hayExamenesEnMes(visibleData, year, month);
-    function sanitizeDate(date) {
-        let aux = date.toLocaleString('es-ES', { month: 'long', year: 'numeric' }).replace(' de ', ' ');
+    function sanitizeDate(date: Date) {
+        const aux = date.toLocaleString('es-ES', { month: 'long', year: 'numeric' }).replace(' de ', ' ');
         return aux[0].toUpperCase() + aux.slice(1);
     }
     return (

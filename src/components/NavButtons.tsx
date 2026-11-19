@@ -1,7 +1,7 @@
 import { IconHome2 } from '@tabler/icons-react';
 import { IconCalendarWeek } from '@tabler/icons-react';
 import { IconFileUpload } from '@tabler/icons-react';
-import ButtonNavBar from './ButtonNavBar.jsx';
+import ButtonNavBar from './ButtonNavBar.tsx';
 
 export default function NavButtons() {
     return (

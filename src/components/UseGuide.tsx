@@ -3,7 +3,7 @@ import fotoguia01 from "../assets/fotoguia01.png";
 import fotoguia02 from "../assets/fotoguia02.jpg";
 import fotoguia03 from "../assets/fotoguia03.png";
 import { NavLink } from 'react-router';
-import PageMeta from './PageMeta.jsx';
+import PageMeta from './PageMeta.tsx';
 
 export default function UseGuide() {
     return (

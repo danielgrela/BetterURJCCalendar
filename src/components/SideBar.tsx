@@ -1,4 +1,4 @@
-import NavButtons from './NavButtons.jsx'
+import NavButtons from './NavButtons.tsx'
 import { NavLink } from 'react-router';
 export default function SideBar() {
     return (

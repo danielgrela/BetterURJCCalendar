@@ -1,12 +1,22 @@
 import ExamCard from './ExamCard';
 import { claveExamen } from '../scripts/examen';
+import type { Examen } from '../types/examen';
+
+interface Props {
+    jsonData: Examen[] | null | undefined;
+    year: number;
+    /** 0 = enero */
+    month: number;
+    today?: Date;
+    compact?: boolean;
+}
 
 // today: día que se resalta (por defecto, hoy) · compact: versión reducida para la portada
-export default function Calendar({ jsonData, year, month, today = new Date(), compact = false }) {
+export default function Calendar({ jsonData, year, month, today = new Date(), compact = false }: Props) {
     const firstDayOfMonth = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const startingDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
-    const getEventsForDay = (day) => {
+    const getEventsForDay = (day: number) => {
     if (!jsonData || !Array.isArray(jsonData)) return [];
         return jsonData.filter(evento => {
             if (!evento.Fecha) return false;

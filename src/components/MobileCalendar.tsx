@@ -1,7 +1,10 @@
 import FiltersCalendar from './FiltersCalendar';
 import ExamCard from './ExamCard';
 import { claveExamen } from '../scripts/examen';
-export default function MobileCalendar({ visibleData, filtersProps }) {
+import type { FiltersCalendarProps } from './FiltersCalendar';
+import type { Examen } from '../types/examen';
+
+export default function MobileCalendar({ visibleData, filtersProps }: { visibleData: Examen[], filtersProps: FiltersCalendarProps }) {
     return (
         <div className="flex flex-col gap-6 max-h-full">
             <header className="flex flex-col mx-auto h-fit items-start justify-between mb-4 w-full">
