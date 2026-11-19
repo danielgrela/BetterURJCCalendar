@@ -8,14 +8,17 @@ export default function ImportPage() {
     const [error, setError] = useState(null);
     const [jsonAuxData, setJsonAuxData] = useState(null);
     const [disabled, setDisabled] = useState(true);
+    const [dragging, setDragging] = useState(false);
     const setJsonData = useFileStore((state) => state.setJsonData);
     const jsonDataState = useFileStore((state) => state.jsonData);
     const navigate = useNavigate();
-    const handleFileChange = async (e) => {
-        const file = e.target.files ? e.target.files[0] : null;
+    const processFile = async (file) => {
         if (file) {
             setFile(file);
             try{
+                if (!file.name.toLowerCase().endsWith('.xlsx')) {
+                    throw new Error("Solo se admiten archivos .xlsx. Descarga el Excel original desde la web de exámenes de la URJC.");
+                }
                 const data = await excelToJson(file);
                 setJsonAuxData(data);
                 if(data.length === 0) {
@@ -33,6 +36,22 @@ export default function ImportPage() {
                 setDisabled(true);
             }
         }
+    };
+    const handleFileChange = (e) => processFile(e.target.files ? e.target.files[0] : null);
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+        setDragging(true);
+    };
+    const handleDragLeave = (e) => {
+        // Al pasar por encima de un hijo también salta dragleave: solo cuenta si se sale de la zona
+        if (e.currentTarget.contains(e.relatedTarget)) return;
+        setDragging(false);
+    };
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setDragging(false);
+        processFile(e.dataTransfer.files[0] ?? null);
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,11 +80,14 @@ export default function ImportPage() {
                 onChange={handleFileChange}
                     id="exam-file"
                     type="file"
-                    accept=".xlsx, .xls, .csv"
+                    accept=".xlsx"
                     className="sr-only"/>
                 <label
                     htmlFor="exam-file"
-                    className="border-2 border-dashed border-gray-300  rounded-lg px-6 py-14 text-center cursor-pointer hover:border-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors dark:text-gray-200">
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    className={`border-2 border-dashed ${dragging ? 'border-primary bg-gray-50 dark:bg-gray-900' : 'border-gray-300 dark:border-gray-700'} rounded-lg px-6 py-14 text-center cursor-pointer hover:border-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors dark:text-gray-200`}>
                     <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-900">
                         <IconFileUpload stroke={2} />
                     </div>
