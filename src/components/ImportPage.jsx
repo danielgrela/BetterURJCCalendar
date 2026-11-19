@@ -20,13 +20,8 @@ export default function ImportPage() {
                     throw new Error("Solo se admiten archivos .xlsx. Descarga el Excel original desde la web de exámenes de la URJC.");
                 }
                 const data = await excelToJson(file);
+                // excelToJson normaliza Fecha y Hora, descarta filas incompletas y lanza un error legible si no queda ninguna
                 setJsonAuxData(data);
-                if(data.length === 0) {
-                    throw new Error("El archivo no contiene elementos. Por favor verifica el formato del archivo.");
-                }
-                if(!data[0].Fecha || !data[0].Hora || !data[0].Asignatura || !data[0].Plan || !data[0].Aula || !data[0].Convocatoria) {
-                    throw new Error("El formato del archivo es incorrecto. Asegúrate de que el archivo tenga las columnas: Fecha, Hora, Asignatura, Plan, Aula y Convocatoria.");
-                }
                 setError(null);
                 setDisabled(false);
             }
@@ -56,7 +51,7 @@ export default function ImportPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!file) {
-            alert("Por favor, selecciona un archivo antes de importar.");
+            setError("ERROR: Por favor, selecciona un archivo antes de importar.");
             return;
         }
         try {

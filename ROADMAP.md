@@ -91,7 +91,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 ## F1 · Bugs funcionales
 - [x] **F1.1** Limpiar `dataFiltered` al importar un archivo nuevo (y al borrar el calendario).
 - [x] **F1.2** Zona de subida con arrastrar y soltar real (`dragover`/`dragleave`/`drop`, estado visual con borde `primary`, mismo flujo de validación que el selector). `accept=".xlsx"` solamente.
-- [ ] **F1.3** Validación de importación en `handleExcel`: normalizar `Fecha` a `DD-MM-YYYY` y `Hora` a `HH:MM - HH:MM` aunque la celda sea fecha o texto enriquecido; descartar filas vacías; error claro si ninguna fila es válida. Sustituir `alert()` por el mensaje de error en línea.
+- [x] **F1.3** Validación de importación en `handleExcel`: normalizar `Fecha` a `DD-MM-YYYY` y `Hora` a `HH:MM - HH:MM` aunque la celda sea fecha o texto enriquecido; descartar filas vacías; error claro si ninguna fila es válida. Sustituir `alert()` por el mensaje de error en línea.
 - [ ] **F1.4** `PCCalendar` abre en el mes del próximo examen (o del último, si ya pasaron todos) y avisa cuando el mes visible no tiene exámenes.
 - [ ] **F1.5** Botón «Borrar calendario» (con confirmación) en Importar o en el dashboard: el alumno debe poder eliminar sus datos del navegador.
 - [ ] **F1.6** `NextExams` sin exámenes futuros (todos pasados) no muestra nada bajo «Próximos Exámenes»: el filtro devuelve `[]` y solo se pinta el aviso cuando es `null`. Mostrar estado vacío («No te quedan exámenes pendientes») con enlace al calendario.
