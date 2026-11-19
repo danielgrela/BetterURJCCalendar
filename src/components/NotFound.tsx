@@ -12,21 +12,21 @@ export default function NotFound() {
             <ToggleThemeButton className="fixed block lg:hidden bottom-8 right-8" />
             <Header />
             <main className="text-balance py-20 w-full px-2 lg:w-1/2 flex flex-col items-center justify-center gap-4 mx-auto text-center">
-                <img src={GatoImagen} alt="" className="w-1/2 lg:w-full max-w-md shadow-lg dark:shadow-none" />
+                <img src={GatoImagen} alt="" className="w-1/2 lg:w-full max-w-md shadow-sm dark:shadow-none" />
                 <h1 className="text-3xl lg:text-5xl font-bold">¡Ups! Parece que te has perdido</h1>
                 <p className="text-base lg:text-xl text-texto-suave">La página que buscas no existe o ha sido movida a una nueva ubicación dentro del sitio web.</p>
                 <div className="flex flex-col lg:flex-row items-center gap-8 mt-8">
-                    <NavLink to="/dashboard" className="inline-block px-9 py-7 hover:brightness-80 bg-primary text-sobre-primary rounded-lg shadow-md dark:shadow-none transition-colors">
-                        <IconLayoutDashboard className="inline-block mr-2" />
+                    <NavLink to="/dashboard" className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90 py-4">
+                        <IconLayoutDashboard aria-hidden="true" />
                         Volver al dashboard
                     </NavLink>
                     <div className="flex flex-row gap-4">
-                        <NavLink to="/" className="min-h-11 px-2 flex flex-row gap-2 items-center hover:brightness-80 text-primary">
+                        <NavLink to="/" className="min-h-11 px-2 inline-flex gap-2 items-center font-medium text-enlace hover:underline">
                             <IconHome2 stroke={2} />
                             Inicio
                         </NavLink>
                         <p className="text-texto-suave text-lg cursor-default">|</p>
-                        <NavLink to="/dashboard/importar" className="min-h-11 px-2 flex flex-row gap-2 items-center hover:brightness-80 text-primary">
+                        <NavLink to="/dashboard/importar" className="min-h-11 px-2 inline-flex gap-2 items-center font-medium text-enlace hover:underline">
                             <IconFileUpload stroke={2} />
                             Importar
                         </NavLink>

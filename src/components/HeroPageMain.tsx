@@ -13,8 +13,8 @@ export default function HeroPageMain() {
                 <h1 className='text-3xl lg:text-5xl font-bold text-primary text-center lg:text-start'>Organiza tus exámenes en segundos</h1>
                 <p className='text-texto-suave font-medium text-center lg:text-start'>Sube tu <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">Excel de exámenes de la Universidad Rey Juan Carlos</a> y nosotros creamos tu calendario de exámenes personalizado. Olvídate de los líos de interfaz y céntrate en estudiar.</p>
                 <div className='flex flex-col lg:flex-row gap-3 lg:gap-6 w-full'>
-                    <NavLink to="/dashboard" className='items-center bg-primary px-6 py-4 text-sobre-primary hover:brightness-80 font-medium flex flex-row gap-3 justify-center w-full lg:w-fit'>Empezar ahora <IconArrowRight stroke={2} /></NavLink>
-                    <NavLink to="/dashboard/importar" className=' items-center border border-primary bg-superficie hover:brightness-80 px-6 py-4 text-primary font-medium flex flex-row gap-3 justify-center w-full lg:w-fit'>Importar directamente <IconFileUpload size={22} className="text-primary" /></NavLink>
+                    <NavLink to="/dashboard" className='min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90 py-4 w-full lg:w-fit'>Empezar ahora <IconArrowRight stroke={2} /></NavLink>
+                    <NavLink to="/dashboard/importar" className='min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium border border-primary bg-superficie text-primary cursor-pointer hover:bg-primary hover:text-sobre-primary transition-colors py-4 w-full lg:w-fit'>Importar directamente <IconFileUpload size={22} aria-hidden="true" /></NavLink>
                 </div>
             </section>
             {/* Demostración para quien aún no ha importado nada: el calendario real con datos de ejemplo */}

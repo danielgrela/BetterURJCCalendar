@@ -9,13 +9,13 @@ export default function ButtonsExportDashboard({ className = '' }: { className?:
     // Sin datos no hay nada que exportar: el estado vacío de NextExams lleva a Importar
     if (!jsonData || jsonData.length === 0) return null;
     return (
-                    <div className={`flex flex-col lg:flex-row gap-2 lg:gap-4 ${className}`}>
-                        <button className="cursor-pointer text-sm flex flex-row gap-2 px-6 py-4 items-center h-fit hover:brightness-80 bg-superficie border-2 border-primary text-primary font-bold" onClick={() => descargarCalendarioExcel(jsonData)}>
-                            <IconFileTypeXls className="min-w-fit" stroke={2} />
+                    <div className={`flex flex-col lg:flex-row lg:items-start gap-3 ${className}`}>
+                        <button type="button" className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium border border-primary bg-superficie text-primary cursor-pointer hover:bg-primary hover:text-sobre-primary transition-colors py-3 whitespace-nowrap" onClick={() => descargarCalendarioExcel(jsonData)}>
+                            <IconFileTypeXls size={20} className="min-w-fit" stroke={2} aria-hidden="true" />
                             Exportar a Excel
                         </button>
-                        <button className="cursor-pointer text-sm flex flex-row gap-2 px-6 py-4 items-center h-fit hover:brightness-80 bg-primary text-sobre-primary font-bold" onClick={() => descargarCalendarioICS(jsonData)}>
-                            <IconCalendarDown className="min-w-fit" stroke={2} />
+                        <button type="button" className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90 py-3 whitespace-nowrap" onClick={() => descargarCalendarioICS(jsonData)}>
+                            <IconCalendarDown size={20} className="min-w-fit" stroke={2} aria-hidden="true" />
                             Exportar a .ics
                         </button>
                     </div>

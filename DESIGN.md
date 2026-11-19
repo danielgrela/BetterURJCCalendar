@@ -103,8 +103,12 @@ En claro, el rojo URJC se queda en `#E4002B` aunque como texto pequeño solo apr
 Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para el título de página (más pequeño en móvil), `text-2xl` bold para secciones, `text-xl` bold para el nombre de la asignatura, `text-base` para cuerpo y `text-sm` medium para metadatos (plan, archivo seleccionado, avisos). Pesos: bold para jerarquía, medium para datos; evitar `extrabold` salvo el logotipo de la barra lateral.
 
 ## Componentes
-- **CTA primario**: `bg-primary text-sobre-primary px-6 py-4 font-medium`, esquinas rectas, icono Tabler a la derecha, `hover:brightness-80`. En móvil ocupa todo el ancho (`w-full lg:w-fit`).
-- **CTA secundario**: mismo tamaño, `border border-primary text-primary` sobre superficie.
+- **Botones, una sola receta** (F6.11): todos con **esquinas rectas** (como los CTA de siempre), `min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium`, icono Tabler de 20 px con `aria-hidden`. Tres tipos:
+  - **Primario**: `bg-primary text-sobre-primary hover:brightness-90`. Uno por vista.
+  - **Secundario**: `border border-primary bg-superficie text-primary`, al pasar el ratón se invierte (`hover:bg-primary hover:text-sobre-primary`; el rojo sobre `superficie-alta` no llega a AA en claro).
+  - **Neutro** (Cancelar, Ahora no, Hoy): `border border-borde-fuerte bg-superficie text-texto hover:bg-superficie-alta`.
+  - **Botón de texto**: `text-enlace font-semibold min-h-11 px-1 hover:underline` (Ver el calendario completo, Ir al próximo examen, enlaces de la 404).
+  - Tamaño grande solo en portada y 404: añadir `py-4` (56 px). En móvil, `w-full lg:w-fit`. Solo-icono: `size-11`. Únicos redondos: el botón de tema (`rounded-full`) y los chips/línea de la rejilla (`rounded-sm`, no son botones de acción).
 - **Exámenes, un solo sistema** (`ExamCard`, rediseño F6.9 elegido por el usuario): la jerarquía es siempre asignatura > fecha y hora > aula > convocatoria y plan, y se escribe en formato humano (`nombreLegible`: tipo frase con los romanos en mayúsculas; `fechaCorta`/`fechaLarga`; `horaLegible` con raya «12:00–14:00»; «Aula sin asignar» en vez de «-»). Nada de `uppercase` forzado ni `truncate` en el nombre.
   - **Tarjeta** (`variant="card"`: Próximos exámenes, lista móvil y detalle del día): bloque de fecha a la izquierda como en una agenda (`w-14`, `superficie-alta`, día `text-2xl` bold entre «lun» y «ene» a 12 px; va `aria-hidden` y la fecha larga está en `sr-only` dentro del título) y a la derecha asignatura (`text-base lg:text-lg` bold, en `texto`), hora y aula a 14 px con iconos en `texto-suave`, «Convocatoria · Quedan N días» (la cuenta atrás es lo único rojo) y el plan en `texto-suave`. Sin borde izquierdo de color. **Pasados**: fondo `lienzo` sin sombra, título en `texto-suave` y «Ya pasó» (atenuados sin bajar el contraste de AA, no con `opacity`).
   - **Línea** (`variant="line"`, celdas de la rejilla): chip `superficie-alta` a 12 px con la hora de inicio (`tabular-nums`, `texto-suave`) y el nombre en hasta 2 líneas (`line-clamp-2`); conflicto = `IconAlertTriangle` en `error` junto a la hora (y el texto en `sr-only`). Es un `button` que abre el detalle del día; en el mockup de la portada es un `div`.
@@ -112,7 +116,7 @@ Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para e
 - **Lista móvil** (`MobileCalendar`): agrupada por mes con el `h2` del mes `sticky` (sin scroll anidado: hace scroll `main`) y botón «Ir al próximo examen» si hay pasados por encima.
 - **Aviso de solapamiento** (dentro de `ExamCard`): texto, no solo color. Conflicto de horas: `IconAlertTriangle` + «Se solapa con ASIGNATURA (hora)» en `text-error`; mismo día sin cruce: `IconCalendarEvent` + «Mismo día que…» en `texto-suave`. En la rejilla solo se marca el conflicto (icono junto a la hora); el detalle del día da el texto completo.
 - **Chip**: `bg-superficie-alta rounded-sm px-3 font-medium`.
-- **Aviso informativo**: caja `border border-borde bg-lienzo rounded-sm p-4` (`bg-superficie` si va directamente sobre el lienzo) con icono a la izquierda (`IconInfoCircle`, `IconExclamationCircle`).
+- **Aviso informativo**: sobre el lienzo, caja `border border-borde bg-superficie rounded-sm p-4`; **dentro de una tarjeta**, sin caja (nada de tarjeta en tarjeta): fila separada con `border-t border-borde pt-6`. Icono a la izquierda en `texto-suave` (`IconInfoCircle`, `IconExclamationCircle`).
 - **Estado vacío** (`EmptyState`): caja `superficie` con borde, icono de 32 px en `texto-suave`, título `text-lg` bold, una frase de apoyo y **siempre un siguiente paso** (sin datos → «Importar Excel»; filtros sin resultados → «Quitar filtros»; todo pasado → «Ver el calendario completo»; mes vacío → «Ir al próximo examen»). Sin datos, la cabecera del dashboard no muestra botones: el paso está en el estado vacío.
 - **Zona de subida**: `border-2 border-dashed border-borde-fuerte rounded-lg`, `hover:border-primary`; el `<input type=file>` es `sr-only` y la `label` es el área clicable.
 - **Selects de filtro**: `rounded-sm border border-borde-fuerte shadow-sm min-h-11`, con `label` visible encima (`text-sm` medium `texto-suave`: «Convocatoria», «Mostrar») y opciones cortas («Todas», «Todos», «Solo pendientes»); en móvil, rejilla de 2 columnas a todo el ancho.
@@ -122,7 +126,7 @@ Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para e
 
 ## Layout y responsive
 - Mobile-first con un único corte en **`lg` (1024 px)**: por debajo, una columna, CTAs a ancho completo, navegación inferior y calendario en lista (`MobileCalendar`); por encima, barra lateral, rejilla mensual (`PCCalendar`) y mockup de calendario en la portada.
-- El dashboard ocupa `h-dvh` y hace scroll solo en el contenido principal.
+- El dashboard ocupa `h-dvh` y hace scroll solo en el contenido principal (`overflow-y-auto`: la barra solo aparece si hace falta).
 - Márgenes: `px-4` en móvil, `lg:p-12` en el dashboard y `lg:p-15` en la portada.
 - Probar siempre a 375, 768 y ≥1024 px, en claro y oscuro, con y sin exámenes importados (estados vacíos incluidos: "Aún no hay exámenes", botón "Nuevo Calendario / Importar Excel").
 

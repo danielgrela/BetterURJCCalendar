@@ -25,10 +25,10 @@ export default function AvisoActualizacion() {
                 Hay una versión nueva de la app.
             </p>
             <div className="flex flex-row gap-2 justify-end">
-                <button type="button" onClick={() => setHayVersionNueva(false)} className="min-h-11 px-4 rounded border border-borde font-semibold cursor-pointer hover:bg-superficie-alta transition-colors">
+                <button type="button" onClick={() => setHayVersionNueva(false)} className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium border border-borde-fuerte bg-superficie text-texto cursor-pointer hover:bg-superficie-alta transition-colors">
                     Ahora no
                 </button>
-                <button type="button" onClick={() => updateServiceWorker(true)} className="min-h-11 px-4 rounded bg-primary text-sobre-primary font-semibold cursor-pointer hover:brightness-90">
+                <button type="button" onClick={() => updateServiceWorker(true)} className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90">
                     Actualizar
                 </button>
             </div>

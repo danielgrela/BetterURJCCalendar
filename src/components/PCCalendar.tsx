@@ -40,10 +40,10 @@ export default function PCCalendar({date, setDate, visibleData, filtersProps, ye
                     {sanitizeDate(date)}
                 </h1>
                 <div className="flex flex-row items-center gap-2">
-                    <button type="button" onClick={() => setDate(new Date(hoy.getFullYear(), hoy.getMonth(), 1))} disabled={esMesActual} className="min-h-11 px-4 rounded-sm border border-borde-fuerte bg-superficie font-medium cursor-pointer hover:bg-superficie-alta transition-colors disabled:cursor-default disabled:text-texto-suave disabled:hover:bg-superficie">
+                    <button type="button" onClick={() => setDate(new Date(hoy.getFullYear(), hoy.getMonth(), 1))} disabled={esMesActual} className="min-h-11 px-4 border border-borde-fuerte bg-superficie font-medium cursor-pointer hover:bg-superficie-alta transition-colors disabled:cursor-default disabled:text-texto-suave disabled:hover:bg-superficie">
                         Hoy
                     </button>
-                    <div className="flex rounded-sm border border-borde-fuerte bg-superficie overflow-hidden">
+                    <div className="flex border border-borde-fuerte bg-superficie">
                         <button type="button" onClick={prevMonth} aria-label="Mes anterior" className="cursor-pointer size-11 flex items-center justify-center hover:bg-superficie-alta transition-colors text-texto">
                             <IconChevronLeft size={22} aria-hidden="true" />
                         </button>

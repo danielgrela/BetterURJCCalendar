@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="flex flex-col-reverse lg:flex-row w-full h-dvh">
       <SideBar />
-      <main className="flex-1 pb-3 px-4 lg:p-12 bg-lienzo overflow-y-scroll">
+      <main className="flex-1 pb-3 px-4 lg:p-12 bg-lienzo overflow-y-auto">
         <Outlet />
       </main>
       <ReturnMobile />

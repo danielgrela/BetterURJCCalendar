@@ -29,7 +29,7 @@ export default function CalendarPage() {
         </EmptyState>
     ) : visibleData.length === 0 ? (
         <EmptyState icono={<IconFilterOff size={32} stroke={2} />} titulo="Ningún examen coincide con los filtros">
-            <button type="button" onClick={() => setFiltros(FILTROS_INICIALES)} className="min-h-11 px-6 border border-primary text-primary font-medium cursor-pointer hover:bg-superficie-alta transition-colors">
+            <button type="button" onClick={() => setFiltros(FILTROS_INICIALES)} className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium border border-primary bg-superficie text-primary cursor-pointer hover:bg-primary hover:text-sobre-primary transition-colors">
                 Quitar filtros
             </button>
         </EmptyState>
