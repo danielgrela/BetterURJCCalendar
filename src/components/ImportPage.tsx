@@ -112,15 +112,15 @@ export default function ImportPage() {
                     <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace hover:underline">examenes</a> </p>
                 </label>
                 {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
-                {error && <p className="text-start text-sm text-red-500 font-medium">{error}</p>}
+                {error && <p className="text-start text-sm text-error font-medium">{error}</p>}
                 </div>
                 <div className='flex flex-col gap-6'>
                     {jsonDataState && jsonDataState.length > 0 && (
-                        <div className="text-sm text-texto border border-borde bg-lienzo rounded-sm p-4 gap-4 flex flex-row">
+                        <div className="text-sm text-texto border border-borde bg-superficie rounded-sm p-4 gap-4 flex flex-row">
                             <IconExclamationCircle className="min-w-5 h-full" stroke={2} />
                             <div className='flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between w-full'>
                                 <p>Ya tiene un calendario, importar otro lo sobreescribirá.</p>
-                                <button type="button" onClick={() => { setBorrado(false); dialogBorrarRef.current?.showModal(); }} className="self-start lg:self-auto shrink-0 min-h-11 inline-flex items-center gap-2 px-4 rounded border border-primary text-primary font-semibold cursor-pointer hover:bg-superficie transition-colors">
+                                <button type="button" onClick={() => { setBorrado(false); dialogBorrarRef.current?.showModal(); }} className="self-start lg:self-auto shrink-0 min-h-11 inline-flex items-center gap-2 px-4 rounded border border-primary text-primary font-semibold cursor-pointer hover:bg-lienzo transition-colors">
                                     <IconTrash size={18} stroke={2} />
                                     Borrar calendario
                                 </button>
@@ -130,7 +130,7 @@ export default function ImportPage() {
                     {borrado && (
                         <p role="status" className="text-sm text-texto font-medium">Se ha borrado el calendario de este navegador.</p>
                     )}
-                    <div className="text-sm text-texto border border-borde bg-lienzo rounded-sm p-4 gap-4 flex flex-row">
+                    <div className="text-sm text-texto border border-borde bg-superficie rounded-sm p-4 gap-4 flex flex-row">
                         <IconInfoCircle className="min-w-5 h-full" stroke={2} />
                         <div className='flex flex-col gap-2'>
                             <h2 className="font-semibold">Instrucciones de formato:</h2>

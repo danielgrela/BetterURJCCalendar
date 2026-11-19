@@ -3,13 +3,13 @@ name: Better URJC Calendar
 description: El Excel de exámenes de la URJC, convertido en un calendario que se entiende de un vistazo.
 colors:                   # tokens de src/index.css (claro / oscuro)
   primary: "#E4002B"
-  primary-dark: "#FF2D3E"
+  primary-dark: "#FF4D5A"
   sobre-primary: "#FFFFFF"
-  sobre-primary-dark: "#FFFFFF"
-  tertiary: "#007AA4"
-  tertiary-dark: "#FFFFFF"
-  enlace: "#3B82F6"       # blue-500
-  enlace-dark: "#3B82F6"
+  sobre-primary-dark: "#030712"  # gray-950
+  tertiary: "#006D93"
+  tertiary-dark: "#38BDF8"  # sky-400
+  enlace: "#1D4ED8"       # blue-700
+  enlace-dark: "#60A5FA"  # blue-400
   lienzo: "#F3F4F6"       # gray-100
   lienzo-dark: "#111827"  # gray-900
   superficie: "#FFFFFF"
@@ -20,9 +20,10 @@ colors:                   # tokens de src/index.css (claro / oscuro)
   borde-dark: "#1F2937"   # gray-800
   texto: "#111827"        # gray-900
   texto-dark: "#F3F4F6"   # gray-100
-  texto-suave: "#717171"
+  texto-suave: "#4B5563"  # gray-600
   texto-suave-dark: "#9CA3AF"  # gray-400
-  error: "#EF4444"        # red-500
+  error: "#DC2626"        # red-600
+  error-dark: "#F87171"   # red-400
 typography:
   display:
     fontFamily: "Inter, sans-serif"
@@ -69,14 +70,28 @@ Derivado del código actual (`src/index.css` y componentes). Si el código y est
 Herramienta de estudiante para estudiantes ("De Daniel para Daniel (y amigos)"). Debe sentirse **institucional pero más clara que la web de la URJC**: el rojo URJC como único color de marca, mucho gris neutro y una jerarquía muy directa (qué examen, cuándo, dónde). Sin adornos: ni degradados, ni brillos, ni emojis, ni animaciones decorativas. La información manda; la interfaz se aparta.
 
 ## Color
-- **`primary` (rojo URJC `#E4002B`, `#FF2D3E` en oscuro)**: acciones principales (CTAs, "Importar", "Exportar a .ics"), elemento activo de la navegación, marca ("Better URJC Calendar"), cuenta atrás de `NextExams` y borde izquierdo de las tarjetas de examen. Es escaso a propósito: si todo es rojo, nada destaca.
-- **`tertiary` (azul `#007AA4`)**: acento secundario puntual (icono de calendario en Características). No usar para acciones.
-- **`sobre-primary`**: texto e iconos encima de `bg-primary` (nunca `text-white` a mano).
+- **`primary` (rojo URJC `#E4002B`, `#FF4D5A` en oscuro)**: acciones principales (CTAs, "Importar", "Exportar a .ics"), elemento activo de la navegación, marca ("Better URJC Calendar"), cuenta atrás de `NextExams` y borde izquierdo de las tarjetas de examen. Es escaso a propósito: si todo es rojo, nada destaca.
+- **`tertiary` (azul `#006D93`, `#38BDF8` en oscuro)**: acento secundario puntual (icono de calendario en Características). No usar para acciones.
+- **`sobre-primary`**: texto e iconos encima de `bg-primary` (nunca `text-white` a mano). Blanco en claro y casi negro en oscuro: el rojo oscuro tiene que ser claro para leerse como texto, y entonces el blanco encima no llega a AA. Igual en todos los botones rojos.
 - **`texto` / `texto-suave`**: texto principal y de apoyo (descripciones, plan, metadatos).
-- **Superficies**: `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios, avisos sobre el lienzo) < `superficie-alta` (chips, hovers y lo que va encima de una superficie). `borde` para todos los bordes. Los avisos dentro de un formulario usan `lienzo` (pozo hundido).
+- **Superficies**: `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios, avisos sobre el lienzo) < `superficie-alta` (chips, hovers y lo que va encima de una superficie). `borde` para todos los bordes.
 - **Enlaces de texto**: `text-enlace hover:underline`.
-- **Errores**: `text-red-500` (no confundir con `primary`: un error no es una acción).
+- **Errores**: `text-error` (no confundir con `primary`: un error no es una acción).
 - Los tokens viven en `src/index.css` (`:root` y `.dark` → `@theme`) y ya cambian con el tema: en `className` van sin pareja `dark:`. Un color nuevo = un token nuevo ahí, nunca un hex ni un `gray-*` con su `dark:` en `className`.
+
+### Contraste (WCAG 2.1, texto normal ≥ 4,5:1; grande ≥ 3:1)
+| Par | Claro | Oscuro |
+|---|---|---|
+| `texto` sobre `lienzo` / `superficie` / `superficie-alta` | 16,1 · 17,7 · 14,3 | 18,1 · 16,1 · 13,3 |
+| `texto-suave` sobre `lienzo` / `superficie` / `superficie-alta` | 6,9 · 7,6 · 6,1 | 7,9 · 7,0 · 5,8 |
+| `primary` (texto) sobre `superficie` | 4,85 | 5,5 (`gray-900`) · 6,2 (`gray-950`) |
+| `primary` (texto) sobre `lienzo` / `superficie-alta` | 4,4 · 3,9 → **solo texto grande** (títulos, marca) | 6,2 · 4,5 |
+| `sobre-primary` sobre `primary` | 4,85 | 6,2 |
+| `enlace` sobre `lienzo` / `superficie` / `superficie-alta` | 6,1 · 6,7 · 5,4 | 7,9 · 7,0 · 5,8 |
+| `tertiary` sobre `lienzo` / `superficie` / `superficie-alta` | 5,3 · 5,8 · 4,7 | 9,4 · 8,3 · 6,9 |
+| `error` sobre `superficie` | 4,8 | 6,4 – 7,3 |
+
+En claro, el rojo URJC se queda en `#E4002B` aunque como texto pequeño solo aprueba sobre `superficie`: los enlaces y botones de texto que van sobre el lienzo usan `enlace` o una caja `superficie`.
 
 ## Tipografía
 Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para el título de página (más pequeño en móvil), `text-2xl` bold para secciones, `text-xl` bold para el nombre de la asignatura, `text-base` para cuerpo y `text-sm` medium para metadatos (plan, archivo seleccionado, avisos). Pesos: bold para jerarquía, medium para datos; evitar `extrabold` salvo el logotipo de la barra lateral.

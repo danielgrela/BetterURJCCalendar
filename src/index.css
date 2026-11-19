@@ -16,10 +16,11 @@
    (bg-superficie, no bg-white dark:bg-gray-950). Ratios de contraste en DESIGN.md */
 :root {
 	/* Marca */
-	--primary: #E4002B;
+	--primary: #E4002B;         /* rojo URJC: 4,85:1 con blanco; como texto pequeño, solo sobre superficie */
 	--sobre-primary: #FFFFFF;   /* texto e iconos sobre bg-primary */
-	--tertiary: #007AA4;
-	--enlace: #3B82F6;
+	--tertiary: #006D93;
+	--enlace: #1D4ED8;          /* blue-700 */
+	--error: #DC2626;           /* red-600 */
 	/* Superficies, de más hundida a más elevada */
 	--lienzo: #F3F4F6;          /* fondo de página (gray-100) */
 	--superficie: #FFFFFF;      /* tarjetas, barra lateral, formularios */
@@ -27,15 +28,16 @@
 	--borde: #E5E7EB;           /* gray-200 */
 	/* Texto */
 	--texto: #111827;           /* gray-900 */
-	--texto-suave: #717171;     /* descripciones y datos de apoyo */
+	--texto-suave: #4B5563;     /* gray-600: descripciones y datos de apoyo */
 	font-family: 'Inter', sans-serif;
 }
 
 .dark {
-	--primary: #FF2D3E;
-	--sobre-primary: #FFFFFF;
-	--tertiary: white;
-	--enlace: #3B82F6;
+	--primary: #FF4D5A;         /* más claro para leerse sobre fondo oscuro */
+	--sobre-primary: #030712;   /* gray-950: el blanco sobre este rojo no llega a AA */
+	--tertiary: #38BDF8;        /* sky-400 */
+	--enlace: #60A5FA;          /* blue-400 */
+	--error: #F87171;           /* red-400 */
 	--lienzo: #111827;          /* gray-900 */
 	--superficie: #030712;      /* gray-950 */
 	--superficie-alta: #1F2937; /* gray-800 */
@@ -49,6 +51,7 @@
 	--color-sobre-primary: var(--sobre-primary);
 	--color-tertiary: var(--tertiary);
 	--color-enlace: var(--enlace);
+	--color-error: var(--error);
 	--color-lienzo: var(--lienzo);
 	--color-superficie: var(--superficie);
 	--color-superficie-alta: var(--superficie-alta);

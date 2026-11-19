@@ -36,7 +36,7 @@ export default function NextExams() {
                         <IconCircleCheck className="min-w-fit text-primary" stroke={2} />
                         <h3 className="text-xl font-bold">No te quedan exámenes pendientes</h3>
                     </div>
-                    <NavLink to="/dashboard/calendario" className="min-h-11 inline-flex items-center px-2 font-semibold text-primary hover:underline">Ver el calendario completo</NavLink>
+                    <NavLink to="/dashboard/calendario" className="min-h-11 inline-flex items-center px-2 font-semibold text-enlace hover:underline">Ver el calendario completo</NavLink>
                 </div>
                 : 
                 <div className="flex flex-col gap-4">
