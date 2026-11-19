@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import useFileStore from '../hooks/useFileStore';
 import MobileCalendar from './MobileCalendar';
 import PCCalendar from './PCCalendar';
-import { sortedEvents } from '../scripts/sortEvents';
+import { sortedEvents, mesDelProximoExamen } from '../scripts/sortEvents';
 export default function CalendarPage() {
-    const [date, setDate] = useState(new Date());
-    const [isLg, setIsLg] = useState(() => window.matchMedia('(min-width: 1024px)').matches);
     const jsonData = useFileStore((state) => state.jsonData);
+    const [date, setDate] = useState(() => mesDelProximoExamen(jsonData));
+    const [isLg, setIsLg] = useState(() => window.matchMedia('(min-width: 1024px)').matches);
     const year = date.getFullYear();
     const month = date.getMonth();
     function isLgBreakpoint() {
