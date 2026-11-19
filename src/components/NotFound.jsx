@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router';
 import GatoImagen from "../assets/404img.jpg";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";

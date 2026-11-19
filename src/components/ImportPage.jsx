@@ -2,7 +2,7 @@ import { IconFileUpload, IconInfoCircle, IconExclamationCircle, IconHelpCircle, 
 import useFileStore from '../hooks/useFileStore';
 import { useRef, useState } from 'react';
 import excelToJson from '../scripts/handleExcel';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router';
 import PageMeta from './PageMeta.jsx';
 export default function ImportPage() {
     const [file, setFile] = useState(null);

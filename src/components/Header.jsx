@@ -1,6 +1,6 @@
 import { GitHub } from "../SocialIcons/Github.jsx";
 import portfolioicon from "../assets/portfolioicon.png";
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router';
 export default function Header() {
     return (
         <header className="flex flex-row bg-gray-100 dark:bg-gray-800 p-4 lg:px-15 items-center justify-between lg:sticky top-0 z-10 shadow-sm">

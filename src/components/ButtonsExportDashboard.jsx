@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router';
 import { IconFileTypeXls } from '@tabler/icons-react';
 import { descargarCalendarioExcel } from "../scripts/generateExcel";
 import { descargarCalendarioICS } from "../scripts/generateICS";

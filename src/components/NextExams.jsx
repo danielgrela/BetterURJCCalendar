@@ -4,7 +4,7 @@ import parseEventDate, { sortedEvents } from "../scripts/sortEvents";
 import { IconExclamationCircle, IconCircleCheck } from "@tabler/icons-react";
 import ExamCard from "./ExamCard";
 import { claveExamen } from "../scripts/examen";
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router';
 // Los 5 primeros exámenes desde hoy; null si no hay datos importados
 function proximosExamenes(examenes) {
     if(!examenes || examenes?.length === 0){

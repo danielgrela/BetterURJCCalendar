@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 import SideBar from './components/SideBar.jsx'
 import ReturnMobile from './components/ReturnMobile.jsx';
 function App() {

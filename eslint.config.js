@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', '.claude']),
+  globalIgnores(['dist', '.claude', '.react-router']),
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     extends: [
@@ -24,8 +24,17 @@ export default defineConfig([
     },
   },
   {
-    // Punto de entrada: monta la app, no exporta componentes
-    files: ['src/main.jsx'],
-    rules: { 'react-refresh/only-export-components': 'off' },
+    // Exportaciones de módulo de ruta que React Router entiende (no son componentes)
+    rules: {
+      'react-refresh/only-export-components': ['warn', {
+        allowConstantExport: true,
+        allowExportNames: ['meta', 'links', 'headers', 'loader', 'clientLoader', 'action', 'Layout', 'HydrateFallback', 'ErrorBoundary'],
+      }],
+    },
+  },
+  {
+    // Configuración que se ejecuta en Node durante el build
+    files: ['react-router.config.js', 'vite.config.ts'],
+    languageOptions: { globals: globals.node },
   },
 ])

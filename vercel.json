@@ -1,13 +1,14 @@
 {
+  "outputDirectory": "dist/client",
   "trailingSlash": false,
   "rewrites": [
     {
       "source": "/dashboard",
-      "destination": "/index.html"
+      "destination": "/__spa-fallback.html"
     },
     {
       "source": "/dashboard/:pagina(calendario|importar|guia-de-uso)",
-      "destination": "/index.html"
+      "destination": "/__spa-fallback.html"
     }
   ]
 }

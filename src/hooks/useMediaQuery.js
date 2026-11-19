@@ -6,5 +6,6 @@ export default function useMediaQuery(query) {
         media.addEventListener('change', onChange);
         return () => media.removeEventListener('change', onChange);
     }, [query]);
-    return useSyncExternalStore(subscribe, () => window.matchMedia(query).matches);
+    // En el prerender no hay ventana: se asume que no coincide
+    return useSyncExternalStore(subscribe, () => window.matchMedia(query).matches, () => false);
 }
