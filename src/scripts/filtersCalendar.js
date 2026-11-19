@@ -1,24 +1,29 @@
-import { useFileStoreJsonFilters } from '../hooks/useFileStore';
+import parseEventDate from './sortEvents';
 
-const handleChange = (e, parseEventDate, sortedEvents) => {
-    const { setDataFiltered } = useFileStoreJsonFilters.getState();
-    let filtered = [...sortedEvents];
+export const FILTROS_INICIALES = { convocatoria: '', fecha: 'Todos' };
 
-    const convocatoriaValue = document.getElementById('convocatoria')?.value;
-    const fechaValue = document.getElementById('fecha')?.value;
+// Orden del curso académico; las convocatorias desconocidas van al final
+const ORDEN_CONVOCATORIAS = ['Septiembre', 'Enero', 'Mayo', 'Junio'];
 
-    if (convocatoriaValue && convocatoriaValue !== 'Convocatoria') {
-        filtered = filtered.filter(ev => ev.Convocatoria === convocatoriaValue);
-    }
-
-    if (fechaValue && fechaValue === 'Pendientes') {
-        filtered = filtered.filter(ev => {
-            const eventDate = parseEventDate(ev.Fecha);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            return eventDate >= today;
-        });
-    }
-    setDataFiltered(filtered);
+export const convocatoriasDe = (examenes) => {
+    const unicas = [...new Set((examenes ?? []).map((ev) => ev?.Convocatoria).filter(Boolean))];
+    const posicion = (c) => {
+        const i = ORDEN_CONVOCATORIAS.indexOf(c);
+        return i === -1 ? ORDEN_CONVOCATORIAS.length : i;
+    };
+    return unicas.sort((a, b) => posicion(a) - posicion(b) || a.localeCompare(b, 'es'));
 };
-export default handleChange;
+
+export const filtrarExamenes = (examenes, { convocatoria, fecha }, hoy = new Date()) => {
+    let filtrados = examenes ?? [];
+
+    if (convocatoria) {
+        filtrados = filtrados.filter((ev) => ev.Convocatoria === convocatoria);
+    }
+
+    if (fecha === 'Pendientes') {
+        const inicioHoy = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+        filtrados = filtrados.filter((ev) => parseEventDate(ev.Fecha) >= inicioHoy);
+    }
+    return filtrados;
+};

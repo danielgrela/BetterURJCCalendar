@@ -1,16 +1,14 @@
-import handleChange from '../scripts/filtersCalendar';
-import parseEventDate from '../scripts/sortEvents';
-export default function FiltersCalendar({ sortedEvents, ...props }) {
+export default function FiltersCalendar({ filtros, setFiltros, convocatorias, className = '' }) {
+    const handleChange = (e) => setFiltros({ ...filtros, [e.target.name]: e.target.value });
     return (
-        <form onChange={(e) => handleChange(e, parseEventDate, sortedEvents)} className={`w-full mt-4 flex flex-row gap-1 ${props.className}`}>
-            <select id="convocatoria" name="convocatoria" className="w-48 px-2 py-3 rounded-lg border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-950 dark:text-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">
-                <option value="Convocatoria">Convocatoria</option>
-                <option value="Septiembre">Septiembre</option>
-                <option value="Enero">Enero</option>
-                <option value="Mayo">Mayo</option>
-                <option value="Junio">Junio</option>
+        <form onSubmit={(e) => e.preventDefault()} className={`w-full mt-4 flex flex-row gap-1 ${className}`}>
+            <select name="convocatoria" value={filtros.convocatoria} onChange={handleChange} className="w-48 px-2 py-3 rounded-lg border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-950 dark:text-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">
+                <option value="">Convocatoria</option>
+                {convocatorias.map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                ))}
             </select>
-            <select id="fecha" name="fecha" className="w-32 p-3 rounded-lg border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-950 dark:text-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">
+            <select name="fecha" value={filtros.fecha} onChange={handleChange} className="w-32 p-3 rounded-lg border border-slate-300 dark:border-gray-600 bg-white dark:bg-gray-950 dark:text-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary">
                 <option value="Todos">Todos</option>
                 <option value="Pendientes">Pendientes</option>
             </select>

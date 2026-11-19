@@ -3,17 +3,14 @@ import {
     IconSchool, IconMapPin
 } from '@tabler/icons-react';
 import FiltersCalendar from './FiltersCalendar';
-import { useFileStoreJsonFilters } from '../hooks/useFileStore';
-export default function MobileCalendar({ jsonData }) {
-    const dataFiltered = useFileStoreJsonFilters((state) => state.dataFiltered);
-    const visibleData = dataFiltered ?? jsonData;
+export default function MobileCalendar({ visibleData, filtersProps }) {
     return (
         <div className="flex flex-col gap-6 max-h-full">
             <header className="flex flex-col mx-auto h-fit items-start justify-between mb-4 w-full">
                 <h1 className="text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
                     Mis Exámenes
                 </h1>
-                <FiltersCalendar sortedEvents={jsonData} />
+                <FiltersCalendar {...filtersProps} />
             </header>
             <div className="flex flex-col gap-4 overflow-y-auto custom-scrollbar pb-2">
                 {Array.isArray(visibleData) && visibleData.length > 0 ? (visibleData.map((ev, idx) => (
