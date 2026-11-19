@@ -5,7 +5,8 @@ Hoja de ruta para agentes. Parte de un análisis del código a fecha 2026-11-19 
 ## Reglas de ejecución
 - **Git** (ver `AGENTS.md` › Git): un commit por tarea terminada y verificada, en español (`Se añade…`), incluyendo el `[x]` de aquí. **Push solo con permiso del usuario** (`main` despliega en Vercel).
 - Servidores (`vite`, `preview`) abiertos hasta que el usuario pida push; se paran justo después.
-- **Si hay dudas, preguntar al usuario** antes de decidir; no suponer.
+- **Una fase entera por sesión de trabajo**: cuando el usuario pida seguir con el roadmap, se hace la fase completa (toda la F4, no solo F4.2) sin parar entre tareas; se sigue haciendo un commit por tarea. Solo se para antes si una tarea necesita una decisión del usuario o falla algo que no se puede resolver.
+- **Preguntar siempre que haga falta** (con `AskUserQuestion`, en cuanto surja la duda y sin esperar al final de la fase): alcance, copy, diseño, borrar algo, elegir entre opciones o resultados que no cuadran con lo esperado. No suponer.
 - Respetar el orden de fases; dentro de una fase, las tareas sin `dep:` son independientes.
 - **Responsive mobile-first y modo oscuro** (ver `AGENTS.md` › Convenciones): todo cambio visual se comprueba a 375, 768 y ≥1024 px, en claro y oscuro, con y sin datos importados.
 - Antes de cerrar: `npm run build` sin errores (y `npm run lint` cuando F0.1 esté hecho; `npm run typecheck` cuando F4.6 esté hecho; `npm test` cuando F4.7 esté hecho).

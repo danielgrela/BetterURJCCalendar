@@ -74,7 +74,7 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 - ExcelJS (930 kB) ya se carga aparte con `import()` dinámico (F4.1); F4.8 valorará cambiarlo por una librería más ligera.
 
 ## Trabajo pendiente
-Seguir [ROADMAP.md](ROADMAP.md) por fases. Marcar tareas `[x]` al terminar. Guía visual en [DESIGN.md](DESIGN.md).
+Seguir [ROADMAP.md](ROADMAP.md) por fases: cada petición de «seguir con el roadmap» cubre la fase entera (F4, no solo F4.2), con un commit por tarea y preguntando al usuario en cuanto surja una duda. Marcar tareas `[x]` al terminar. Guía visual en [DESIGN.md](DESIGN.md).
 
 ## Skills (`.claude/skills/`, copiadas del portfolio, no se versionan)
 - `modern-web-guidance` (GoogleChrome, Apache 2.0): consultar antes de escribir HTML/CSS/JS de cliente (`npx -y modern-web-guidance@latest search "<consulta>"`). No para config/tooling.
