@@ -19,7 +19,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `src/SocialIcons/Github.jsx` → icono SVG de GitHub (Tabler no trae logos de marca)
 - `src/hooks/` → stores de Zustand: `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`; `useFileStoreJsonFilters` = resultado de filtros, sin persistir) · `useDarkMode` (persistido en `dark-mode`, añade/quita `.dark` en `<html>`)
 - `src/scripts/` → lógica sin UI:
-  - `handleExcel` (**sin extensión**) → `excelTojson(file)`: lee la hoja 1 con ExcelJS, ignora las 2 primeras filas y mapea las columnas 1–10
+  - `handleExcel.js` → `excelTojson(file)`: lee la hoja 1 con ExcelJS, ignora las 2 primeras filas y mapea las columnas 1–10
   - `sortEvents.js` → `parseEventDate('DD-MM-YYYY')` (default) y `sortedEvents(json)` (por fecha y hora)
   - `filtersCalendar.js` → filtro por convocatoria y "Pendientes" (lee los `<select>` por `id`)
   - `generateExcel.js` / `generateICS.js` → descargas `horario_examenes.xlsx` / `.ics`
@@ -65,7 +65,7 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 ## Deuda conocida (candidatos a refactor, ver ROADMAP)
 - `README.md` es la plantilla de Vite (habla de TypeScript).
 - `index.html`: `<html lang="en">` y `<title>` sin cuidar, sin meta de SEO (F3).
-- `scripts/handleExcel` sin extensión `.js`; `generateExcel.js`/`generateICS.js` duplican la lógica de descarga.
+- `generateExcel.js`/`generateICS.js` duplican la lógica de descarga.
 - `CalendarMainMockup` es casi una copia de `Calendar`; `FiltersCalendar` lee el DOM por `id` en vez de estado.
 - Bundle de 1,3 MB (ExcelJS entero en el chunk principal): candidato a `import()` dinámico al importar/exportar.
 
