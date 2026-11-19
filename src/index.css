@@ -12,26 +12,49 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/* Tokens: cada uno cambia de valor con el tema, así que en className van sin pareja dark:
+   (bg-superficie, no bg-white dark:bg-gray-950). Ratios de contraste en DESIGN.md */
 :root {
+	/* Marca */
 	--primary: #E4002B;
-	--secundario: #333333;
+	--sobre-primary: #FFFFFF;   /* texto e iconos sobre bg-primary */
 	--tertiary: #007AA4;
-	--neutro: #717171;
+	--enlace: #3B82F6;
+	/* Superficies, de más hundida a más elevada */
+	--lienzo: #F3F4F6;          /* fondo de página (gray-100) */
+	--superficie: #FFFFFF;      /* tarjetas, barra lateral, formularios */
+	--superficie-alta: #E5E7EB; /* chips, hovers y lo que va encima de una superficie (gray-200) */
+	--borde: #E5E7EB;           /* gray-200 */
+	/* Texto */
+	--texto: #111827;           /* gray-900 */
+	--texto-suave: #717171;     /* descripciones y datos de apoyo */
 	font-family: 'Inter', sans-serif;
 }
 
 .dark {
 	--primary: #FF2D3E;
-	--secundario: #CCCCCC;
+	--sobre-primary: #FFFFFF;
 	--tertiary: white;
-	--neutro: #9CA3AF;
+	--enlace: #3B82F6;
+	--lienzo: #111827;          /* gray-900 */
+	--superficie: #030712;      /* gray-950 */
+	--superficie-alta: #1F2937; /* gray-800 */
+	--borde: #1F2937;           /* gray-800 */
+	--texto: #F3F4F6;           /* gray-100 */
+	--texto-suave: #9CA3AF;     /* gray-400 */
 }
 
 @theme {
 	--color-primary: var(--primary);
-	--color-secundario: var(--secundario);
+	--color-sobre-primary: var(--sobre-primary);
 	--color-tertiary: var(--tertiary);
-	--color-neutro: var(--neutro);
+	--color-enlace: var(--enlace);
+	--color-lienzo: var(--lienzo);
+	--color-superficie: var(--superficie);
+	--color-superficie-alta: var(--superficie-alta);
+	--color-borde: var(--borde);
+	--color-texto: var(--texto);
+	--color-texto-suave: var(--texto-suave);
 }
 
 body {
@@ -40,7 +63,7 @@ body {
 
 @layer base {
 	body {
-		@apply text-black dark:text-white;
+		@apply bg-lienzo text-texto;
 	}
 }
 

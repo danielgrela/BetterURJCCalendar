@@ -38,9 +38,9 @@ export default function ExamCard({ examen, variant = 'full' }: { examen: Examen,
 
     if (variant === 'list') {
         return (
-            <div className="flex flex-col gap-2 group relative p-5 border-l-5 border-primary text-primary rounded-md shadow-sm bg-white dark:bg-gray-950">
+            <div className="flex flex-col gap-2 group relative p-5 border-l-5 border-primary text-primary rounded-md shadow-sm bg-superficie">
                 <div className='flex flex-row justify-between items-center'>
-                    <div className='bg-gray-200 dark:bg-gray-800 dark:text-gray-200 rounded-sm py-1 px-4'>
+                    <div className='bg-superficie-alta rounded-sm py-1 px-4'>
                             <span>{examen.Convocatoria}</span>
                     </div>
                     <div className='flex flex-col w-1/2 items-end'>
@@ -71,14 +71,14 @@ export default function ExamCard({ examen, variant = 'full' }: { examen: Examen,
     }
 
     return (
-        <div className="flex flex-col lg:flex-row gap-4 justify-between items-center w-full shadow-sm border border-gray-200 dark:border-gray-800 border-l-6 p-4 lg:p-8 border-l-primary dark:border-l-primary bg-white dark:bg-gray-950">
+        <div className="flex flex-col lg:flex-row gap-4 justify-between items-center w-full shadow-sm border border-borde border-l-6 p-4 lg:p-8 border-l-primary bg-superficie">
             <div className="flex flex-col gap-2">
                 <div className="flex flex-row gap-4 items-center">
-                    <p className="bg-gray-200 dark:bg-gray-800 dark:text-gray-200 rounded-sm py-px px-3 w-fit font-medium">{examen.Convocatoria}</p>
+                    <p className="bg-superficie-alta rounded-sm py-px px-3 w-fit font-medium">{examen.Convocatoria}</p>
                     <p className="text-sm text-primary font-bold">{textoDias(diasHasta(examen.Fecha))}</p>
                 </div>
-                <h3 className="text-xl font-bold dark:text-gray-100">{nombreAsignatura(examen)}</h3>
-                <p className="text-sm font-medium dark:text-gray-300">{examen.Plan}</p>
+                <h3 className="text-xl font-bold">{nombreAsignatura(examen)}</h3>
+                <p className="text-sm font-medium text-texto-suave">{examen.Plan}</p>
             </div>
             <div className="flex flex-col gap-2 w-full lg:items-end">
                 <div className="flex flex-row items-center gap-2">

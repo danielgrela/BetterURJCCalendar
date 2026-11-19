@@ -19,16 +19,16 @@ export default function AvisoActualizacion() {
     if (!hayVersionNueva) return null;
 
     return (
-        <div role="status" className="fixed z-50 inset-x-4 bottom-28 lg:inset-x-auto lg:left-8 lg:bottom-8 lg:max-w-sm flex flex-col gap-4 p-4 rounded-sm border border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-900 text-sm text-secundario dark:text-gray-200 shadow-md">
+        <div role="status" className="fixed z-50 inset-x-4 bottom-28 lg:inset-x-auto lg:left-8 lg:bottom-8 lg:max-w-sm flex flex-col gap-4 p-4 rounded-sm border border-borde bg-superficie text-sm text-texto shadow-md">
             <p className="flex flex-row gap-3 items-center">
                 <IconInfoCircle className="min-w-5" stroke={2} />
                 Hay una versión nueva de la app.
             </p>
             <div className="flex flex-row gap-2 justify-end">
-                <button type="button" onClick={() => setHayVersionNueva(false)} className="min-h-11 px-4 rounded border border-gray-300 dark:border-gray-600 font-semibold cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <button type="button" onClick={() => setHayVersionNueva(false)} className="min-h-11 px-4 rounded border border-borde font-semibold cursor-pointer hover:bg-superficie-alta transition-colors">
                     Ahora no
                 </button>
-                <button type="button" onClick={() => updateServiceWorker(true)} className="min-h-11 px-4 rounded bg-primary text-white font-semibold cursor-pointer hover:brightness-90">
+                <button type="button" onClick={() => updateServiceWorker(true)} className="min-h-11 px-4 rounded bg-primary text-sobre-primary font-semibold cursor-pointer hover:brightness-90">
                     Actualizar
                 </button>
             </div>

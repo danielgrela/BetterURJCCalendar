@@ -23,7 +23,7 @@ export default function NextExams() {
     const proximos = useMemo(() => proximosExamenes(sortedEvents(jsonData)), [jsonData]);
     return (
         <section className="flex flex-col gap-3">
-            <h2 className="text-2xl font-bold dark:text-gray-100">Próximos Exámenes</h2>
+            <h2 className="text-2xl font-bold">Próximos Exámenes</h2>
             {!proximos ?
                 <div className="flex flex-row gap-2 text-primary items-center justify-center">              
                     <IconExclamationCircle className="min-w-fit" stroke={2} />  
@@ -32,7 +32,7 @@ export default function NextExams() {
                 : proximos.length === 0 ?
                 // Hay exámenes importados pero ya han pasado todos
                 <div className="flex flex-col gap-2 items-center text-center py-6">
-                    <div className="flex flex-col lg:flex-row gap-2 items-center text-secundario dark:text-gray-100">
+                    <div className="flex flex-col lg:flex-row gap-2 items-center text-texto">
                         <IconCircleCheck className="min-w-fit text-primary" stroke={2} />
                         <h3 className="text-xl font-bold">No te quedan exámenes pendientes</h3>
                     </div>

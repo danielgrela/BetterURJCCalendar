@@ -86,12 +86,12 @@ export default function ImportPage() {
     return (
         <div className='min-h-full flex flex-col'>
             <PageMeta titulo="Importar Excel" noindex />
-            <h1 className="text-3xl font-bold dark:text-gray-100">Importar Calendario de Exámenes</h1>
+            <h1 className="text-3xl font-bold">Importar Calendario de Exámenes</h1>
             <div className='flex flex-row gap-1 items-center text-center mt-3'>
-                <IconHelpCircle size={16} className="inline-block text-gray-500 dark:text-gray-500 mr-1" />
-                <p className="text-neutro text-sm">¿Tienes dudas? puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-blue-500 active:text-blue-800 hover:underline">guía de uso</NavLink></p>
+                <IconHelpCircle size={16} className="inline-block text-texto-suave mr-1" />
+                <p className="text-texto-suave text-sm">¿Tienes dudas? puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-enlace hover:underline">guía de uso</NavLink></p>
             </div>
-            <form className="relative mt-6 flex flex-col bg-white dark:bg-gray-950 h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded shadow-sm gap-8 lg:gap-10">
+            <form className="relative mt-6 flex flex-col bg-superficie h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded shadow-sm gap-8 lg:gap-10">
             <div className='flex flex-col gap-4'>
                 <input
                 onChange={handleFileChange}
@@ -104,23 +104,23 @@ export default function ImportPage() {
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
-                    className={`border-2 border-dashed ${dragging ? 'border-primary bg-gray-50 dark:bg-gray-900' : 'border-gray-300 dark:border-gray-700'} rounded-lg px-6 py-14 text-center cursor-pointer hover:border-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors dark:text-gray-200`}>
-                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-900">
+                    className={`border-2 border-dashed ${dragging ? 'border-primary bg-lienzo' : 'border-borde'} rounded-lg px-6 py-14 text-center cursor-pointer hover:border-primary hover:bg-lienzo transition-colors`}>
+                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-lienzo">
                         <IconFileUpload stroke={2} />
                     </div>
                     <p className="font-semibold">Arrastra tu archivo de examenes aqui o haz clic para buscar</p>
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-500">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-blue-500 active:text-blue-800 hover:underline">examenes</a> </p>
+                    <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace hover:underline">examenes</a> </p>
                 </label>
-                {file && <p className="text-start text-sm text-secundario font-medium">Archivo seleccionado: {file.name}</p>}
+                {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
                 {error && <p className="text-start text-sm text-red-500 font-medium">{error}</p>}
                 </div>
                 <div className='flex flex-col gap-6'>
                     {jsonDataState && jsonDataState.length > 0 && (
-                        <div className="text-sm text-secundario dark:text-gray-300 border border-gray-400 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 rounded-sm p-4 gap-4 flex flex-row">
+                        <div className="text-sm text-texto border border-borde bg-lienzo rounded-sm p-4 gap-4 flex flex-row">
                             <IconExclamationCircle className="min-w-5 h-full" stroke={2} />
                             <div className='flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between w-full'>
                                 <p>Ya tiene un calendario, importar otro lo sobreescribirá.</p>
-                                <button type="button" onClick={() => { setBorrado(false); dialogBorrarRef.current?.showModal(); }} className="self-start lg:self-auto shrink-0 min-h-11 inline-flex items-center gap-2 px-4 rounded border border-primary text-primary font-semibold cursor-pointer hover:bg-white dark:hover:bg-gray-800 transition-colors">
+                                <button type="button" onClick={() => { setBorrado(false); dialogBorrarRef.current?.showModal(); }} className="self-start lg:self-auto shrink-0 min-h-11 inline-flex items-center gap-2 px-4 rounded border border-primary text-primary font-semibold cursor-pointer hover:bg-superficie transition-colors">
                                     <IconTrash size={18} stroke={2} />
                                     Borrar calendario
                                 </button>
@@ -128,25 +128,25 @@ export default function ImportPage() {
                         </div>
                     )}
                     {borrado && (
-                        <p role="status" className="text-sm text-secundario dark:text-gray-300 font-medium">Se ha borrado el calendario de este navegador.</p>
+                        <p role="status" className="text-sm text-texto font-medium">Se ha borrado el calendario de este navegador.</p>
                     )}
-                    <div className="text-sm text-secundario dark:text-gray-300 border border-gray-400 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 rounded-sm p-4 gap-4 flex flex-row">
+                    <div className="text-sm text-texto border border-borde bg-lienzo rounded-sm p-4 gap-4 flex flex-row">
                         <IconInfoCircle className="min-w-5 h-full" stroke={2} />
                         <div className='flex flex-col gap-2'>
                             <h2 className="font-semibold">Instrucciones de formato:</h2>
-                            <p>Asegúrate de que el archivo cumpla el formato correcto que se específica en la <NavLink to="/dashboard/guia-de-uso" className="text-blue-500 active:text-blue-800 hover:underline">guía de uso</NavLink>.</p>
+                            <p>Asegúrate de que el archivo cumpla el formato correcto que se específica en la <NavLink to="/dashboard/guia-de-uso" className="text-enlace hover:underline">guía de uso</NavLink>.</p>
                         </div>
                     </div>
                 </div>
-                <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 disabled:cursor-not-allowed hover:brightness-90 hidden lg:block cursor-pointer bg-primary self-end w-38 text-white px-8 py-2 rounded">Importar</button>
-                <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 lg:hidden cursor-pointer bg-primary text-white px-8 py-2 rounded">Importar</button>
+                <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 disabled:cursor-not-allowed hover:brightness-90 hidden lg:block cursor-pointer bg-primary self-end w-38 text-sobre-primary px-8 py-2 rounded">Importar</button>
+                <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 lg:hidden cursor-pointer bg-primary text-sobre-primary px-8 py-2 rounded">Importar</button>
             </form>
-            <dialog ref={dialogBorrarRef} onClose={handleCerrarDialogo} aria-labelledby="borrar-titulo" aria-describedby="borrar-descripcion" className="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-white dark:bg-gray-900 text-secundario dark:text-gray-200 border border-gray-200 dark:border-gray-700 p-6 shadow-lg overscroll-contain backdrop:bg-black/50 backdrop:overflow-hidden backdrop:overscroll-contain">
-                <h2 id="borrar-titulo" className="text-lg font-bold dark:text-gray-100">¿Borrar el calendario?</h2>
-                <p id="borrar-descripcion" className="mt-2 text-sm text-neutro">Se eliminarán los exámenes guardados en este navegador. Para recuperarlos tendrás que volver a importar el Excel.</p>
+            <dialog ref={dialogBorrarRef} onClose={handleCerrarDialogo} aria-labelledby="borrar-titulo" aria-describedby="borrar-descripcion" className="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-superficie text-texto border border-borde p-6 shadow-lg overscroll-contain backdrop:bg-black/50 backdrop:overflow-hidden backdrop:overscroll-contain">
+                <h2 id="borrar-titulo" className="text-lg font-bold">¿Borrar el calendario?</h2>
+                <p id="borrar-descripcion" className="mt-2 text-sm text-texto-suave">Se eliminarán los exámenes guardados en este navegador. Para recuperarlos tendrás que volver a importar el Excel.</p>
                 <form method="dialog" className="mt-6 flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">
-                    <button value="cancelar" autoFocus className="min-h-11 px-4 rounded border border-gray-300 dark:border-gray-600 font-semibold cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Cancelar</button>
-                    <button value="borrar" className="min-h-11 px-4 rounded bg-primary text-white font-semibold cursor-pointer hover:brightness-90">Borrar calendario</button>
+                    <button value="cancelar" autoFocus className="min-h-11 px-4 rounded border border-borde font-semibold cursor-pointer hover:bg-superficie-alta transition-colors">Cancelar</button>
+                    <button value="borrar" className="min-h-11 px-4 rounded bg-primary text-sobre-primary font-semibold cursor-pointer hover:brightness-90">Borrar calendario</button>
                 </form>
             </dialog>
         </div>

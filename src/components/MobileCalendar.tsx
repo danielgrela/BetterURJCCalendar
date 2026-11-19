@@ -8,7 +8,7 @@ export default function MobileCalendar({ visibleData, filtersProps }: { visibleD
     return (
         <div className="flex flex-col gap-6 max-h-full">
             <header className="flex flex-col mx-auto h-fit items-start justify-between mb-4 w-full">
-                <h1 className="text-3xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
+                <h1 className="text-3xl font-black text-texto tracking-tight">
                     Mis Exámenes
                 </h1>
                 <FiltersCalendar {...filtersProps} />
