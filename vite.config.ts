@@ -1,5 +1,6 @@
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
 // Vercel sirve dist/404.html con estado 404 en las rutas que no reescribe (vercel.json):
 // es una copia de index.html para que React Router pinte NotFound.
@@ -17,5 +18,5 @@ function paginaNoEncontrada(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), paginaNoEncontrada()],
+  plugins: [react(), tailwindcss(), paginaNoEncontrada()],
 })

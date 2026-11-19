@@ -1,6 +1,6 @@
 # AGENTS.md — Better URJC Calendar
 
-SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/examenes) en un calendario personal, con próximos exámenes y exportación a Excel e iCal (.ics). Todo ocurre en el navegador: no hay backend ni cuentas. React 19 + Vite 8 + Tailwind 4 (vía PostCSS) + React Router 7 + Zustand. **JavaScript (`.jsx`/`.js`), no TypeScript.** Idioma de trabajo y de la interfaz: español (no hay i18n).
+SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/examenes) en un calendario personal, con próximos exámenes y exportación a Excel e iCal (.ics). Todo ocurre en el navegador: no hay backend ni cuentas. React 19 + Vite 8 + Tailwind 4 (plugin `@tailwindcss/vite`) + React Router 7 + Zustand. **JavaScript (`.jsx`/`.js`), no TypeScript.** Idioma de trabajo y de la interfaz: español (no hay i18n).
 
 ## Comandos
 - `npm run dev` → http://localhost:5173 · `npm run host` → igual, expuesto en la red local (para probar en el móvil)
@@ -32,7 +32,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `public/robots.txt` y `public/sitemap.xml` → solo `/` y `/dashboard/guia-de-uso`; si se añade una ruta pública, añadirla al sitemap
 - `src/assets/` y `public/*.png|ico` → imágenes (no leer, binarios)
 - `vercel.json` → reescribe a `/index.html` **solo** las rutas conocidas del dashboard; el resto recibe `dist/404.html` (copia de `index.html` que genera el plugin `paginaNoEncontrada` de `vite.config.ts`) con estado 404. **Si se añade una ruta en `main.jsx`, añadirla también aquí** o dará 404 al recargar
-- `vite.config.ts` → plugin de React y `paginaNoEncontrada`
+- `vite.config.ts` → plugins de React, Tailwind y `paginaNoEncontrada`
 
 ## Modelo de datos (examen)
 Objeto con `Curso, Plan, Asignatura, CodigoPlan, CodigoAsignatura, CodigoGrupo, Convocatoria, Fecha, Hora, Aula`, tal y como sale de `handleExcel`.

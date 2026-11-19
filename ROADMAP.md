@@ -116,7 +116,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 
 ## F4 · Stack y rendimiento
 - [x] **F4.1** ExcelJS con `import()` dinámico solo al importar/exportar; el chunk inicial debe bajar claramente de 1,3 MB (anotar antes/después). Hecho en `handleExcel.js` y `generateExcel.js`: chunk inicial de 1.286,18 kB (367,59 kB gzip) a 356,11 kB (110,86 kB gzip); ExcelJS va aparte en `exceljs.min-*.js` (929,91 kB, 256,42 kB gzip) y solo se descarga al importar o exportar a Excel.
-- [ ] **F4.2** Tailwind con `@tailwindcss/vite` en lugar de PostCSS; quitar `autoprefixer` y `postcss.config.js`. Mismo CSS resultante.
+- [x] **F4.2** Tailwind con `@tailwindcss/vite` en lugar de PostCSS; quitar `autoprefixer` y `postcss.config.js`. Mismo CSS resultante. Hecho (fuera también `postcss`, que ya trae Vite); Tailwind sube de 4.3.0 a 4.3.5 por el plugin. El CSS solo cambia en minificado y en el prefijo `-o-object-fit` de `autoprefixer`. El `@import` de Google Fonts pasa delante del de Tailwind: el plugin descarta un `@import` que no vaya primero (lo quita F4.3).
 - [ ] **F4.3** Inter autoalojada (`@fontsource-variable/inter`, solo latin) con `font-display: swap` y `preload`; fuera el `@import` de Google Fonts (rendimiento y privacidad).
 - [ ] **F4.4** React Router en modo framework (`ssr: false`, `prerender: ["/", "/dashboard/guia-de-uso"]`), rutas en `app/routes.js`, `meta` por ruta y carga diferida por página. Verificar que el HTML de `dist` contiene el texto de la portada. dep: F2, F3.3
 - [ ] **F4.5** Comprobar en Vercel tras F4.4: portada y guía servidas como HTML estático, rutas del dashboard funcionando al recargar y 404 real (F3.8). Ajustar `vercel.json` si hace falta. dep: F4.4
