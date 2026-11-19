@@ -105,7 +105,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 - [x] **F2.6** Limpieza React: renombrar la función interna de `NextExams` (`proximosExamenes`), `key` estable (`CodigoAsignatura + Fecha + Hora`), `useMemo` para `sortedEvents`, hook `useMediaQuery` sin `addListener` ni estado `loading`, `NavLink` con `isActive` en `ButtonNavBar`, `children` como hijos JSX, un solo botón «Importar» responsive.
 
 ## F3 · SEO
-- [ ] **F3.1** `index.html`: `lang="es"`, `<title>` y `meta description` en español con las búsquedas reales («calendario de exámenes de la URJC»), `theme-color` claro y oscuro (`media="(prefers-color-scheme: …)"`).
+- [x] **F3.1** `index.html`: `lang="es"`, `<title>` y `meta description` en español con las búsquedas reales («calendario de exámenes de la URJC»), `theme-color` claro y oscuro (`media="(prefers-color-scheme: …)"`).
 - [ ] **F3.2** Open Graph y Twitter Card (`og:title`, `og:description`, `og:image` 1200×630 hecha con una captura real del calendario, `og:url`, `og:locale=es_ES`) y `canonical` con `https://betterurjccalendar.danielgrela.com/`.
 - [ ] **F3.3** Título y descripción por ruta con los `<title>`/`<meta>` nativos de React 19 dentro de cada página; `noindex` en `/dashboard`, `/dashboard/calendario`, `/dashboard/importar` y en `NotFound`.
 - [ ] **F3.4** `public/robots.txt` y `public/sitemap.xml` (solo `/` y `/dashboard/guia-de-uso`, con el dominio `betterurjccalendar.danielgrela.com`; línea `Sitemap:` en `robots.txt`).
