@@ -26,6 +26,7 @@
 	--superficie: #FFFFFF;      /* tarjetas, barra lateral, formularios */
 	--superficie-alta: #E5E7EB; /* chips, hovers y lo que va encima de una superficie (gray-200) */
 	--borde: #E5E7EB;           /* gray-200 */
+	--borde-fuerte: #D1D5DB;    /* gray-300: controles (selects, zona de subida) */
 	/* Texto */
 	--texto: #111827;           /* gray-900 */
 	--texto-suave: #4B5563;     /* gray-600: descripciones y datos de apoyo */
@@ -46,6 +47,7 @@
 	--superficie: #111827;      /* gray-900 */
 	--superficie-alta: #1F2937; /* gray-800 */
 	--borde: #1F2937;           /* gray-800 */
+	--borde-fuerte: #4B5563;    /* gray-600 */
 	--texto: #F3F4F6;           /* gray-100 */
 	--texto-suave: #9CA3AF;     /* gray-400 */
 	color-scheme: dark;
@@ -61,6 +63,7 @@
 	--color-superficie: var(--superficie);
 	--color-superficie-alta: var(--superficie-alta);
 	--color-borde: var(--borde);
+	--color-borde-fuerte: var(--borde-fuerte);
 	--color-texto: var(--texto);
 	--color-texto-suave: var(--texto-suave);
 }

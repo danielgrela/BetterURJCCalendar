@@ -104,7 +104,7 @@ export default function ImportPage() {
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
-                    className={`border-2 border-dashed ${dragging ? 'border-primary bg-lienzo' : 'border-borde'} rounded-lg px-6 py-14 text-center cursor-pointer hover:border-primary hover:bg-lienzo transition-colors`}>
+                    className={`border-2 border-dashed ${dragging ? 'border-primary bg-lienzo' : 'border-borde-fuerte'} rounded-lg px-6 py-14 text-center cursor-pointer hover:border-primary hover:bg-lienzo transition-colors`}>
                     <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-lienzo">
                         <IconFileUpload stroke={2} />
                     </div>

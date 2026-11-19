@@ -18,6 +18,8 @@ colors:                   # tokens de src/index.css (claro / oscuro)
   superficie-alta-dark: "#1F2937"  # gray-800
   borde: "#E5E7EB"        # gray-200
   borde-dark: "#1F2937"   # gray-800
+  borde-fuerte: "#D1D5DB" # gray-300: selects y zona de subida
+  borde-fuerte-dark: "#4B5563"  # gray-600
   texto: "#111827"        # gray-900
   texto-dark: "#F3F4F6"   # gray-100
   texto-suave: "#4B5563"  # gray-600
@@ -74,7 +76,7 @@ Herramienta de estudiante para estudiantes ("De Daniel para Daniel (y amigos)").
 - **`tertiary` (azul `#006D93`, `#38BDF8` en oscuro)**: acento secundario puntual (icono de calendario en Características). No usar para acciones.
 - **`sobre-primary`**: texto e iconos encima de `bg-primary` (nunca `text-white` a mano). Blanco en claro y casi negro en oscuro: el rojo oscuro tiene que ser claro para leerse como texto, y entonces el blanco encima no llega a AA. Igual en todos los botones rojos.
 - **`texto` / `texto-suave`**: texto principal y de apoyo (descripciones, plan, metadatos).
-- **Superficies**: `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios, avisos sobre el lienzo) < `superficie-alta` (chips, hovers y lo que va encima de una superficie). `borde` para todos los bordes.
+- **Superficies**: `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios, avisos sobre el lienzo) < `superficie-alta` (chips, hovers y lo que va encima de una superficie). `borde` para todos los bordes; `borde-fuerte` para los controles que tienen que verse como tales (selects, zona de subida discontinua). Las capturas de la guía llevan `border border-borde` para no flotar sobre el oscuro.
 - **Elevación**: en claro, sombras suaves (`shadow-sm`/`md`); en oscuro, cada nivel es un escalón más claro (`gray-950` → `gray-900` → `gray-800`) y las sombras se quitan (`dark:shadow-none`, no se ven sobre negro): lo que se eleva lleva `border border-borde` en los dos temas.
 - **Enlaces de texto**: `text-enlace hover:underline`.
 - **Errores**: `text-error` (no confundir con `primary`: un error no es una acción).
@@ -103,7 +105,7 @@ Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para e
 - **Tarjeta de examen** (`NextExams`): superficie, `shadow-sm`, `border-borde` con `border-l-6 border-l-primary`; arriba chip de convocatoria + cuenta atrás ("Hoy", "Mañana", "Quedan N días"), luego asignatura y plan; a la derecha (abajo en móvil) fecha/hora y aula con iconos `IconCalendar`/`IconMapPin`.
 - **Chip**: `bg-superficie-alta rounded-sm px-3 font-medium`.
 - **Aviso informativo**: caja `border border-borde bg-lienzo rounded-sm p-4` (`bg-superficie` si va directamente sobre el lienzo) con icono a la izquierda (`IconInfoCircle`, `IconExclamationCircle`).
-- **Zona de subida**: `border-2 border-dashed rounded-lg`, `hover:border-primary`; el `<input type=file>` es `sr-only` y la `label` es el área clicable.
+- **Zona de subida**: `border-2 border-dashed border-borde-fuerte rounded-lg`, `hover:border-primary`; el `<input type=file>` es `sr-only` y la `label` es el área clicable.
 - **Selects de filtro**: `rounded-lg border shadow-sm focus:ring-2 focus:ring-primary`.
 - **Navegación del dashboard**: barra lateral (`superficie`) en `lg:` con logotipo y botones apilados; en móvil, barra inferior de 3 botones a un tercio de ancho cada uno. Activo = `bg-primary text-sobre-primary font-bold`.
 - **Botón de tema**: círculo invertido (`bg-texto text-lienzo`) fijo abajo a la derecha; en el dashboard móvil va en `ReturnMobile`.

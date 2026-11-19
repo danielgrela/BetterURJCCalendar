@@ -3,7 +3,7 @@ import portfolioicon from "../assets/portfolioicon.png";
 import { NavLink } from 'react-router';
 export default function Header() {
     return (
-        <header className="flex flex-row bg-gray-100 dark:bg-gray-800 p-4 lg:px-15 items-center justify-between lg:sticky top-0 z-10 shadow-sm">
+        <header className="flex flex-row bg-lienzo border-b border-borde p-4 lg:px-15 items-center justify-between lg:sticky top-0 z-10 shadow-sm dark:shadow-none">
             <NavLink to="/" className="text-xl lg:text-3xl font-bold text-primary">
                 Better URJC Calendar
             </NavLink>
