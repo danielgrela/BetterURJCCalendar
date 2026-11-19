@@ -68,7 +68,6 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 - `scripts/handleExcel` sin extensión `.js`; `generateExcel.js`/`generateICS.js` duplican la lógica de descarga.
 - `CalendarMainMockup` es casi una copia de `Calendar`; `FiltersCalendar` lee el DOM por `id` en vez de estado.
 - Bundle de 1,3 MB (ExcelJS entero en el chunk principal): candidato a `import()` dinámico al importar/exportar.
-- Assets sin uso: `src/assets/{hero.png,react.svg,vite.svg}`, `public/icons.svg` (comprobar con grep antes de borrar).
 
 ## Trabajo pendiente
 Seguir [ROADMAP.md](ROADMAP.md) por fases. Marcar tareas `[x]` al terminar. Guía visual en [DESIGN.md](DESIGN.md).
