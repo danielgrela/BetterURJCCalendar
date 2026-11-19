@@ -1,4 +1,5 @@
 import { descargarBlob } from './descargarBlob';
+import type { Examen } from '../types/examen';
 
 const COLUMNAS_EXCEL = [
   { header: 'Curso', key: 'Curso', width: 14 },
@@ -13,7 +14,7 @@ const COLUMNAS_EXCEL = [
   { header: 'Aula', key: 'Aula', width: 16 },
 ];
 
-export const descargarCalendarioExcel = async (examenesJSON) => {
+export const descargarCalendarioExcel = async (examenesJSON: Examen[] | null | undefined): Promise<void> => {
   if (!examenesJSON || examenesJSON.length === 0) {
     console.warn('El JSON de exámenes está vacío o no es válido.');
     return;

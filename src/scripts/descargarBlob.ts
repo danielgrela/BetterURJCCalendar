@@ -1,5 +1,5 @@
 // Descarga un Blob con el nombre indicado mediante un enlace temporal
-export const descargarBlob = (blob, nombre) => {
+export const descargarBlob = (blob: Blob, nombre: string): void => {
   const url = URL.createObjectURL(blob);
   const enlaceOculto = document.createElement('a');
   enlaceOculto.href = url;
