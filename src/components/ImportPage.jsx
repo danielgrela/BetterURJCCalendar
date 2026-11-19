@@ -1,6 +1,6 @@
-import { IconFileUpload, IconInfoCircle, IconExclamationCircle, IconHelpCircle } from '@tabler/icons-react';
+import { IconFileUpload, IconInfoCircle, IconExclamationCircle, IconHelpCircle, IconTrash } from '@tabler/icons-react';
 import useFileStore from '../hooks/useFileStore';
-import { useState} from 'react';
+import { useRef, useState } from 'react';
 import excelToJson from '../scripts/handleExcel';
 import { NavLink, useNavigate } from 'react-router-dom';
 export default function ImportPage() {
@@ -11,6 +11,22 @@ export default function ImportPage() {
     const [dragging, setDragging] = useState(false);
     const setJsonData = useFileStore((state) => state.setJsonData);
     const jsonDataState = useFileStore((state) => state.jsonData);
+    const clearJsonData = useFileStore((state) => state.clearJsonData);
+    const [borrado, setBorrado] = useState(false);
+    const dialogBorrarRef = useRef(null);
+    // El diálogo devuelve el botón pulsado en returnValue; Esc o el gesto atrás lo dejan vacío
+    const handleCerrarDialogo = (e) => {
+        const dialog = e.currentTarget;
+        if (dialog.returnValue === 'borrar') {
+            clearJsonData();
+            setFile(null);
+            setJsonAuxData(null);
+            setDisabled(true);
+            setError(null);
+            setBorrado(true);
+        }
+        dialog.returnValue = '';
+    };
     const navigate = useNavigate();
     const processFile = async (file) => {
         if (file) {
@@ -96,8 +112,17 @@ export default function ImportPage() {
                     {jsonDataState && jsonDataState.length > 0 && (
                         <div className="text-sm text-secundario dark:text-gray-300 border border-gray-400 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 rounded-sm p-4 gap-4 flex flex-row">
                             <IconExclamationCircle className="min-w-5 h-full" stroke={2} />
-                            <p>Ya tiene un calendario, importar otro lo sobreescribirá.</p>
+                            <div className='flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between w-full'>
+                                <p>Ya tiene un calendario, importar otro lo sobreescribirá.</p>
+                                <button type="button" onClick={() => { setBorrado(false); dialogBorrarRef.current.showModal(); }} className="self-start lg:self-auto shrink-0 min-h-11 inline-flex items-center gap-2 px-4 rounded border border-primary text-primary font-semibold cursor-pointer hover:bg-white dark:hover:bg-gray-800 transition-colors">
+                                    <IconTrash size={18} stroke={2} />
+                                    Borrar calendario
+                                </button>
+                            </div>
                         </div>
+                    )}
+                    {borrado && (
+                        <p role="status" className="text-sm text-secundario dark:text-gray-300 font-medium">Se ha borrado el calendario de este navegador.</p>
                     )}
                     <div className="text-sm text-secundario dark:text-gray-300 border border-gray-400 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 rounded-sm p-4 gap-4 flex flex-row">
                         <IconInfoCircle className="min-w-5 h-full" stroke={2} />
@@ -110,6 +135,14 @@ export default function ImportPage() {
                 <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 disabled:cursor-not-allowed hover:brightness-90 hidden lg:block cursor-pointer bg-primary self-end w-38 text-white px-8 py-2 rounded">Importar</button>
                 <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 lg:hidden cursor-pointer bg-primary text-white px-8 py-2 rounded">Importar</button>
             </form>
+            <dialog ref={dialogBorrarRef} onClose={handleCerrarDialogo} aria-labelledby="borrar-titulo" aria-describedby="borrar-descripcion" className="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-white dark:bg-gray-900 text-secundario dark:text-gray-200 border border-gray-200 dark:border-gray-700 p-6 shadow-lg overscroll-contain backdrop:bg-black/50 backdrop:overflow-hidden backdrop:overscroll-contain">
+                <h2 id="borrar-titulo" className="text-lg font-bold dark:text-gray-100">¿Borrar el calendario?</h2>
+                <p id="borrar-descripcion" className="mt-2 text-sm text-neutro">Se eliminarán los exámenes guardados en este navegador. Para recuperarlos tendrás que volver a importar el Excel.</p>
+                <form method="dialog" className="mt-6 flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">
+                    <button value="cancelar" autoFocus className="min-h-11 px-4 rounded border border-gray-300 dark:border-gray-600 font-semibold cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Cancelar</button>
+                    <button value="borrar" className="min-h-11 px-4 rounded bg-primary text-white font-semibold cursor-pointer hover:brightness-90">Borrar calendario</button>
+                </form>
+            </dialog>
         </div>
         )
     }
