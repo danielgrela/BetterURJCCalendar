@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*", "react-router.config.*", "vite.config.ts", ".react-router/types/**/*"],
+  "include": ["src/**/*", "react-router.config.ts", "vite.config.ts", ".react-router/types/**/*"],
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
@@ -8,8 +8,6 @@
     "jsx": "react-jsx",
     "types": ["vite/client", "node"],
     "rootDirs": [".", "./.react-router/types"],
-    "allowJs": true,
-    "checkJs": false,
     "strict": true,
     "noEmit": true,
     "allowImportingTsExtensions": true,

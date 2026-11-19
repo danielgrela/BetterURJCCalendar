@@ -1,11 +1,13 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
+import type { ReactNode } from 'react'
+import type { Route } from './+types/root'
 import interUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url'
 import './index.css'
 import ToggleThemeButton from './components/ToggleThemeButton.tsx'
 
 const DOMINIO = 'https://betterurjccalendar.danielgrela.com'
 
-export const links = () => [
+export const links: Route.LinksFunction = () => [
   { rel: 'preload', href: interUrl, as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' },
   { rel: 'icon', type: 'image/png', href: '/favicon-96x96.png', sizes: '96x96' },
   { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
@@ -16,7 +18,7 @@ export const links = () => [
 
 // Documento HTML común a todas las rutas. <title>, description, canonical y og:title/description/url
 // los pone cada página con PageMeta; aquí solo va lo que es igual en todo el sitio.
-export function Layout({ children }) {
+export function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <head>

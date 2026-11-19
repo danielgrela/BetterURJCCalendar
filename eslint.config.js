@@ -34,7 +34,7 @@ export default defineConfig([
   },
   {
     // Configuración que se ejecuta en Node durante el build
-    files: ['react-router.config.js', 'vite.config.ts'],
+    files: ['react-router.config.ts', 'vite.config.ts'],
     languageOptions: { globals: globals.node },
   },
 ])

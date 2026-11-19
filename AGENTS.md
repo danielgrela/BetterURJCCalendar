@@ -1,18 +1,20 @@
 # AGENTS.md — Better URJC Calendar
 
-SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/examenes) en un calendario personal, con próximos exámenes y exportación a Excel e iCal (.ics). Todo ocurre en el navegador: no hay backend ni cuentas. React 19 + Vite 8 + Tailwind 4 (plugin `@tailwindcss/vite`) + React Router 7 en modo framework (`ssr: false` + `prerender`: sitio estático, sin servidor) + Zustand. **JavaScript (`.jsx`/`.js`), no TypeScript.** Idioma de trabajo y de la interfaz: español (no hay i18n).
+SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/examenes) en un calendario personal, con próximos exámenes y exportación a Excel e iCal (.ics). Todo ocurre en el navegador: no hay backend ni cuentas. React 19 + Vite 8 + Tailwind 4 (plugin `@tailwindcss/vite`) + React Router 7 en modo framework (`ssr: false` + `prerender`: sitio estático, sin servidor) + Zustand. **TypeScript (`.tsx`/`.ts`) con `strict`; sin `any`.** Idioma de trabajo y de la interfaz: español (no hay i18n).
 
 ## Comandos
 - `npm run dev` → http://localhost:5173 · `npm run host` → igual, expuesto en la red local (para probar en el móvil)
 - `npm run build` → `dist/client` (estático; prerenderiza `/` y `/dashboard/guia-de-uso`) · `npm run preview` → http://localhost:4173, responde como Vercel (lee `vercel.json`: reescrituras y 404 real)
-- `npm run lint` → ESLint sobre `.js`/`.jsx` (ignora `dist/` y `.claude/`). No hay tests. La verificación es `npm run build` + revisar en el navegador
+- `npm run lint` → ESLint sobre `.js`/`.jsx`/`.ts`/`.tsx` (ignora `dist/`, `.claude/` y `.react-router/`)
+- `npm run typecheck` → `react-router typegen` + `tsc` (genera en `.react-router/types` los tipos `./+types/<ruta>` de los módulos de ruta)
+- No hay tests. La verificación es `npm run build` + `npm run typecheck` + `npm run lint` + revisar en el navegador
 
 ## Mapa (solo lo que importa)
-- `react-router.config.js` → `appDirectory: 'src'`, `buildDirectory: 'dist'`, `ssr: false`, `prerender` (`/` y `/dashboard/guia-de-uso`) y `buildEnd`, que copia `__spa-fallback.html` a `404.html`. **Una página nueva pública va en `prerender`**
-- `src/root.jsx` → documento HTML (`Layout`: `lang`, favicons, manifest, `preload` de Inter, `theme-color` y `og`/`twitter` comunes), `ToggleThemeButton` flotante de escritorio y `HydrateFallback` (título de respaldo en las rutas no prerenderizadas). No hay `index.html` ni `main.jsx`
-- `src/routes.js` → rutas, cada una en su chunk: `/` → `HeroPage` (portada) · `/dashboard` → `App` (layout con `SideBar` + `<Outlet>`) con hijas index → `HomePage`, `calendario` → `CalendarPage`, `importar` → `ImportPage`, `guia-de-uso` → `UseGuide` · `*` → `NotFound`. Importar de `react-router` (no `react-router-dom`)
+- `react-router.config.ts` → `appDirectory: 'src'`, `buildDirectory: 'dist'`, `ssr: false`, `prerender` (`/` y `/dashboard/guia-de-uso`) y `buildEnd`, que copia `__spa-fallback.html` a `404.html`. **Una página nueva pública va en `prerender`**
+- `src/root.tsx` → documento HTML (`Layout`: `lang`, favicons, manifest, `preload` de Inter, `theme-color` y `og`/`twitter` comunes), `ToggleThemeButton` flotante de escritorio y `HydrateFallback` (título de respaldo en las rutas no prerenderizadas). No hay `index.html` ni `main.jsx`
+- `src/routes.ts` → rutas, cada una en su chunk: `/` → `HeroPage` (portada) · `/dashboard` → `App` (layout con `SideBar` + `<Outlet>`) con hijas index → `HomePage`, `calendario` → `CalendarPage`, `importar` → `ImportPage`, `guia-de-uso` → `UseGuide` · `*` → `NotFound`. Importar de `react-router` (no `react-router-dom`)
 - Prerender: lo prerenderizado se ejecuta en Node y luego se hidrata; no leer `window`/`localStorage` ni stores persistidos para decidir qué se pinta en `HeroPage`, `UseGuide`, `App`/`SideBar`, `root` (mismo HTML en Node y en el navegador, o habrá errores de hidratación). Por eso `ToggleThemeButton` elige el icono con `dark:` y `useMediaQuery` devuelve `false` en el servidor
-- `src/App.jsx` → layout del dashboard: en móvil `flex-col-reverse` (la `SideBar` pasa a barra inferior y aparece `ReturnMobile` arriba); en `lg:` barra lateral fija a la izquierda
+- `src/App.tsx` → layout del dashboard: en móvil `flex-col-reverse` (la `SideBar` pasa a barra inferior y aparece `ReturnMobile` arriba); en `lg:` barra lateral fija a la izquierda
 - `src/components/` (un componente por archivo, nombre en PascalCase):
   - Portada: `HeroPage` (Header + HeroPageMain + Features + Footer), `HeroPageMain` (titular, CTAs y `Calendar` en modo `compact` con `assets/jsonMockup.json`)
   - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (`NavLink` con `isActive`), `ReturnMobile`, `HomePage` (`DashboardHeader`, que incluye `ButtonsExportDashboard` y en móvil lo baja al final con `display: contents` + `order`, y `NextExams`)
@@ -20,20 +22,21 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - `ExamCard`: tarjeta de examen con variantes `full` (`NextExams`), `list` (`MobileCalendar`) y `compact` (celdas de `Calendar`)
   - `PageMeta` (`<title>`, `description`, `canonical` y `og:title`/`og:description`/`og:url`, `twitter:*` y `noindex` por página con las etiquetas nativas de React 19; va dentro de cada página, no en `root.jsx`)
   - `ImportPage` (subida y validación del Excel), `UseGuide` (guía con capturas `assets/fotoguia0*.{png,jpg}`), `NotFound`, `ToggleThemeButton`
-- `src/SocialIcons/Github.jsx` → icono SVG de GitHub (Tabler no trae logos de marca)
-- `src/hooks/` → stores de Zustand: `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (persistido en `dark-mode`, añade/quita `.dark` en `<html>`) · `useMediaQuery(query)` (hook de React, no store)
+- `src/SocialIcons/Github.tsx` → icono SVG de GitHub (Tabler no trae logos de marca)
+- `src/types/examen.ts` → tipos `Examen` (ver «Modelo de datos») y `FiltrosCalendario`
+- `src/hooks/` → stores de Zustand (tipados con `create<Store>()`): `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (persistido en `dark-mode`, añade/quita `.dark` en `<html>`) · `useMediaQuery(query)` (hook de React, no store)
 - `src/scripts/` → lógica sin UI:
-  - `handleExcel.js` → `excelTojson(file)`: lee la hoja 1 con ExcelJS, ignora las 2 primeras filas y mapea las columnas 1–10
-  - `examen.js` → `nombreAsignatura(ev)` (corta en el primer `(`), `diasHasta(fecha)` y `claveExamen(ev)` (`key` de listas)
-  - `sortEvents.js` → `parseEventDate('DD-MM-YYYY')` (default) y `sortedEvents(json)` (por fecha y hora)
-  - `filtersCalendar.js` → `filtrarExamenes(examenes, filtros)` (convocatoria y "Pendientes") y `convocatoriasDe(examenes)`; el estado de los filtros vive en `CalendarPage`
-  - `generateExcel.js` / `generateICS.js` → descargas `horario_examenes.xlsx` / `.ics` con `descargarBlob(blob, nombre)` de `descargarBlob.js`
-- `src/index.css` → Tailwind, variante `dark` por clase `.dark`, fuente Inter autoalojada (`@fontsource-variable/inter`, solo latin, precargada en `root.jsx`) y tokens de color (ver DESIGN.md)
+  - `handleExcel.ts` → `excelTojson(file)`: lee la hoja 1 con ExcelJS, ignora las 2 primeras filas y mapea las columnas 1–10
+  - `examen.ts` → `nombreAsignatura(ev)` (corta en el primer `(`), `diasHasta(fecha)` y `claveExamen(ev)` (`key` de listas)
+  - `sortEvents.ts` → `parseEventDate('DD-MM-YYYY')` (default) y `sortedEvents(json)` (por fecha y hora)
+  - `filtersCalendar.ts` → `filtrarExamenes(examenes, filtros)` (convocatoria y "Pendientes") y `convocatoriasDe(examenes)`; el estado de los filtros vive en `CalendarPage`
+  - `generateExcel.ts` / `generateICS.ts` → descargas `horario_examenes.xlsx` / `.ics` con `descargarBlob(blob, nombre)` de `descargarBlob.ts`
+- `src/index.css` → Tailwind, variante `dark` por clase `.dark`, fuente Inter autoalojada (`@fontsource-variable/inter`, solo latin, precargada en `root.tsx`) y tokens de color (ver DESIGN.md)
 - `public/Examenes.xlsx` → Excel de ejemplo que se ofrece en la guía de uso
 - `public/og-image.png` → imagen 1200×630 para Open Graph/Twitter (captura real del calendario)
 - `public/robots.txt` y `public/sitemap.xml` → solo `/` y `/dashboard/guia-de-uso`; si se añade una ruta pública, añadirla al sitemap
 - `src/assets/` y `public/*.png|ico` → imágenes (no leer, binarios)
-- `vercel.json` → `outputDirectory: dist/client`; reescribe a `/__spa-fallback.html` **solo** las rutas conocidas del dashboard (los archivos prerenderizados ganan a las reescrituras); el resto recibe `404.html` con estado 404. **Si se añade una ruta en `routes.js`, añadirla también aquí** o dará 404 al recargar
+- `vercel.json` → `outputDirectory: dist/client`; reescribe a `/__spa-fallback.html` **solo** las rutas conocidas del dashboard (los archivos prerenderizados ganan a las reescrituras); el resto recibe `404.html` con estado 404. **Si se añade una ruta en `routes.ts`, añadirla también aquí** o dará 404 al recargar
 - `vite.config.ts` → plugins de Tailwind, React Router y `previewComoVercel` (solo para `npm run preview`)
 
 ## Modelo de datos (examen)
@@ -45,7 +48,7 @@ Objeto con `Curso, Plan, Asignatura, CodigoPlan, CodigoAsignatura, CodigoGrupo, 
 - Si cambia el formato del Excel de la URJC, se toca **solo** `handleExcel` (y la validación de `ImportPage`); el resto de la app consume el objeto anterior
 
 ## Convenciones
-- Componentes funcionales con `export default function Nombre()`; lógica pura (parseo, ordenación, exportación) en `src/scripts/`, estado compartido en un store de `src/hooks/`. No meter lógica de datos en los componentes si ya existe un helper.
+- Componentes funcionales con `export default function Nombre({ ... }: Props)` y props tipadas (interfaz `Props` en el mismo archivo; los datos de examen siempre con `Examen` de `src/types`); lógica pura (parseo, ordenación, exportación) en `src/scripts/`, estado compartido en un store de `src/hooks/`. No meter lógica de datos en los componentes si ya existe un helper.
 - Estado global solo con Zustand; nada de Context nuevo ni de leer `localStorage` a mano.
 - Iconos con `@tabler/icons-react` (`stroke={2}` por defecto); no añadir otra librería de iconos.
 - Estilo solo con utilidades Tailwind. Colores de marca con los tokens de `index.css` (`primary`, `secundario`, `tertiary`, `neutro`), que ya cambian con el tema; nunca hex sueltos en `className` ni en props (`color='#E4002B'` → `className="text-primary"`). Grises de Tailwind (`gray-*`) para fondos y bordes, siempre con su pareja `dark:`.

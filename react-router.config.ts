@@ -1,7 +1,7 @@
 import { copyFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import type { Config } from '@react-router/dev/config'
 
-/** @type {import('@react-router/dev/config').Config} */
 export default {
   appDirectory: 'src',
   buildDirectory: 'dist',
@@ -15,4 +15,4 @@ export default {
     const cliente = join(reactRouterConfig.buildDirectory, 'client')
     await copyFile(join(cliente, '__spa-fallback.html'), join(cliente, '404.html'))
   },
-}
+} satisfies Config
