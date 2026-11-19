@@ -33,11 +33,11 @@ export default function PCCalendar({date, setDate, visibleData, filtersProps, ye
                     {sanitizeDate(date)}
                 </h1>
                 <div className="flex gap-2 bg-superficie p-1.5 rounded-2xl shadow-sm dark:shadow-none border border-borde">
-                    <button onClick={prevMonth} className="cursor-pointer p-2 hover:bg-superficie-alta rounded-xl transition-all text-texto-suave">
-                        <IconChevronLeft size={24} />
+                    <button type="button" onClick={prevMonth} aria-label="Mes anterior" className="cursor-pointer size-11 flex items-center justify-center hover:bg-superficie-alta rounded-xl transition-all text-texto-suave">
+                        <IconChevronLeft size={24} aria-hidden="true" />
                     </button>
-                    <button onClick={nextMonth} className="cursor-pointer p-2 hover:bg-superficie-alta rounded-xl transition-all text-texto-suave">
-                        <IconChevronRight size={24} />
+                    <button type="button" onClick={nextMonth} aria-label="Mes siguiente" className="cursor-pointer size-11 flex items-center justify-center hover:bg-superficie-alta rounded-xl transition-all text-texto-suave">
+                        <IconChevronRight size={24} aria-hidden="true" />
                     </button>
                 </div>
             </header>

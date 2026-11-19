@@ -76,6 +76,22 @@ body {
 	body {
 		@apply bg-lienzo text-texto;
 	}
+	/* Foco visible con teclado en todos los controles: anillo rojo de marca (≥ 3:1 sobre las superficies) */
+	:where(a, button, select, input, textarea, summary, [tabindex]):focus-visible {
+		outline: 2px solid var(--primary);
+		outline-offset: 2px;
+	}
+}
+
+/* Las transiciones son solo de color: con movimiento reducido el cambio es instantáneo */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		transition-duration: 0s !important;
+		animation-duration: 0s !important;
+		scroll-behavior: auto !important;
+	}
 }
 
 .no-transitions *,

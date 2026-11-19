@@ -89,7 +89,7 @@ export default function ImportPage() {
             <h1 className="text-3xl font-bold">Importar calendario de exámenes</h1>
             <div className='flex flex-row gap-1 items-center text-center mt-3'>
                 <IconHelpCircle size={16} className="inline-block text-texto-suave mr-1" />
-                <p className="text-texto-suave text-sm">¿Tienes dudas? Puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-enlace hover:underline">guía de uso</NavLink></p>
+                <p className="text-texto-suave text-sm">¿Tienes dudas? Puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-enlace underline underline-offset-2 hover:decoration-2">guía de uso</NavLink></p>
             </div>
             <form className="relative mt-6 flex flex-col bg-superficie h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded border border-borde shadow-sm dark:shadow-none gap-8 lg:gap-10">
             <div className='flex flex-col gap-4'>
@@ -98,18 +98,18 @@ export default function ImportPage() {
                     id="exam-file"
                     type="file"
                     accept=".xlsx"
-                    className="sr-only"/>
+                    className="peer sr-only"/>
                 <label
                     htmlFor="exam-file"
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
-                    className={`border-2 border-dashed ${dragging ? 'border-primary bg-lienzo' : 'border-borde-fuerte'} rounded-lg px-6 py-14 text-center cursor-pointer hover:border-primary hover:bg-lienzo transition-colors`}>
+                    className={`border-2 border-dashed ${dragging ? 'border-primary bg-lienzo' : 'border-borde-fuerte'} rounded-lg px-6 py-14 text-center cursor-pointer peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary hover:border-primary hover:bg-lienzo transition-colors`}>
                     <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-lienzo">
                         <IconFileUpload stroke={2} />
                     </div>
                     <p className="font-semibold">Arrastra tu archivo de exámenes aquí o haz clic para buscar</p>
-                    <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace hover:underline">exámenes</a></p>
+                    <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">exámenes</a></p>
                 </label>
                 {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
                 {error && <p className="text-start text-sm text-error font-medium">{error}</p>}
@@ -134,12 +134,11 @@ export default function ImportPage() {
                         <IconInfoCircle className="min-w-5 h-full" stroke={2} />
                         <div className='flex flex-col gap-2'>
                             <h2 className="font-semibold">Instrucciones de formato</h2>
-                            <p>Asegúrate de que el archivo cumpla el formato que se explica en la <NavLink to="/dashboard/guia-de-uso" className="text-enlace hover:underline">guía de uso</NavLink>.</p>
+                            <p>Asegúrate de que el archivo cumpla el formato que se explica en la <NavLink to="/dashboard/guia-de-uso" className="text-enlace underline underline-offset-2 hover:decoration-2">guía de uso</NavLink>.</p>
                         </div>
                     </div>
                 </div>
-                <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 disabled:cursor-not-allowed hover:brightness-90 hidden lg:block cursor-pointer bg-primary self-end w-38 text-sobre-primary px-8 py-2 rounded">Importar</button>
-                <button type="submit" onClick={handleSubmit} disabled={disabled} className="disabled:brightness-75 lg:hidden cursor-pointer bg-primary text-sobre-primary px-8 py-2 rounded">Importar</button>
+                <button type="submit" onClick={handleSubmit} disabled={disabled} className="min-h-11 lg:self-end lg:w-38 px-8 rounded bg-primary text-sobre-primary cursor-pointer hover:brightness-90 disabled:brightness-75 disabled:cursor-not-allowed">Importar</button>
             </form>
             <dialog ref={dialogBorrarRef} onClose={handleCerrarDialogo} aria-labelledby="borrar-titulo" aria-describedby="borrar-descripcion" className="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-superficie text-texto border border-borde p-6 shadow-lg dark:shadow-none overscroll-contain backdrop:bg-black/50 backdrop:overflow-hidden backdrop:overscroll-contain">
                 <h2 id="borrar-titulo" className="text-lg font-bold">¿Borrar el calendario?</h2>

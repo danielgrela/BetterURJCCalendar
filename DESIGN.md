@@ -78,7 +78,9 @@ Herramienta de estudiante para estudiantes ("De Daniel para Daniel (y amigos)").
 - **`texto` / `texto-suave`**: texto principal y de apoyo (descripciones, plan, metadatos).
 - **Superficies**: `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios, avisos sobre el lienzo) < `superficie-alta` (chips, hovers y lo que va encima de una superficie). `borde` para todos los bordes; `borde-fuerte` para los controles que tienen que verse como tales (selects, zona de subida discontinua). Las capturas de la guía llevan `border border-borde` para no flotar sobre el oscuro.
 - **Elevación**: en claro, sombras suaves (`shadow-sm`/`md`); en oscuro, cada nivel es un escalón más claro (`stone-950` → `stone-900` → `stone-800`) y las sombras se quitan (`dark:shadow-none`, no se ven sobre negro): lo que se eleva lleva `border border-borde` en los dos temas.
-- **Enlaces de texto**: `text-enlace hover:underline`.
+- **Enlaces de texto**: dentro de un párrafo, `text-enlace underline underline-offset-2 hover:decoration-2` (subrayados: el color solo no basta, WCAG 1.4.1); sueltos (fuera de un párrafo), `text-enlace hover:underline` con `min-h-11`.
+- **Foco**: anillo global `outline: 2px solid var(--primary)` con `outline-offset: 2px` en `:focus-visible` (`index.css`); no quitarlo con `outline-none`. Si el control real es `sr-only` (selector de archivo), su `label` lo pinta con `peer-focus-visible:`.
+- **Zonas táctiles**: todo enlace o botón fuera de un párrafo mide ≥ 44×44 px (`min-h-11`, `size-11` en los de solo icono).
 - **Errores**: `text-error` (no confundir con `primary`: un error no es una acción).
 - **Neutros cálidos**: todos los grises salen de la escala `stone` de Tailwind (gris con un punto marrón), no de `gray` (azulado). Junto al rojo se ve más de papel y menos de plantilla. Elegido por el usuario el 2026-11-19 entre cinco paletas (opción A, «Rojo URJC sobrio»).
 - Los tokens viven en `src/index.css` (`:root` y `.dark` → `@theme`) y ya cambian con el tema: en `className` van sin pareja `dark:`. Un color nuevo = un token nuevo ahí, nunca un hex ni un `gray-*` con su `dark:` en `className`.
@@ -107,7 +109,7 @@ Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para e
 - **Chip**: `bg-superficie-alta rounded-sm px-3 font-medium`.
 - **Aviso informativo**: caja `border border-borde bg-lienzo rounded-sm p-4` (`bg-superficie` si va directamente sobre el lienzo) con icono a la izquierda (`IconInfoCircle`, `IconExclamationCircle`).
 - **Zona de subida**: `border-2 border-dashed border-borde-fuerte rounded-lg`, `hover:border-primary`; el `<input type=file>` es `sr-only` y la `label` es el área clicable.
-- **Selects de filtro**: `rounded-lg border shadow-sm focus:ring-2 focus:ring-primary`.
+- **Selects de filtro**: `rounded-lg border border-borde-fuerte shadow-sm`, con `label` `sr-only` y el foco global.
 - **Navegación del dashboard**: barra lateral (`superficie`) en `lg:` con logotipo y botones apilados; en móvil, barra inferior de 3 botones a un tercio de ancho cada uno. Activo = `bg-primary text-sobre-primary font-bold`.
 - **Botón de tema**: círculo invertido (`bg-texto text-lienzo`) fijo abajo a la derecha; en el dashboard móvil va en `ReturnMobile`.
 
@@ -118,7 +120,7 @@ Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para e
 - Probar siempre a 375, 768 y ≥1024 px, en claro y oscuro, con y sin exámenes importados (estados vacíos incluidos: "Aún no hay exámenes", botón "Nuevo Calendario / Importar Excel").
 
 ## Movimiento
-Solo transiciones cortas de color/brillo en hover (`duration-200/300`). El cambio de tema desactiva transiciones un frame (`.no-transitions`) para que no parpadee. Nada de animaciones de entrada; respetar `prefers-reduced-motion` si se añade alguna.
+Solo transiciones cortas de color/brillo en hover (`duration-200/300`). El cambio de tema desactiva transiciones un frame (`.no-transitions`) para que no parpadee. Nada de animaciones de entrada. Con `prefers-reduced-motion: reduce`, `index.css` deja las transiciones y animaciones en 0 s (el cambio de estado se ve igual, sin fundido).
 
 ## No hacer
 - Más de un color de acento por pantalla, o el rojo para cosas que no son acción/marca/urgencia.

@@ -21,12 +21,12 @@ export default function NotFound() {
                         Volver al dashboard
                     </NavLink>
                     <div className="flex flex-row gap-4">
-                        <NavLink to="/" className="flex flex-row gap-2 hover:brightness-80 text-primary">
+                        <NavLink to="/" className="min-h-11 px-2 flex flex-row gap-2 items-center hover:brightness-80 text-primary">
                             <IconHome2 stroke={2} />
                             Inicio
                         </NavLink>
                         <p className="text-texto-suave text-lg cursor-default">|</p>
-                        <NavLink to="/dashboard/importar" className="flex flex-row gap-2 hover:brightness-80 text-primary">
+                        <NavLink to="/dashboard/importar" className="min-h-11 px-2 flex flex-row gap-2 items-center hover:brightness-80 text-primary">
                             <IconFileUpload stroke={2} />
                             Importar
                         </NavLink>

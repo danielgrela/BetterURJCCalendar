@@ -10,7 +10,7 @@ export default function HeroPageMain() {
                     <IconSpeakerphone size={16}/>De Daniel para Daniel (y amigos)
                 </span>
                 <h1 className='text-3xl lg:text-5xl font-bold text-primary text-center lg:text-start'>Organiza tus exámenes en segundos</h1>
-                <p className='text-texto-suave font-medium text-center lg:text-start'>Sube tu <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace hover:underline">Excel de exámenes de la Universidad Rey Juan Carlos</a> y nosotros creamos tu calendario de exámenes personalizado. Olvídate de los líos de interfaz y céntrate en estudiar.</p>
+                <p className='text-texto-suave font-medium text-center lg:text-start'>Sube tu <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">Excel de exámenes de la Universidad Rey Juan Carlos</a> y nosotros creamos tu calendario de exámenes personalizado. Olvídate de los líos de interfaz y céntrate en estudiar.</p>
                 <div className='flex flex-col lg:flex-row gap-3 lg:gap-6 w-full'>
                     <NavLink to="/dashboard" className='items-center bg-primary px-6 py-4 text-sobre-primary hover:brightness-80 font-medium flex flex-row gap-3 justify-center w-full lg:w-fit'>Empezar ahora <IconArrowRight stroke={2} /></NavLink>
                     <NavLink to="/dashboard/importar" className=' items-center border border-primary bg-superficie hover:brightness-80 px-6 py-4 text-primary font-medium flex flex-row gap-3 justify-center w-full lg:w-fit'>Importar directamente <IconFileUpload size={22} className="text-primary" /></NavLink>
