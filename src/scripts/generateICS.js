@@ -1,4 +1,5 @@
 import * as ics from 'ics';
+import { descargarBlob } from './descargarBlob';
 export const descargarCalendarioICS = (examenesJSON) => {
   if (!examenesJSON || examenesJSON.length === 0) {
     console.warn("El JSON de exámenes está vacío o no es válido.");
@@ -24,14 +25,6 @@ export const descargarCalendarioICS = (examenesJSON) => {
       return;
     }
     const blob = new Blob([value], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const enlaceOculto = document.createElement('a');
-    enlaceOculto.href = url;
-    enlaceOculto.download = 'horario_examenes.ics';
-    
-    document.body.appendChild(enlaceOculto);
-    enlaceOculto.click();
-    document.body.removeChild(enlaceOculto);
-    URL.revokeObjectURL(url);
+    descargarBlob(blob, 'horario_examenes.ics');
   });
 };

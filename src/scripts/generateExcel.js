@@ -1,4 +1,5 @@
 import ExcelJS from 'exceljs';
+import { descargarBlob } from './descargarBlob';
 
 const COLUMNAS_EXCEL = [
   { header: 'Curso', key: 'Curso', width: 14 },
@@ -59,14 +60,5 @@ export const descargarCalendarioExcel = async (examenesJSON) => {
   const blob = new Blob([buffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   });
-  const url = URL.createObjectURL(blob);
-  const enlaceOculto = document.createElement('a');
-
-  enlaceOculto.href = url;
-  enlaceOculto.download = 'horario_examenes.xlsx';
-
-  document.body.appendChild(enlaceOculto);
-  enlaceOculto.click();
-  document.body.removeChild(enlaceOculto);
-  URL.revokeObjectURL(url);
+  descargarBlob(blob, 'horario_examenes.xlsx');
 };
