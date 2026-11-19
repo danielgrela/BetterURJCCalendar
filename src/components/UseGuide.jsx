@@ -3,10 +3,12 @@ import fotoguia01 from "../assets/fotoguia01.png";
 import fotoguia02 from "../assets/fotoguia02.jpg";
 import fotoguia03 from "../assets/fotoguia03.png";
 import { NavLink } from 'react-router-dom';
+import PageMeta from './PageMeta.jsx';
 
 export default function UseGuide() {
     return (
         <main className='px-8 lg:px-0 flex flex-col gap-8'>
+            <PageMeta titulo="Guía de uso" ruta="/dashboard/guia-de-uso" descripcion="Cómo descargar el Excel de exámenes desde la web de la URJC e importarlo en Better URJC Calendar para tener tu calendario de exámenes en segundos." />
             <article className="p-6 gap-10 w-full max-w-300 rounded-md shadow-md border-2 border-gray-400 dark:border-gray-600 bg-gray-200/60 dark:bg-gray-800/60 h-fit flex flex-col lg:flex-row">
                 <div className="min-w-full lg:min-w-1/2 gap-5 flex flex-col">
                     <div className='flex flex-col lg:flex-row items-center justify-center text-center lg:text-start lg:justify-start gap-3'>

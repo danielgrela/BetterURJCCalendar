@@ -16,6 +16,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - Dashboard: `SideBar`, `NavButtons` + `ButtonNavBar` (`NavLink` con `isActive`), `ReturnMobile`, `HomePage` (`DashboardHeader`, que incluye `ButtonsExportDashboard` y en móvil lo baja al final con `display: contents` + `order`, y `NextExams`)
   - Calendario: `CalendarPage` decide con `useMediaQuery('(min-width: 1024px)')` entre `PCCalendar` (rejilla mensual `Calendar` con navegación de mes) y `MobileCalendar` (lista); ambos usan `FiltersCalendar`
   - `ExamCard`: tarjeta de examen con variantes `full` (`NextExams`), `list` (`MobileCalendar`) y `compact` (celdas de `Calendar`)
+  - `PageMeta` (`<title>`, `description`, `canonical` y `noindex` por página con las etiquetas nativas de React 19; va dentro de cada página, no en `index.html`)
   - `ImportPage` (subida y validación del Excel), `UseGuide` (guía con capturas `assets/fotoguia0*.{png,jpg}`), `NotFound`, `ToggleThemeButton`
 - `src/SocialIcons/Github.jsx` → icono SVG de GitHub (Tabler no trae logos de marca)
 - `src/hooks/` → stores de Zustand: `useFileStore` (exámenes importados, persistido en `localStorage` `file-storage`) · `useDarkMode` (persistido en `dark-mode`, añade/quita `.dark` en `<html>`) · `useMediaQuery(query)` (hook de React, no store)
@@ -67,7 +68,7 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 
 ## Deuda conocida (candidatos a refactor, ver ROADMAP)
 - `README.md` es la plantilla de Vite (habla de TypeScript).
-- `index.html`: `canonical` y Open Graph globales (apuntan a `/` en todas las rutas) y sin datos estructurados (F3.3–F3.5).
+- `index.html`: Open Graph global (apunta a `/` en todas las rutas) y sin datos estructurados (F3.5); `description` y `canonical` solo existen tras ejecutar JS hasta el prerender (F4.4).
 - Bundle de 1,3 MB (ExcelJS entero en el chunk principal): candidato a `import()` dinámico al importar/exportar.
 
 ## Trabajo pendiente

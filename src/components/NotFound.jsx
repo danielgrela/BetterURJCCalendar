@@ -4,9 +4,11 @@ import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 import { IconLayoutDashboard, IconHome2, IconFileUpload } from "@tabler/icons-react";
 import ToggleThemeButton from "./ToggleThemeButton.jsx";
+import PageMeta from "./PageMeta.jsx";
 export default function NotFound() {
     return (
         <div className="bg-white dark:bg-gray-950 flex flex-col min-h-screen">
+            <PageMeta titulo="Página no encontrada" noindex />
             <ToggleThemeButton className="fixed block lg:hidden bottom-8 right-8" />
             <Header />
             <main className="text-balance py-20 w-full px-2 lg:w-1/2 flex flex-col items-center justify-center gap-4 mx-auto text-center">

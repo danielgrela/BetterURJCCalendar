@@ -3,6 +3,7 @@ import useFileStore from '../hooks/useFileStore';
 import { useRef, useState } from 'react';
 import excelToJson from '../scripts/handleExcel';
 import { NavLink, useNavigate } from 'react-router-dom';
+import PageMeta from './PageMeta.jsx';
 export default function ImportPage() {
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
@@ -80,6 +81,7 @@ export default function ImportPage() {
     };
     return (
         <div className='min-h-full flex flex-col'>
+            <PageMeta titulo="Importar Excel" noindex />
             <h1 className="text-3xl font-bold dark:text-gray-100">Importar Calendario de Exámenes</h1>
             <div className='flex flex-row gap-1 items-center text-center mt-3'>
                 <IconHelpCircle size={16} className="inline-block text-gray-500 dark:text-gray-500 mr-1" />

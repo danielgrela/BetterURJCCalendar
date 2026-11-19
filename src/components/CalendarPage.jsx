@@ -5,6 +5,7 @@ import MobileCalendar from './MobileCalendar';
 import PCCalendar from './PCCalendar';
 import { sortedEvents, mesDelProximoExamen } from '../scripts/sortEvents';
 import { FILTROS_INICIALES, convocatoriasDe, filtrarExamenes } from '../scripts/filtersCalendar';
+import PageMeta from './PageMeta.jsx';
 export default function CalendarPage() {
     const jsonData = useFileStore((state) => state.jsonData);
     const [date, setDate] = useState(() => mesDelProximoExamen(jsonData));
@@ -18,6 +19,7 @@ export default function CalendarPage() {
     const month = date.getMonth();
     return (
         <>
+        <PageMeta titulo="Calendario" noindex />
         {isLg ? (
             <PCCalendar date={date} setDate={setDate} visibleData={visibleData} filtersProps={filtersProps} year={year} month={month} />
             ) :
