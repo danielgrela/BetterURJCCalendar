@@ -13,7 +13,7 @@ export default function HeroPageMain() {
                 <p className='text-neutro dark:text-gray-300 font-medium text-center lg:text-start'>Sube tu  <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-blue-500 active:text-blue-800 hover:underline">Excel de examenes de la Universidad Rey Juan Carlos </a> y nosotros creamos tu calendario de examenes personalizado. Olvidate de los líos de interfaz y centrate en estudiar.</p>
                 <div className='flex flex-col lg:flex-row gap-3 lg:gap-6 w-full'>
                     <NavLink to="/dashboard" className='items-center bg-primary px-6 py-4 text-white hover:brightness-80 font-medium flex flex-row gap-3 justify-center w-full lg:w-fit'>Empezar ahora <IconArrowRight stroke={2} /></NavLink>
-                    <NavLink to="/dashboard/importar" className=' items-center border border-primary bg-white dark:bg-gray-950 hover:brightness-80 px-6 py-4 text-primary font-medium flex flex-row gap-3 justify-center w-full lg:w-fit'>Importar directamente <IconFileUpload color='#E4002B' size={22} /></NavLink>
+                    <NavLink to="/dashboard/importar" className=' items-center border border-primary bg-white dark:bg-gray-950 hover:brightness-80 px-6 py-4 text-primary font-medium flex flex-row gap-3 justify-center w-full lg:w-fit'>Importar directamente <IconFileUpload size={22} className="text-primary" /></NavLink>
                 </div>
             </section>
             <section className="w-1/2 hidden lg:flex items-center justify-center">

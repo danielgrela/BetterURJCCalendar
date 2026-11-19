@@ -84,7 +84,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 ## F0 · Arreglos base
 - [x] **F0.1 Lint**: instalar `typescript-eslint` (se migra a TS en F4.6) y ampliar `files` a `**/*.{js,jsx,ts,tsx}` para que revise ya el código actual. `npm run lint` debe pasar o dejar solo avisos acordados.
 - [x] **F0.2 Rutas de `public/`**: en `index.html` y en el enlace de `UseGuide` a `Examenes.xlsx`, usar `/favicon…`, `/site.webmanifest`, `/Examenes.xlsx`. Comprobar en `npm run preview` que cargan y que el favicon ya no sale en `dist/assets`.
-- [ ] **F0.3 Clases rotas**: `text-neuto`/`text-neutral` → `text-neutro`; `flex-flex-col` → `flex flex-col`; quitar `hover:bg-primary-dark`; revisar `w-38`; `color='#E4002B'` → `className="text-primary"`.
+- [x] **F0.3 Clases rotas**: `text-neuto`/`text-neutral` → `text-neutro`; `flex-flex-col` → `flex flex-col`; quitar `hover:bg-primary-dark`; `w-38` es válida en Tailwind 4 (se deja); `color='#E4002B'` → `className="text-primary"`. Para que el texto que pasa a `neutro` no pierda contraste en oscuro, `neutro` ya tiene valor oscuro (`#9CA3AF`); F5.2 revisará el resto.
 - [ ] **F0.4 Dependencias y assets muertos**: quitar `glob`, `rimraf`, `uuid`, `@types/node`; confirmar con grep y borrar `src/assets/{hero.png,react.svg,vite.svg}` y `public/icons.svg`. Preguntar antes de borrar.
 - [ ] **F0.5 Datos del alumno fuera de la consola**: quitar los `console.log` con el contenido del Excel.
 
@@ -132,7 +132,7 @@ Lo bueno: un solo color de marca, CTAs rectos y directos, tarjeta de examen clar
 - [ ] **F5.4** Sin destello al cargar: script en línea en `<head>` que aplica `.dark` antes de pintar, leyendo `dark-mode` de `localStorage` o `prefers-color-scheme`.
 - [ ] **F5.5** Tres estados en `ToggleThemeButton`: sistema / claro / oscuro (por defecto sistema, escuchando cambios del SO); `aria-label` con el estado actual; mismo comportamiento en portada, dashboard y 404.
 - [ ] **F5.6** `color-scheme: light dark` en `:root` y `.dark` para que `<select>`, selector de archivo, barras de scroll y autocompletado sigan el tema; `accent-color: var(--primary)`.
-- [ ] **F5.7** Barrido de variantes que faltan: cuadros de icono de `Features`, borde de la zona de subida, `Header` frente a la portada, hovers en oscuro, imágenes de la guía (borde sutil para que no floten sobre negro). Revisar cada ruta en los dos temas con y sin datos.
+- [ ] **F5.7** Barrido de variantes que faltan: cuadros de icono de `Features` (y su borde izquierdo rojo, que `dark:border-gray-700` tapa en oscuro), borde de la zona de subida, `Header` frente a la portada, hovers en oscuro, imágenes de la guía (borde sutil para que no floten sobre negro). Revisar cada ruta en los dos temas con y sin datos.
 
 ## F6 · Interfaz (sin aspecto «IA»)
 - [ ] **F6.1** `impeccable audit` de portada, dashboard, calendario, importación y guía en claro y oscuro; convertir el resultado en tareas aquí. dep: F5.2

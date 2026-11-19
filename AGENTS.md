@@ -65,7 +65,6 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 ## Deuda conocida (candidatos a refactor, ver ROADMAP)
 - `README.md` es la plantilla de Vite (habla de TypeScript).
 - `index.html`: `<html lang="en">` y `<title>` sin cuidar, sin meta de SEO (F3).
-- Clases inexistentes o con erratas: `text-neuto`, `text-neutral`, `flex-flex-col`, `hover:bg-primary-dark`, `w-38`. Hex suelto en `HeroPageMain` (`color='#E4002B'`).
 - `scripts/handleExcel` sin extensión `.js`; `generateExcel.js`/`generateICS.js` duplican la lógica de descarga.
 - `CalendarMainMockup` es casi una copia de `Calendar`; `FiltersCalendar` lee el DOM por `id` en vez de estado.
 - Bundle de 1,3 MB (ExcelJS entero en el chunk principal): candidato a `import()` dinámico al importar/exportar.

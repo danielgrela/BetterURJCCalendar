@@ -5,41 +5,41 @@ export default function Features() {
             <p className='text-neutro dark:text-gray-200 text-lg font-bold text-center mb-6'>Características</p>
             <h1 className='text-3xl font-bold text-center hidden lg:block mb-14'>Ahorrate perder el tiempo.</h1>
             <div className='flex flex-col lg:flex-row gap-8 lg:gap-6 w-full'>
-                <article className="border-2 bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-700 border-l-4 border-l-red-500 px-4 py-4 flex-flex-col gap-4 rounded-md">
-                    <div className='flex items-center justify-center w-12 h-12 bg-red-200 rounded-lg mb-4'>
+                <article className="border-2 bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-700 border-l-4 border-l-red-500 px-4 py-4 flex flex-col gap-4 rounded-md">
+                    <div className='flex items-center justify-center w-12 h-12 bg-red-200 rounded-lg'>
                         <IconFileUploadFilled size={24} className="text-primary" />
                     </div>
                     <div className='flex flex-col gap-1'>
                         <h1 className='text-xl font-bold'>
                             Importación fácil
                         </h1>
-                        <p className='text-neuto'>
+                        <p className='text-neutro'>
                             Sube tu archivo Excel de horarios de la URJC directamente al sistema. Sin configuraciones complejas, detectamos tus asignaturas al instante.
                         </p>
                     </div>
                 </article>
-                <article className="border-2 bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-700 border-l-4 border-l-red-500 px-4 py-4 flex-flex-col gap-4 rounded-md">
-                    <div className='flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mb-4'>
+                <article className="border-2 bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-700 border-l-4 border-l-red-500 px-4 py-4 flex flex-col gap-4 rounded-md">
+                    <div className='flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg'>
                         <IconCalendar size={24} stroke={2.5} className="text-tertiary dark:text-blue-900" />
                     </div>
                     <div className='flex flex-col gap-1'>
                         <h1 className='text-xl font-bold'>
                             Visualización clara
                         </h1>
-                        <p className='text-neuto'>
+                        <p className='text-neutro'>
                             Una interfaz limpia y estructurada para ver tus exámenes. Identifica rápidamente solapamientos y planifica tu tiempo de estudio eficazmente.
                         </p>
                     </div>
                 </article>
-                <article className="border-2 bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-700 border-l-4 border-l-red-500 px-4 py-4 flex-flex-col gap-4 rounded-md">
-                    <div className='flex items-center justify-center w-12 h-12 bg-red-200 rounded-lg mb-4'>
+                <article className="border-2 bg-gray-50 border-gray-300 dark:bg-gray-900 dark:border-gray-700 border-l-4 border-l-red-500 px-4 py-4 flex flex-col gap-4 rounded-md">
+                    <div className='flex items-center justify-center w-12 h-12 bg-red-200 rounded-lg'>
                         <IconDownload size={24} stroke={2.5} className="text-primary" />
                     </div>
                     <div className='flex flex-col gap-1'>
                         <h1 className='text-xl font-bold'>
                             Descarga multiformato
                         </h1>
-                        <p className='text-neuto'>
+                        <p className='text-neutro'>
                             Exporta tu calendario finalizado a Excel, o a formato iCal (.ics) para sincronizarlo con Google Calendar, Apple o Outlook.
                         </p>
                     </div>

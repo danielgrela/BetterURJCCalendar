@@ -14,7 +14,7 @@ export default function NotFound() {
                 <h1 className="text-3xl lg:text-5xl font-bold">¡Ups! Parece que te has perdido</h1>
                 <p className="text-base lg:text-xl text-gray-700 dark:text-gray-300">La página que buscas no existe o ha sido movida a una nueva ubicación dentro del sitio web.</p>
                 <div className="flex flex-col lg:flex-row items-center gap-8 mt-8">
-                    <NavLink to="/dashboard" className="inline-block px-9 py-7 hover:brightness-80 bg-primary text-white rounded-lg shadow-md hover:bg-primary-dark transition-colors">
+                    <NavLink to="/dashboard" className="inline-block px-9 py-7 hover:brightness-80 bg-primary text-white rounded-lg shadow-md transition-colors">
                         <IconLayoutDashboard className="inline-block mr-2" />
                         Volver al dashboard
                     </NavLink>
