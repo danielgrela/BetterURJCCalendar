@@ -41,7 +41,7 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
 
     return (
         <>
-        <div className={`grid grid-cols-7 gap-px bg-borde rounded-md overflow-hidden border border-borde shadow-sm dark:shadow-none max-w-6xl mx-auto ${compact ? '[zoom:0.75]' : ''}`}>
+        <div className={`grid grid-cols-7 gap-px bg-borde rounded-md overflow-hidden border border-borde shadow-sm dark:shadow-none max-w-6xl w-full mx-auto`}>
             {DIAS_SEMANA.map((d) => (
                 <div key={d} className="text-center text-sm font-medium text-texto-suave py-2 bg-superficie">
                     {d}
@@ -50,7 +50,7 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
 
             {/* Huecos del mes anterior */}
             {[...Array(startingDay)].map((_, i) => (
-                <div key={`empty-${i}`} className="min-h-28 bg-lienzo" />
+                <div key={`empty-${i}`} className={`${compact ? 'min-h-20' : 'min-h-28'} bg-lienzo`} />
             ))}
 
             {[...Array(daysInMonth)].map((_, i) => {
@@ -63,7 +63,7 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
                     year === today.getFullYear();
 
                 return (
-                    <div key={day} className="min-h-28 p-1.5 flex flex-col gap-1 bg-superficie">
+                    <div key={day} className={`${compact ? 'min-h-20' : 'min-h-28'} p-1.5 flex flex-col gap-1 bg-superficie`}>
                         <span className={`inline-flex items-center justify-center size-7 text-sm rounded-full tabular-nums
                             ${isToday ? 'ring-2 ring-primary text-primary font-bold' : 'text-texto-suave font-medium'}`}>
                             {day}

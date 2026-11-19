@@ -117,6 +117,7 @@ Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para e
 - **Zona de subida**: `border-2 border-dashed border-borde-fuerte rounded-lg`, `hover:border-primary`; el `<input type=file>` es `sr-only` y la `label` es el área clicable.
 - **Selects de filtro**: `rounded-sm border border-borde-fuerte shadow-sm min-h-11`, con `label` visible encima (`text-sm` medium `texto-suave`: «Convocatoria», «Mostrar») y opciones cortas («Todas», «Todos», «Solo pendientes»); en móvil, rejilla de 2 columnas a todo el ancho.
 - **Navegación del dashboard**: barra lateral (`superficie`) en `lg:` con logotipo y botones apilados; en móvil, barra inferior de 3 botones a un tercio de ancho cada uno. Activo = `bg-primary text-sobre-primary font-bold`.
+- **Portada**: la frase «De Daniel para Daniel (y amigos)» es una línea `text-sm` en `texto-suave`, sin píldora ni icono. El visual es el `Calendar` real a tamaño nativo (`compact`: celdas `min-h-20`, sin detalle al pulsar) con los datos de ejemplo de `jsonMockup.json`, en un `figure` con pie «Ejemplo: …» para quien aún no ha usado la app. Las tarjetas de Características son `superficie` con borde fino y el icono suelto en `primary` (sin cuadro de color ni borde lateral). Nada crece al pasar el ratón: los iconos del `Header` cambian de fondo.
 - **Botón de tema**: círculo invertido (`bg-texto text-lienzo`) fijo abajo a la derecha; en el dashboard móvil va en `ReturnMobile`.
 
 ## Layout y responsive
@@ -132,4 +133,5 @@ Solo transiciones cortas de color/brillo en hover (`duration-200/300`). El cambi
 - Más de un color de acento por pantalla, o el rojo para cosas que no son acción/marca/urgencia.
 - Hex sueltos, clases inventadas (`text-neuto`, `hover:bg-primary-dark`) o grises de Tailwind en lugar de tokens.
 - Tarjetas dentro de tarjetas, sombras fuertes, degradados, glassmorphism, iconos decorativos sin función.
-- Varios `h1` por página (las tarjetas de Características usan `h1`: es deuda, no patrón).
+- Varios `h1` por página.
+- Bordes laterales gruesos de color en tarjetas, cuadros de icono de color, `hover:scale`, píldoras con icono como adorno.
