@@ -46,7 +46,7 @@ export default function ImportPage() {
             }
             catch(error) {
                 console.error("Error al procesar el archivo:", error);
-                setError("ERROR: " + (error instanceof Error ? error.message : String(error)));
+                setError(error instanceof Error ? error.message : String(error));
                 setDisabled(true);
             }
         }
@@ -70,7 +70,7 @@ export default function ImportPage() {
     const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (!file) {
-            setError("ERROR: Por favor, selecciona un archivo antes de importar.");
+            setError("Selecciona un archivo antes de importar.");
             return;
         }
         // Sin datos válidos el botón está desactivado; se comprueba también para el tipo
@@ -80,16 +80,16 @@ export default function ImportPage() {
             navigate('/dashboard/calendario');
         } catch (error) {
             console.error("Error al importar el archivo:", error);
-            setError("ERROR: " + (error instanceof Error ? error.message : String(error)));
+            setError(error instanceof Error ? error.message : String(error));
         }
     };
     return (
         <div className='min-h-full flex flex-col'>
             <PageMeta titulo="Importar Excel" noindex />
-            <h1 className="text-3xl font-bold">Importar Calendario de Exámenes</h1>
+            <h1 className="text-3xl font-bold">Importar calendario de exámenes</h1>
             <div className='flex flex-row gap-1 items-center text-center mt-3'>
                 <IconHelpCircle size={16} className="inline-block text-texto-suave mr-1" />
-                <p className="text-texto-suave text-sm">¿Tienes dudas? puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-enlace hover:underline">guía de uso</NavLink></p>
+                <p className="text-texto-suave text-sm">¿Tienes dudas? Puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-enlace hover:underline">guía de uso</NavLink></p>
             </div>
             <form className="relative mt-6 flex flex-col bg-superficie h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded border border-borde shadow-sm dark:shadow-none gap-8 lg:gap-10">
             <div className='flex flex-col gap-4'>
@@ -108,8 +108,8 @@ export default function ImportPage() {
                     <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-lienzo">
                         <IconFileUpload stroke={2} />
                     </div>
-                    <p className="font-semibold">Arrastra tu archivo de examenes aqui o haz clic para buscar</p>
-                    <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace hover:underline">examenes</a> </p>
+                    <p className="font-semibold">Arrastra tu archivo de exámenes aquí o haz clic para buscar</p>
+                    <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace hover:underline">exámenes</a></p>
                 </label>
                 {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
                 {error && <p className="text-start text-sm text-error font-medium">{error}</p>}
@@ -119,7 +119,7 @@ export default function ImportPage() {
                         <div className="text-sm text-texto border border-borde bg-superficie rounded-sm p-4 gap-4 flex flex-row">
                             <IconExclamationCircle className="min-w-5 h-full" stroke={2} />
                             <div className='flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between w-full'>
-                                <p>Ya tiene un calendario, importar otro lo sobreescribirá.</p>
+                                <p>Ya tienes un calendario: importar otro lo sobrescribirá.</p>
                                 <button type="button" onClick={() => { setBorrado(false); dialogBorrarRef.current?.showModal(); }} className="self-start lg:self-auto shrink-0 min-h-11 inline-flex items-center gap-2 px-4 rounded border border-primary text-primary font-semibold cursor-pointer hover:bg-lienzo transition-colors">
                                     <IconTrash size={18} stroke={2} />
                                     Borrar calendario
@@ -133,8 +133,8 @@ export default function ImportPage() {
                     <div className="text-sm text-texto border border-borde bg-superficie rounded-sm p-4 gap-4 flex flex-row">
                         <IconInfoCircle className="min-w-5 h-full" stroke={2} />
                         <div className='flex flex-col gap-2'>
-                            <h2 className="font-semibold">Instrucciones de formato:</h2>
-                            <p>Asegúrate de que el archivo cumpla el formato correcto que se específica en la <NavLink to="/dashboard/guia-de-uso" className="text-enlace hover:underline">guía de uso</NavLink>.</p>
+                            <h2 className="font-semibold">Instrucciones de formato</h2>
+                            <p>Asegúrate de que el archivo cumpla el formato que se explica en la <NavLink to="/dashboard/guia-de-uso" className="text-enlace hover:underline">guía de uso</NavLink>.</p>
                         </div>
                     </div>
                 </div>

@@ -8,10 +8,10 @@ export default function Header() {
                 Better URJC Calendar
             </NavLink>
             <div className="flex flex-row items-center gap-6 *:hover:scale-120 *:transition-all *:duration-200">
-                <a href="https://github.com/danielgrela/BetterURJCCalendar" aria-label="Github Repo" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/danielgrela/BetterURJCCalendar" aria-label="Repositorio en GitHub" target="_blank" rel="noopener noreferrer">
                     <GitHub className="size-8" />
                 </a>
-                <a href="https://www.danielgrela.com" aria-label="Portfolio" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.danielgrela.com" aria-label="Portfolio de Daniel Grela" target="_blank" rel="noopener noreferrer">
                     <img src={portfolioicon} alt="" className="size-10" />
                 </a>
             </div>

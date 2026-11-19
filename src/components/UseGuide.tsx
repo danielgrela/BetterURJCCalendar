@@ -14,20 +14,20 @@ export default function UseGuide() {
                 <div className="min-w-full lg:min-w-1/2 gap-5 flex flex-col">
                     <div className='flex flex-col lg:flex-row items-center justify-center text-center lg:text-start lg:justify-start gap-3'>
                         <IconUserCircle stroke={2} className='bg-primary text-sobre-primary p-1 size-8 rounded-md min-w-fit'/>
-                        <h2 className="text-3xl font-bold">1. Acceso a Examenes</h2>
+                        <h2 className="text-3xl font-bold">1. Acceso a exámenes</h2>
                     </div>
                     <div className='flex flex-row gap-4'>
                         <p className="font-bold">01.</p>
                         <div>
                             <h3 className="font-bold">Iniciar sesión</h3>
-                            <p className='pl'><a href="https://servicios.urjc.es/examenes/alumno/login" target="_blank" rel="noopener noreferrer" className="text-enlace hover:underline">Accede a la plataforma con tus credenciales universitarias </a> para ver tu calendario de exámenes.</p>
+                            <p className='pl'><a href="https://servicios.urjc.es/examenes/alumno/login" target="_blank" rel="noopener noreferrer" className="text-enlace hover:underline">Accede a la plataforma con tus credenciales universitarias</a> para ver tu calendario de exámenes.</p>
                         </div>    
                     </div>
                     <div className='flex flex-row gap-4'>
                         <p className="font-bold">02.</p>
                         <div>
-                            <h3 className="font-bold">Descargar el archivo excel</h3>
-                            <p className='pl'>Selecciona la opción "Descargar en Excel" para obtener tu calendario de exámenes, también puedes hacerlo tu mismo si cumple con las posiciones de columnas y filas del siguiente<a href="/Examenes.xlsx" download="Examenes.xlsx" className="text-enlace hover:underline"> archivo de ejemplo</a>.</p>
+                            <h3 className="font-bold">Descargar el archivo Excel</h3>
+                            <p className='pl'>Selecciona la opción «Descargar en Excel» para obtener tu calendario de exámenes. También puedes hacerlo tú mismo si respetas las columnas y filas de este<a href="/Examenes.xlsx" download="Examenes.xlsx" className="text-enlace hover:underline"> archivo de ejemplo</a>.</p>
                         </div>    
                     </div>
                 </div>
@@ -48,7 +48,7 @@ export default function UseGuide() {
                         <p className="font-bold">01.</p>
                         <div>
                             <h3 className="font-bold">Acceder al dashboard</h3>
-                            <p className='pl'>Accede a la <NavLink to="/dashboard/importar" className="text-enlace hover:underline">página de importar</NavLink> y añade tu archivo de exámenes. Si el sistema no da ningún error, pulsa el botón de importar y se te guiará directamente a la sección "calendario".</p>
+                            <p className='pl'>Accede a la <NavLink to="/dashboard/importar" className="text-enlace hover:underline">página de importar</NavLink> y añade tu archivo de exámenes. Si el sistema no da ningún error, pulsa el botón de importar y se te llevará directamente a la sección «Calendario».</p>
                         </div>    
                     </div>
                     <div className='flex flex-row gap-4'>
@@ -58,8 +58,8 @@ export default function UseGuide() {
                             <p className='pl'>En la fecha en la que escribo esta guía, las siguientes funciones están disponibles en el calendario de exámenes.</p>
                             <ul className='list-disc pl-6'>
                                 <li>Visualización de exámenes por fecha</li>
-                                <li>Filtro por convocatoria.</li>
-                                <li>Filtro por examenes pendientes</li>
+                                <li>Filtro por convocatoria</li>
+                                <li>Filtro por exámenes pendientes</li>
                             </ul>
                         </div>    
                     </div>

@@ -24,7 +24,7 @@ export default function ButtonsExportDashboard({ className = '' }: { className?:
                     : 
                     <NavLink to="/dashboard/importar" className={`text-sm flex flex-row gap-2 px-6 py-4 items-center h-fit hover:brightness-80 bg-primary text-sobre-primary ${className}`}>
                         <IconCirclePlus className="min-w-fit"  stroke={2} />
-                        Nuevo Calendario / Importar Excel
+                        Nuevo calendario / Importar Excel
                     </NavLink>
             }
         </>

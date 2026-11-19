@@ -23,7 +23,7 @@ export default function NextExams() {
     const proximos = useMemo(() => proximosExamenes(sortedEvents(jsonData)), [jsonData]);
     return (
         <section className="flex flex-col gap-3">
-            <h2 className="text-2xl font-bold">Próximos Exámenes</h2>
+            <h2 className="text-2xl font-bold">Próximos exámenes</h2>
             {!proximos ?
                 <div className="flex flex-row gap-2 text-primary items-center justify-center">              
                     <IconExclamationCircle className="min-w-fit" stroke={2} />  
