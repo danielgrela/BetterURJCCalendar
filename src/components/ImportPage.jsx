@@ -129,7 +129,7 @@ export default function ImportPage() {
                     <div className="text-sm text-secundario dark:text-gray-300 border border-gray-400 dark:border-gray-600 bg-gray-100 dark:bg-gray-900 rounded-sm p-4 gap-4 flex flex-row">
                         <IconInfoCircle className="min-w-5 h-full" stroke={2} />
                         <div className='flex flex-col gap-2'>
-                            <h4 className="font-semibold">Instrucciones de formato:</h4>
+                            <h2 className="font-semibold">Instrucciones de formato:</h2>
                             <p>Asegúrate de que el archivo cumpla el formato correcto que se específica en la <NavLink to="/dashboard/guia-de-uso" className="text-blue-500 active:text-blue-800 hover:underline">guía de uso</NavLink>.</p>
                         </div>
                     </div>

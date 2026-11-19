@@ -3,10 +3,10 @@ import DashboardHeader from "./DashboardHeader";
 import PageMeta from "./PageMeta.jsx";
 export default function HomePage() {
     return (
-        <main className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8">
             <PageMeta titulo="Inicio" noindex />
             <DashboardHeader />
             <NextExams />
-        </main>
+        </div>
     )
 }

@@ -3,7 +3,7 @@ import portfolioicon from "../assets/portfolioicon.png";
 import { NavLink } from "react-router-dom";
 export default function Header() {
     return (
-        <div className="flex flex-row bg-gray-100 dark:bg-gray-800 p-4 lg:px-15 items-center justify-between lg:sticky top-0 z-10 shadow-sm">
+        <header className="flex flex-row bg-gray-100 dark:bg-gray-800 p-4 lg:px-15 items-center justify-between lg:sticky top-0 z-10 shadow-sm">
             <NavLink to="/" className="text-xl lg:text-3xl font-bold text-primary">
                 Better URJC Calendar
             </NavLink>
@@ -12,9 +12,9 @@ export default function Header() {
                     <GitHub className="size-8" />
                 </a>
                 <a href="https://www.danielgrela.com" aria-label="Portfolio" target="_blank" rel="noopener noreferrer">
-                    <img src={portfolioicon} alt="Portfolio" className="size-10" />
+                    <img src={portfolioicon} alt="" className="size-10" />
                 </a>
             </div>
-        </div>
+        </header>
     );
 }

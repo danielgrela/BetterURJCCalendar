@@ -76,7 +76,7 @@ export default function ExamCard({ examen, variant = 'full' }) {
                     <p className="bg-gray-200 dark:bg-gray-800 dark:text-gray-200 rounded-sm py-px px-3 w-fit font-medium">{examen.Convocatoria}</p>
                     <p className="text-sm text-primary font-bold">{textoDias(diasHasta(examen.Fecha))}</p>
                 </div>
-                <h2 className="text-xl font-bold dark:text-gray-100">{nombreAsignatura(examen)}</h2>
+                <h3 className="text-xl font-bold dark:text-gray-100">{nombreAsignatura(examen)}</h3>
                 <p className="text-sm font-medium dark:text-gray-300">{examen.Plan}</p>
             </div>
             <div className="flex flex-col gap-2 w-full lg:items-end">

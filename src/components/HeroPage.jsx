@@ -27,12 +27,14 @@ export default function HeroPage() {
     <>
       <PageMeta ruta="/" descripcion={DESCRIPCION} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(DATOS_ESTRUCTURADOS) }} />
-      <main className="min-h-screen flex flex-col w-full">
+      <div className="min-h-screen flex flex-col w-full">
         <Header/>
-        <HeroPageMain />
-        <Features />
+        <main className="flex flex-col w-full">
+          <HeroPageMain />
+          <Features />
+        </main>
         <Footer />
-      </main>
+      </div>
       <ToggleThemeButton className="fixed block lg:hidden bottom-8 right-8" />
     </>
   );
