@@ -31,7 +31,8 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `public/og-image.png` → imagen 1200×630 para Open Graph/Twitter (captura real del calendario)
 - `public/robots.txt` y `public/sitemap.xml` → solo `/` y `/dashboard/guia-de-uso`; si se añade una ruta pública, añadirla al sitemap
 - `src/assets/` y `public/*.png|ico` → imágenes (no leer, binarios)
-- `vercel.json` → reescribe todo a `/index.html` (necesario para las rutas de la SPA)
+- `vercel.json` → reescribe a `/index.html` **solo** las rutas conocidas del dashboard; el resto recibe `dist/404.html` (copia de `index.html` que genera el plugin `paginaNoEncontrada` de `vite.config.ts`) con estado 404. **Si se añade una ruta en `main.jsx`, añadirla también aquí** o dará 404 al recargar
+- `vite.config.ts` → plugin de React y `paginaNoEncontrada`
 
 ## Modelo de datos (examen)
 Objeto con `Curso, Plan, Asignatura, CodigoPlan, CodigoAsignatura, CodigoGrupo, Convocatoria, Fecha, Hora, Aula`, tal y como sale de `handleExcel`.
