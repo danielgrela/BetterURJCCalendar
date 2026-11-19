@@ -1,6 +1,7 @@
 import ExamCard from './ExamCard';
 import { claveExamen } from '../scripts/examen';
 import type { Examen } from '../types/examen';
+import type { Solapamiento } from '../scripts/solapamientos';
 
 interface Props {
     jsonData: Examen[] | null | undefined;
@@ -9,10 +10,11 @@ interface Props {
     month: number;
     today?: Date;
     compact?: boolean;
+    solapamientos?: Map<string, Solapamiento>;
 }
 
 // today: día que se resalta (por defecto, hoy) · compact: versión reducida para la portada
-export default function Calendar({ jsonData, year, month, today = new Date(), compact = false }: Props) {
+export default function Calendar({ jsonData, year, month, today = new Date(), compact = false, solapamientos }: Props) {
     const firstDayOfMonth = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const startingDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
@@ -60,7 +62,7 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
 
                             <div className="flex flex-col gap-1.5 max-h-full overflow-y-auto overflow-x-hidden pr-1 custom-scrollbar pb-2">
                                 {dayEvents.map((ev) => (
-                                    <ExamCard key={claveExamen(ev)} examen={ev} variant="compact" />
+                                    <ExamCard key={claveExamen(ev)} examen={ev} variant="compact" solapamiento={solapamientos?.get(claveExamen(ev))} />
                                 ))}
                             </div>
                         </div>

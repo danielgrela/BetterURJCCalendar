@@ -6,6 +6,7 @@ import PCCalendar from './PCCalendar';
 import { sortedEvents, mesDelProximoExamen } from '../scripts/sortEvents';
 import { FILTROS_INICIALES, convocatoriasDe, filtrarExamenes } from '../scripts/filtersCalendar';
 import PageMeta from './PageMeta.tsx';
+import { detectarSolapamientos } from '../scripts/solapamientos';
 import type { FiltersCalendarProps } from './FiltersCalendar';
 import EmptyState from './EmptyState';
 import ImportButton from './ImportButton';
@@ -15,6 +16,8 @@ export default function CalendarPage() {
     const [date, setDate] = useState(() => mesDelProximoExamen(jsonData));
     const [filtros, setFiltros] = useState(FILTROS_INICIALES);
     const examenes = useMemo(() => sortedEvents(jsonData), [jsonData]);
+    // Sobre todos los exámenes: un cruce existe aunque el filtro oculte uno de los dos
+    const solapamientos = useMemo(() => detectarSolapamientos(examenes), [examenes]);
     const convocatorias = useMemo(() => convocatoriasDe(examenes), [examenes]);
     const visibleData = useMemo(() => filtrarExamenes(examenes, filtros), [examenes, filtros]);
     const filtersProps: FiltersCalendarProps = { filtros, setFiltros, convocatorias };
@@ -37,9 +40,9 @@ export default function CalendarPage() {
         <>
         <PageMeta titulo="Calendario" noindex />
         {isLg ? (
-            <PCCalendar date={date} setDate={setDate} visibleData={visibleData} filtersProps={filtersProps} year={year} month={month} estadoVacio={estadoVacio} />
+            <PCCalendar date={date} setDate={setDate} visibleData={visibleData} filtersProps={filtersProps} year={year} month={month} estadoVacio={estadoVacio} solapamientos={solapamientos} />
             ) :
-                <MobileCalendar visibleData={visibleData} filtersProps={filtersProps} estadoVacio={estadoVacio} />
+                <MobileCalendar visibleData={visibleData} filtersProps={filtersProps} estadoVacio={estadoVacio} solapamientos={solapamientos} />
             }
         </>
     );

@@ -33,6 +33,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
   - `examen.ts` → `nombreAsignatura(ev)` (corta en el primer `(`), `diasHasta(fecha)` y `claveExamen(ev)` (`key` de listas)
   - `sortEvents.ts` → `parseEventDate('DD-MM-YYYY')` (default) y `sortedEvents(json)` (por fecha y hora)
   - `filtersCalendar.ts` → `filtrarExamenes(examenes, filtros)` (convocatoria y "Pendientes") y `convocatoriasDe(examenes)`; el estado de los filtros vive en `CalendarPage`
+  - `solapamientos.ts` → `detectarSolapamientos(examenes)` (pura, con tests): `Map` por `claveExamen` con `conflicto` (horas que se cruzan) o `mismoDia`; el mismo examen en otro grupo no cuenta. Se calcula en `NextExams` y `CalendarPage` sobre todos los exámenes y llega a `ExamCard` como `solapamiento`
   - `generateICS.ts` → `eventosICS(examenes)` (pura, con tests) y la descarga
   - `generateExcel.ts` → exporta con `write-excel-file` (cargado con `import()` solo al exportar); probado con un test de ida y vuelta con `handleExcel`
   - `tema.ts` → tipo `Tema`, `siguienteTema`, `esOscuro` y `temaDeEstado` (lee lo guardado, incluido el formato antiguo)

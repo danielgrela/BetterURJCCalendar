@@ -1,6 +1,7 @@
-import { IconCalendar, IconClock, IconMapPin, IconSchool } from '@tabler/icons-react';
+import { IconAlertTriangle, IconCalendar, IconCalendarEvent, IconClock, IconMapPin, IconSchool } from '@tabler/icons-react';
 import { nombreAsignatura, diasHasta } from '../scripts/examen';
 import type { Examen } from '../types/examen';
+import type { Solapamiento } from '../scripts/solapamientos';
 
 function textoDias(dias: number) {
     switch (dias) {
@@ -12,8 +13,33 @@ function textoDias(dias: number) {
     return `Quedan ${dias} días`;
 }
 
-// variant: "full" (Próximos exámenes), "list" (calendario móvil), "compact" (celda de la rejilla)
-export default function ExamCard({ examen, variant = 'full' }: { examen: Examen, variant?: 'full' | 'list' | 'compact' }) {
+function textoSolapamiento({ tipo, con }: Solapamiento) {
+    const otros = con.map((ev) => `${nombreAsignatura(ev)} (${ev.Hora})`).join(', ');
+    return tipo === 'conflicto' ? `Se solapa con ${otros}` : `Mismo día que ${otros}`;
+}
+
+// Aviso con texto (no solo color): conflicto de horas en color de error, mismo día en gris
+function AvisoSolapamiento({ solapamiento, corto = false }: { solapamiento: Solapamiento, corto?: boolean }) {
+    const conflicto = solapamiento.tipo === 'conflicto';
+    const Icono = conflicto ? IconAlertTriangle : IconCalendarEvent;
+    const texto = textoSolapamiento(solapamiento);
+    return (
+        <p title={corto ? texto : undefined} className={`flex items-start gap-1 font-semibold ${corto ? 'text-[10px]' : 'text-sm'} ${conflicto ? 'text-error' : 'text-texto-suave'}`}>
+            <Icono size={corto ? 10 : 16} stroke={2} className="min-w-fit mt-px" aria-hidden="true" />
+            {corto ? <><span aria-hidden="true">{conflicto ? 'Se solapa' : 'Mismo día'}</span><span className="sr-only">{texto}</span></> : <span>{texto}</span>}
+        </p>
+    );
+}
+
+interface Props {
+    examen: Examen;
+    /** "full" (Próximos exámenes), "list" (calendario móvil), "compact" (celda de la rejilla) */
+    variant?: 'full' | 'list' | 'compact';
+    /** Si coincide con otro examen ese día (detectarSolapamientos) */
+    solapamiento?: Solapamiento;
+}
+
+export default function ExamCard({ examen, variant = 'full', solapamiento }: Props) {
     if (variant === 'compact') {
         return (
             <div className="group relative p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border-l-[3px] border-primary text-primary shadow-sm hover:shadow-md transition-shadow">
@@ -32,6 +58,7 @@ export default function ExamCard({ examen, variant = 'full' }: { examen: Examen,
                     <IconMapPin size={10} className='min-w-fit'/>
                     <span>{examen.Aula}</span>
                 </div>
+                {solapamiento && <AvisoSolapamiento solapamiento={solapamiento} corto />}
             </div>
         );
     }
@@ -66,6 +93,7 @@ export default function ExamCard({ examen, variant = 'full' }: { examen: Examen,
                     <IconMapPin size={16} className='min-w-fit'/>
                     <span>{examen.Aula}</span>
                 </div>
+                {solapamiento && <AvisoSolapamiento solapamiento={solapamiento} />}
             </div>
         );
     }
@@ -79,6 +107,7 @@ export default function ExamCard({ examen, variant = 'full' }: { examen: Examen,
                 </div>
                 <h3 className="text-xl font-bold">{nombreAsignatura(examen)}</h3>
                 <p className="text-sm font-medium text-texto-suave">{examen.Plan}</p>
+                {solapamiento && <AvisoSolapamiento solapamiento={solapamiento} />}
             </div>
             <div className="flex flex-col gap-2 w-full lg:items-end">
                 <div className="flex flex-row items-center gap-2">

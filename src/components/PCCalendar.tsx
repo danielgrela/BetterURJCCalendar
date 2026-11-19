@@ -9,6 +9,7 @@ import {
 import type { FiltersCalendarProps } from './FiltersCalendar';
 import type { Examen } from '../types/examen';
 import type { ReactNode } from 'react';
+import type { Solapamiento } from '../scripts/solapamientos';
 
 interface Props {
     date: Date;
@@ -19,9 +20,10 @@ interface Props {
     month: number;
     /** Aviso si no hay exámenes que mostrar (sin datos o sin resultados con los filtros) */
     estadoVacio: ReactNode;
+    solapamientos: Map<string, Solapamiento>;
 }
 
-export default function PCCalendar({date, setDate, visibleData, filtersProps, year, month, estadoVacio }: Props) {
+export default function PCCalendar({date, setDate, visibleData, filtersProps, year, month, estadoVacio, solapamientos }: Props) {
     const prevMonth = () => setDate(new Date(year, month - 1, 1));
     const nextMonth = () => setDate(new Date(year, month + 1, 1));
     const mesVacio = Array.isArray(visibleData) && visibleData.length > 0 && !hayExamenesEnMes(visibleData, year, month);
@@ -55,7 +57,7 @@ export default function PCCalendar({date, setDate, visibleData, filtersProps, ye
                 </div>
             )}
             {estadoVacio && <div className="max-w-6xl mx-auto mb-5">{estadoVacio}</div>}
-            <Calendar jsonData={visibleData} year={year} month={month} />
+            <Calendar jsonData={visibleData} year={year} month={month} solapamientos={solapamientos} />
         </>
     );
 }

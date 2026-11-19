@@ -6,6 +6,7 @@ import ImportButton from "./ImportButton";
 import EmptyState from "./EmptyState";
 import ExamCard from "./ExamCard";
 import { claveExamen } from "../scripts/examen";
+import { detectarSolapamientos } from "../scripts/solapamientos";
 import { NavLink } from 'react-router';
 import type { Examen } from '../types/examen';
 // Los 5 primeros exámenes desde hoy; null si no hay datos importados
@@ -22,6 +23,7 @@ function proximosExamenes(examenes: Examen[]): Examen[] | null {
 
 export default function NextExams() {
     const jsonData = useFileStore((state) => state.jsonData);
+    const solapamientos = useMemo(() => detectarSolapamientos(jsonData), [jsonData]);
     const proximos = useMemo(() => proximosExamenes(sortedEvents(jsonData)), [jsonData]);
     return (
         <section className="flex flex-col gap-3">
@@ -38,7 +40,7 @@ export default function NextExams() {
                 : 
                 <div className="flex flex-col gap-4">
                     {proximos.map((examen) => (
-                        <ExamCard key={claveExamen(examen)} examen={examen} variant="full" />
+                        <ExamCard key={claveExamen(examen)} examen={examen} variant="full" solapamiento={solapamientos.get(claveExamen(examen))} />
                 ))}
                 </div>
                 }
