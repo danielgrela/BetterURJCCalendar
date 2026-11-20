@@ -107,6 +107,33 @@ export function crearExamen(datos: DatosExamen, conocidos: Examen[]): Examen {
   };
 }
 
+// Al revés que crearExamen: los datos del formulario a partir de un examen, para editarlo
+export function datosDeExamen(ev: Examen): DatosExamen {
+  const [dia, mes, anio] = ev.Fecha.split('-');
+  const [inicio = '', fin = ''] = ev.Hora.split(' - ');
+  return {
+    asignatura: nombreLegible(ev),
+    fecha: `${anio}-${mes}-${dia}`,
+    inicio,
+    fin,
+    aula: ev.Aula === '-' ? '' : ev.Aula,
+    convocatoria: ev.Convocatoria,
+    curso: ev.Curso,
+    plan: ev.Plan,
+  };
+}
+
+// Como crearExamen, pero lo que no se ha tocado conserva sus códigos originales (los del Excel):
+// así el examen editado sigue siendo «el mismo» para los solapamientos, el .ics y las preferencias
+export function editarExamen(original: Examen, datos: DatosExamen, conocidos: Examen[]): Examen {
+  const editado = crearExamen(datos, [original, ...conocidos]);
+  return {
+    ...editado,
+    CodigoGrupo: datos.curso.trim() === original.Curso ? original.CodigoGrupo : editado.CodigoGrupo,
+    CodigoPlan: datos.plan.trim() === original.Plan ? original.CodigoPlan : editado.CodigoPlan,
+  };
+}
+
 export const unirExamenes = (importados: Examen[] | null | undefined, propios: Examen[] | null | undefined): Examen[] =>
   [...(importados ?? []), ...(propios ?? [])];
 

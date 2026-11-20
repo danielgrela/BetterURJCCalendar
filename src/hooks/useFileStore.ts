@@ -28,6 +28,8 @@ interface FileStore {
   /** Quita el examen con esa claveExamen, sea importado o propio; devuelve lo que hace falta para deshacerlo */
   eliminarExamen: (clave: string) => ExamenEliminado | null;
   restaurarExamen: (eliminado: ExamenEliminado) => void;
+  /** Sustituye el examen con esa claveExamen (importado o propio) en su misma posición */
+  reemplazarExamen: (clave: string, nuevo: Examen) => void;
   /** Borra todo: lo importado y lo creado a mano */
   borrarCalendario: () => void;
 }
@@ -50,6 +52,10 @@ const useFileStore = create<FileStore>()(persist((set, get) => ({
     set({ jsonData: importados.length > 0 ? importados : null, propios: sinExamen(propios, clave) });
     return eliminado;
   },
+  reemplazarExamen: (clave, nuevo) => set((estado) => {
+    const cambiar = (lista: Examen[]) => lista.map((ev) => (claveExamen(ev) === clave ? nuevo : ev));
+    return { jsonData: estado.jsonData ? cambiar(estado.jsonData) : null, propios: cambiar(estado.propios) };
+  }),
   restaurarExamen: ({ examen, origen, indice }) => set((estado) => {
     const insertar = (lista: Examen[]) => [...lista.slice(0, indice), examen, ...lista.slice(indice)];
     return origen === 'importado'

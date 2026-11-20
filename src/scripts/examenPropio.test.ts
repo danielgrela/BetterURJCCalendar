@@ -3,7 +3,7 @@ import { claveExamen } from './examen';
 import { examen } from './examenDePrueba';
 import { detectarSolapamientos } from './solapamientos';
 import {
-  asignaturasConocidas, convocatoriaPorFecha, crearExamen, errorEnDatos, franjasFrecuentes,
+  asignaturasConocidas, convocatoriaPorFecha, crearExamen, datosDeExamen, editarExamen, errorEnDatos, franjasFrecuentes,
   masFrecuentes, sinExamen, sumarMinutos, unirExamenes, type DatosExamen,
 } from './examenPropio';
 
@@ -109,5 +109,23 @@ describe('unirExamenes y sinExamen', () => {
     expect(todos).toEqual([importado, propio]);
     expect(unirExamenes(null, [])).toEqual([]);
     expect(sinExamen(todos, claveExamen(importado))).toEqual([propio]);
+  });
+});
+
+describe('datosDeExamen y editarExamen', () => {
+  it('pasa un examen al formulario y, sin tocar nada, lo deja igual', () => {
+    const original = examen();
+    expect(datosDeExamen(original)).toEqual({
+      asignatura: 'Bases de datos', fecha: '2026-05-11', inicio: '17:00', fin: '19:00',
+      aula: 'Aulario III - Aula 002', convocatoria: 'Mayo', curso: '3/BT', plan: original.Plan,
+    });
+    expect(editarExamen(original, datosDeExamen(original), [])).toEqual(original);
+  });
+
+  it('cambia lo editado y conserva los códigos del Excel', () => {
+    const original = examen({ Aula: '-' });
+    expect(datosDeExamen(original).aula).toBe('');
+    const editado = editarExamen(original, { ...datosDeExamen(original), fecha: '2026-05-13', aula: 'Aula 101' }, [original]);
+    expect(editado).toEqual({ ...original, Fecha: '13-05-2026', Aula: 'Aula 101' });
   });
 });

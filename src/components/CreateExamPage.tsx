@@ -1,7 +1,9 @@
 import { useId, useMemo, useRef, useState } from 'react';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
-import { NavLink } from 'react-router';
-import { IconCalendarPlus, IconCircleCheck, IconExclamationCircle } from '@tabler/icons-react';
+import { NavLink, useLocation, useNavigate, useSearchParams } from 'react-router';
+import { IconCalendarPlus, IconCircleCheck, IconDeviceFloppy, IconExclamationCircle, IconQuestionMark } from '@tabler/icons-react';
+import useAvisos from '../hooks/useAvisos';
+import EmptyState from './EmptyState';
 import useFileStore from '../hooks/useFileStore';
 import useExamenes from '../hooks/useExamenes';
 import PageMeta from './PageMeta.tsx';
@@ -12,7 +14,7 @@ import { detectarSolapamientos } from '../scripts/solapamientos';
 import { convocatoriasDe } from '../scripts/filtersCalendar';
 import {
     CONVOCATORIAS_URJC, asignaturasConocidas, buscarAsignatura, convocatoriaPorFecha, crearExamen,
-    errorEnDatos, franjasFrecuentes, masFrecuentes, sumarMinutos, type DatosExamen,
+    datosDeExamen, editarExamen, errorEnDatos, franjasFrecuentes, masFrecuentes, sumarMinutos, type DatosExamen,
 } from '../scripts/examenPropio';
 import type { Examen } from '../types/examen';
 
@@ -77,15 +79,36 @@ function datosIniciales(examenes: Examen[], propios: Examen[]): DatosExamen {
     };
 }
 
+// Con ?editar=<claveExamen> (acción «Editar» del menú «⋯») el mismo formulario edita ese examen,
+// sea importado o propio. La key reinicia el formulario al pasar de editar a crear o a editar otro
 export default function CreateExamPage() {
+    const [params] = useSearchParams();
+    const clave = params.get('editar');
+    const examenes = useExamenes();
+    const original = clave ? examenes.find((ev) => claveExamen(ev) === clave) : undefined;
+    return <FormularioExamen key={clave ?? 'nuevo'} editando={clave !== null} original={original} />;
+}
+
+interface FormularioProps {
+    editando: boolean;
+    /** El examen que se edita; undefined si se crea o si la clave ya no existe */
+    original?: Examen;
+}
+
+function FormularioExamen({ editando, original }: FormularioProps) {
     const id = useId();
     const examenes = useExamenes();
     const propios = useFileStore((state) => state.propios);
     const anadirPropio = useFileStore((state) => state.anadirPropio);
+    const reemplazarExamen = useFileStore((state) => state.reemplazarExamen);
+    const mostrarAviso = useAvisos((state) => state.mostrarAviso);
+    const navigate = useNavigate();
+    const volver = (useLocation().state as { volver?: string } | null)?.volver ?? '/dashboard/calendario';
 
-    const [datos, setDatos] = useState<DatosExamen>(() => datosIniciales(examenes, propios));
+    const [datos, setDatos] = useState<DatosExamen>(() => (original ? datosDeExamen(original) : datosIniciales(examenes, propios)));
     // Mientras no se toquen a mano, la hora de fin y la convocatoria se deducen de inicio y fecha
-    const [finAMano, setFinAMano] = useState(false);
+    // (al editar se respetan las que ya tenía)
+    const [finAMano, setFinAMano] = useState(editando);
     const [convocatoriaAMano, setConvocatoriaAMano] = useState(datos.convocatoria !== '');
     const [error, setError] = useState<string | null>(null);
     const [anadido, setAnadido] = useState<string | null>(null);
@@ -137,9 +160,15 @@ export default function CreateExamPage() {
             setError(problema);
             return;
         }
-        const nuevo = crearExamen(datos, examenes);
-        if (examenes.some((ev) => claveExamen(ev) === claveExamen(nuevo))) {
+        const nuevo = original ? editarExamen(original, datos, examenes) : crearExamen(datos, examenes);
+        if (examenes.some((ev) => ev !== original && claveExamen(ev) === claveExamen(nuevo))) {
             setError('Ese examen ya está en el calendario (misma asignatura, grupo, fecha y hora).');
+            return;
+        }
+        if (original) {
+            reemplazarExamen(claveExamen(original), nuevo);
+            mostrarAviso({ texto: `Se han guardado los cambios de ${nombreLegible(nuevo)}.` });
+            navigate(volver);
             return;
         }
         anadirPropio(nuevo);
@@ -151,18 +180,32 @@ export default function CreateExamPage() {
         asignaturaRef.current?.focus();
     };
 
+    if (editando && !original) {
+        return (
+            <div className="flex flex-col gap-8">
+                <PageMeta titulo="Editar examen" noindex />
+                <h1 className="text-3xl font-bold">Editar examen</h1>
+                <EmptyState icono={<IconQuestionMark size={32} stroke={2} />} titulo="No se encuentra ese examen" texto="Puede que lo hayas eliminado o que hayas vuelto a importar el calendario y haya cambiado.">
+                    <NavLink to="/dashboard/calendario" className="min-h-11 inline-flex items-center px-2 font-semibold text-enlace hover:underline">Ir al calendario</NavLink>
+                </EmptyState>
+            </div>
+        );
+    }
+
     return (
         <div className="flex flex-col gap-8">
-            <PageMeta titulo="Crear examen" noindex />
+            <PageMeta titulo={editando ? 'Editar examen' : 'Crear examen'} noindex />
             <header className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold">Crear examen</h1>
-                <p className="text-sm lg:text-base text-texto-suave max-w-prose">Añade exámenes que no estén en el Excel, como un parcial o una recuperación. Se suman a tu calendario, se guardan solo en este navegador y se mantienen aunque importes otro archivo.</p>
+                <h1 className="text-3xl font-bold">{editando ? 'Editar examen' : 'Crear examen'}</h1>
+                <p className="text-sm lg:text-base text-texto-suave max-w-prose">{editando
+                    ? 'Corrige lo que haga falta, por ejemplo el aula. Si vuelves a importar el Excel, lo importado se sustituye y verás tu cambio en la lista de cambios.'
+                    : 'Añade exámenes que no estén en el Excel, como un parcial o una recuperación. Se suman a tu calendario, se guardan solo en este navegador y se mantienen aunque importes otro archivo.'}</p>
             </header>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-6 bg-superficie p-5 lg:p-8 rounded border border-borde shadow-sm dark:shadow-none">
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <div className="lg:col-span-2">
-                        <Campo id={`${id}-asignatura`} etiqueta="Asignatura" ayuda={conocida ? 'Ya está en tu calendario: se usan su curso y su plan.' : undefined}>
+                        <Campo id={`${id}-asignatura`} etiqueta="Asignatura" ayuda={conocida && !editando ? 'Ya está en tu calendario: se usan su curso y su plan.' : undefined}>
                             <input ref={asignaturaRef} id={`${id}-asignatura`} name="asignatura" type="text" required autoComplete="off" list={`${id}-asignaturas`}
                                 value={datos.asignatura} onChange={handleAsignatura} placeholder="Por ejemplo, Bases de datos" className={CAMPO} />
                             <datalist id={`${id}-asignaturas`}>
@@ -233,13 +276,23 @@ export default function CreateExamPage() {
                     </p>
                 )}
 
-                <button type="submit" className="lg:self-end min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90">
-                    <IconCalendarPlus size={20} stroke={2} aria-hidden="true" />
-                    Añadir al calendario
-                </button>
+                {editando ? (
+                    <div className="flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">
+                        <button type="button" onClick={() => navigate(volver)} className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium border border-borde-fuerte bg-superficie text-texto cursor-pointer hover:bg-superficie-alta transition-colors">Cancelar</button>
+                        <button type="submit" className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90">
+                            <IconDeviceFloppy size={20} stroke={2} aria-hidden="true" />
+                            Guardar cambios
+                        </button>
+                    </div>
+                ) : (
+                    <button type="submit" className="lg:self-end min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90">
+                        <IconCalendarPlus size={20} stroke={2} aria-hidden="true" />
+                        Añadir al calendario
+                    </button>
+                )}
             </form>
 
-            <section className="flex flex-col gap-3">
+            {!editando && <section className="flex flex-col gap-3">
                 <h2 className="text-2xl font-bold">Creados por ti</h2>
                 {misExamenes.length === 0
                     ? <p className="text-sm text-texto-suave">Aún no has creado ningún examen.</p>
@@ -248,8 +301,8 @@ export default function CreateExamPage() {
                             <ExamCard key={claveExamen(ev)} examen={ev} solapamiento={solapamientos.get(claveExamen(ev))} conAcciones />
                         ))}
                     </div>}
-                <p className="text-sm text-texto-suave">Los exámenes importados también se pueden eliminar con la papelera de su tarjeta, en Inicio o en el calendario.</p>
-            </section>
+                <p className="text-sm text-texto-suave">Los exámenes importados también se pueden editar o eliminar desde el menú «⋯» de su tarjeta, en Inicio o en el calendario.</p>
+            </section>}
         </div>
     );
 }
