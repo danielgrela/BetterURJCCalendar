@@ -18,7 +18,6 @@
 	/* Marca */
 	--primary: #E4002B;         /* rojo URJC: 4,85:1 con blanco; como texto pequeño, solo sobre superficie */
 	--sobre-primary: #FFFFFF;   /* texto e iconos sobre bg-primary */
-	--tertiary: #006D93;
 	--enlace: #1D4ED8;          /* blue-700 */
 	--error: #DC2626;           /* red-600 */
 	/* Superficies, de más hundida a más elevada */
@@ -39,7 +38,6 @@
 .dark {
 	--primary: #FF5A64;         /* más claro para leerse sobre fondo oscuro */
 	--sobre-primary: #0C0A09;   /* stone-950: el blanco sobre este rojo no llega a AA */
-	--tertiary: #38BDF8;        /* sky-400 */
 	--enlace: #60A5FA;          /* blue-400 */
 	--error: #F87171;           /* red-400 */
 	/* En oscuro, cuanto más elevado, más claro; sin sombras (no se ven sobre negro): bordes */
@@ -56,7 +54,6 @@
 @theme {
 	--color-primary: var(--primary);
 	--color-sobre-primary: var(--sobre-primary);
-	--color-tertiary: var(--tertiary);
 	--color-enlace: var(--enlace);
 	--color-error: var(--error);
 	--color-lienzo: var(--lienzo);

@@ -6,8 +6,6 @@ colors:                   # tokens de src/index.css (claro / oscuro)
   primary-dark: "#FF5A64"
   sobre-primary: "#FFFFFF"
   sobre-primary-dark: "#0C0A09"  # stone-950
-  tertiary: "#006D93"
-  tertiary-dark: "#38BDF8"  # sky-400
   enlace: "#1D4ED8"       # blue-700
   enlace-dark: "#60A5FA"  # blue-400
   lienzo: "#F5F5F4"       # stone-100
@@ -73,7 +71,6 @@ Herramienta de estudiante para estudiantes ("De Daniel para Daniel (y amigos)").
 
 ## Color
 - **`primary` (rojo URJC `#E4002B`, `#FF5A64` en oscuro)**: acciones principales (CTAs, "Importar", "Exportar a .ics"), elemento activo de la navegación, marca ("Better URJC Calendar", título de la portada), iconos de Características y de la guía, día de hoy en la rejilla y cuenta atrás de las tarjetas de examen. Es escaso a propósito: si todo es rojo, nada destaca.
-- **`tertiary` (azul `#006D93`, `#38BDF8` en oscuro)**: acento secundario reservado; desde F6.4 ningún componente lo usa (los iconos de Características pasaron a `primary`). No usar para acciones.
 - **`sobre-primary`**: texto e iconos encima de `bg-primary` (nunca `text-white` a mano). Blanco en claro y casi negro en oscuro: el rojo oscuro tiene que ser claro para leerse como texto, y entonces el blanco encima no llega a AA. Igual en todos los botones rojos.
 - **`texto` / `texto-suave`**: texto principal y de apoyo (descripciones, plan, metadatos).
 - **Superficies**: `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios, avisos sobre el lienzo) < `superficie-alta` (chips, hovers y lo que va encima de una superficie). `borde` para todos los bordes; `borde-fuerte` para los controles que tienen que verse como tales (selects, zona de subida discontinua). Las capturas de la guía llevan `border border-borde` para no flotar sobre el oscuro.
@@ -94,7 +91,6 @@ Herramienta de estudiante para estudiantes ("De Daniel para Daniel (y amigos)").
 | `primary` (texto) sobre `lienzo` / `superficie-alta` | 4,4 · 3,9 → **solo texto grande** (títulos, marca) | 6,5 · 5,0 |
 | `sobre-primary` sobre `primary` | 4,85 | 6,5 |
 | `enlace` sobre `lienzo` / `superficie` / `superficie-alta` | 6,1 · 6,7 · 5,3 | 7,8 · 6,9 · 6,0 |
-| `tertiary` sobre `lienzo` / `superficie` / `superficie-alta` | 5,3 · 5,8 · 4,6 | 9,2 · 8,2 · 7,1 |
 | `error` sobre `superficie` | 4,8 | 6,3 |
 
 En claro, el rojo URJC se queda en `#E4002B` aunque como texto pequeño solo aprueba sobre `superficie`: los enlaces y botones de texto que van sobre el lienzo usan `enlace` o una caja `superficie`.
