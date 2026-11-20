@@ -12,6 +12,7 @@ import { compararCalendarios } from '../scripts/cambios';
 import { leerCopia, type CopiaSeguridad } from '../scripts/copiaSeguridad';
 import usePreferencias from '../hooks/usePreferencias';
 import { codigoDeHash, decodificarCalendario } from '../scripts/compartir';
+import AvisoCompartido from './AvisoCompartido';
 export default function ImportPage() {
     const [file, setFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -116,8 +117,17 @@ export default function ImportPage() {
         setDragging(false);
         processFile(e.dataTransfer.files[0] ?? null);
     };
-    const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+    const descartarCompartido = () => {
+        setCompartido(false);
+        setJsonAuxData(null);
+        setDisabled(true);
+        navigate({ hash: '' }, { replace: true });
+    };
+    const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        importar();
+    };
+    const importar = () => {
         if (!file && !compartido) {
             setError("Selecciona un archivo antes de importar.");
             return;
@@ -149,6 +159,9 @@ export default function ImportPage() {
                 <IconHelpCircle size={16} className="inline-block text-texto-suave mr-1" />
                 <p className="text-texto-suave text-sm">¿Tienes dudas? Puedes ver esta <NavLink to="/dashboard/guia-de-uso" className="text-enlace underline underline-offset-2 hover:decoration-2">guía de uso</NavLink></p>
             </div>
+            {compartido && jsonAuxData && (
+                <AvisoCompartido examenes={jsonAuxData} hayImportados={hayImportados} hayPropios={propios.length > 0} alImportar={importar} alDescartar={descartarCompartido} />
+            )}
             <form className="relative mt-6 flex flex-col bg-superficie h-full py-10 px-10 lg:px-20 lg:h-4/5 rounded border border-borde shadow-sm dark:shadow-none gap-8 lg:gap-10">
             <div className='flex flex-col gap-4'>
                 <input
@@ -170,11 +183,6 @@ export default function ImportPage() {
                     <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">exámenes</a>, un calendario .ics como el que exportas desde aquí o una copia de seguridad .json</p>
                 </label>
                 {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
-                {compartido && jsonAuxData && (
-                    <p role="status" className="text-start text-sm text-texto">
-                        <strong className="font-semibold">Te han compartido un calendario con {jsonAuxData.length === 1 ? '1 examen' : `${jsonAuxData.length} exámenes`}.</strong> Pulsa «Importar» para guardarlo en este navegador{hayImportados ? ': sustituye lo que tienes importado' : ''}{propios.length > 0 ? '; los exámenes que has creado a mano se mantienen' : ''}.
-                    </p>
-                )}
                 {copia && (
                     <p role="status" className="text-start text-sm text-texto">
                         Copia de seguridad del {new Date(copia.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}: {copia.importados?.length ?? 0} exámenes importados y {copia.propios.length} creados a mano, con tus ajustes. <strong className="font-semibold">Al importarla se sustituye todo lo que hay en este navegador.</strong>
