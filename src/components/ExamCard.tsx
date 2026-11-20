@@ -1,4 +1,5 @@
-import { IconAlertTriangle, IconCalendarEvent, IconClock, IconMapPin } from '@tabler/icons-react';
+import { useRef, useState } from 'react';
+import { IconAlertTriangle, IconCalendarEvent, IconClock, IconMapPin, IconTrash } from '@tabler/icons-react';
 import { aulaLegible, diasHasta, fechaLarga, horaInicio, horaLegible, nombreLegible, partesFecha } from '../scripts/examen';
 import type { Examen } from '../types/examen';
 import type { Solapamiento } from '../scripts/solapamientos';
@@ -37,10 +38,19 @@ interface Props {
     onSelect?: () => void;
     /** Para calcular «Quedan N días» y atenuar los pasados */
     hoy?: Date;
+    /** Solo en "card": muestra la papelera y, tras confirmar, lo llama */
+    onEliminar?: () => void;
 }
 
-export default function ExamCard({ examen, variant = 'card', solapamiento, onSelect, hoy = new Date() }: Props) {
+export default function ExamCard({ examen, variant = 'card', solapamiento, onSelect, hoy = new Date(), onEliminar }: Props) {
     const nombre = nombreLegible(examen);
+    const [confirmando, setConfirmando] = useState(false);
+    const papeleraRef = useRef<HTMLButtonElement>(null);
+    // Al cancelar, el foco vuelve a la papelera (que se había ocultado) y no se pierde en el documento
+    const cancelar = () => {
+        setConfirmando(false);
+        requestAnimationFrame(() => papeleraRef.current?.focus());
+    };
 
     if (variant === 'line') {
         const conflicto = solapamiento?.tipo === 'conflicto';
@@ -64,14 +74,14 @@ export default function ExamCard({ examen, variant = 'card', solapamiento, onSel
     const pasado = dias < 0;
     const { dia, diaSemana, mes } = partesFecha(examen.Fecha);
     return (
-        <article className={`flex flex-row gap-4 p-4 lg:p-5 rounded-md border border-borde ${pasado ? 'bg-lienzo' : 'bg-superficie shadow-sm dark:shadow-none'}`}>
+        <article className={`relative flex flex-row gap-4 p-4 lg:p-5 rounded-md border border-borde ${pasado ? 'bg-lienzo' : 'bg-superficie shadow-sm dark:shadow-none'}`}>
             {/* Bloque de fecha como en una agenda; la fecha completa va en texto para lectores de pantalla */}
             <div aria-hidden="true" className={`flex flex-col items-center justify-center shrink-0 w-14 py-2 rounded-sm ${pasado ? 'border border-borde' : 'bg-superficie-alta'}`}>
                 <span className="text-xs font-medium text-texto-suave">{diaSemana}</span>
                 <span className={`text-2xl font-bold leading-tight tabular-nums ${pasado ? 'text-texto-suave' : 'text-texto'}`}>{dia}</span>
                 <span className="text-xs font-medium text-texto-suave">{mes}</span>
             </div>
-            <div className="flex flex-col gap-1 min-w-0">
+            <div className={`flex flex-col gap-1 min-w-0 ${onEliminar ? 'pe-10' : ''}`}>
                 <h3 className={`text-base lg:text-lg font-bold leading-snug ${pasado ? 'text-texto-suave' : 'text-texto'}`}>
                     {nombre}
                     <span className="sr-only">, {fechaLarga(examen.Fecha)}</span>
@@ -93,7 +103,21 @@ export default function ExamCard({ examen, variant = 'card', solapamiento, onSel
                 </p>
                 <p className="text-sm text-texto-suave">{examen.Plan}</p>
                 {solapamiento && <AvisoSolapamiento solapamiento={solapamiento} />}
+                {onEliminar && confirmando && (
+                    <div className="mt-2 pt-3 border-t border-borde flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                        <p className="text-sm font-medium text-texto">¿Eliminar este examen del calendario?</p>
+                        <div className="flex flex-row gap-2">
+                            <button type="button" onClick={onEliminar} className="min-h-11 inline-flex items-center justify-center gap-2 px-4 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90">Eliminar</button>
+                            <button type="button" onClick={cancelar} autoFocus className="min-h-11 inline-flex items-center justify-center gap-2 px-4 font-medium border border-borde-fuerte bg-superficie text-texto cursor-pointer hover:bg-superficie-alta transition-colors">Cancelar</button>
+                        </div>
+                    </div>
+                )}
             </div>
+            {onEliminar && !confirmando && (
+                <button ref={papeleraRef} type="button" onClick={() => setConfirmando(true)} aria-label={`Eliminar ${nombre}`} title="Eliminar examen" className="absolute top-1 right-1 lg:top-2 lg:right-2 size-11 flex items-center justify-center rounded-sm text-texto-suave cursor-pointer hover:bg-superficie-alta hover:text-error transition-colors">
+                    <IconTrash size={20} stroke={2} aria-hidden="true" />
+                </button>
+            )}
         </article>
     );
 }

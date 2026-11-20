@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import useFileStore from '../hooks/useFileStore';
+import useExamenes from '../hooks/useExamenes';
 import useMediaQuery from '../hooks/useMediaQuery';
 import MobileCalendar from './MobileCalendar';
 import PCCalendar from './PCCalendar';
@@ -10,9 +11,14 @@ import { detectarSolapamientos } from '../scripts/solapamientos';
 import type { FiltersCalendarProps } from './FiltersCalendar';
 import EmptyState from './EmptyState';
 import ImportButton from './ImportButton';
+import CreateExamLink from './CreateExamLink';
+import { claveExamen } from '../scripts/examen';
+import type { Examen } from '../types/examen';
 import { IconCalendarOff, IconFilterOff } from '@tabler/icons-react';
 export default function CalendarPage() {
-    const jsonData = useFileStore((state) => state.jsonData);
+    const jsonData = useExamenes();
+    const eliminarExamen = useFileStore((state) => state.eliminarExamen);
+    const onEliminar = (examen: Examen) => eliminarExamen(claveExamen(examen));
     const [date, setDate] = useState(() => mesDelProximoExamen(jsonData));
     const [filtros, setFiltros] = useState(FILTROS_INICIALES);
     const examenes = useMemo(() => sortedEvents(jsonData), [jsonData]);
@@ -24,8 +30,9 @@ export default function CalendarPage() {
     const isLg = useMediaQuery('(min-width: 1024px)');
     // Sin datos → Importar; con datos pero nada tras filtrar → Quitar filtros
     const estadoVacio = examenes.length === 0 ? (
-        <EmptyState icono={<IconCalendarOff size={32} stroke={2} />} titulo="Aún no hay exámenes" texto="Importa el Excel de exámenes de la URJC para verlos en el calendario.">
+        <EmptyState icono={<IconCalendarOff size={32} stroke={2} />} titulo="Aún no hay exámenes" texto="Importa el Excel de exámenes de la URJC para verlos en el calendario, o añade los tuyos a mano.">
             <ImportButton />
+            <CreateExamLink />
         </EmptyState>
     ) : visibleData.length === 0 ? (
         <EmptyState icono={<IconFilterOff size={32} stroke={2} />} titulo="Ningún examen coincide con los filtros">
@@ -40,9 +47,9 @@ export default function CalendarPage() {
         <>
         <PageMeta titulo="Calendario" noindex />
         {isLg ? (
-            <PCCalendar date={date} setDate={setDate} visibleData={visibleData} filtersProps={filtersProps} year={year} month={month} estadoVacio={estadoVacio} solapamientos={solapamientos} />
+            <PCCalendar date={date} setDate={setDate} visibleData={visibleData} filtersProps={filtersProps} year={year} month={month} estadoVacio={estadoVacio} solapamientos={solapamientos} onEliminar={onEliminar} />
             ) :
-                <MobileCalendar visibleData={visibleData} filtersProps={filtersProps} estadoVacio={estadoVacio} solapamientos={solapamientos} />
+                <MobileCalendar visibleData={visibleData} filtersProps={filtersProps} estadoVacio={estadoVacio} solapamientos={solapamientos} onEliminar={onEliminar} />
             }
         </>
     );

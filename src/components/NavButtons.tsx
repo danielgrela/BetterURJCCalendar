@@ -1,6 +1,7 @@
 import { IconHome2 } from '@tabler/icons-react';
 import { IconCalendarWeek } from '@tabler/icons-react';
 import { IconFileUpload } from '@tabler/icons-react';
+import { IconCalendarPlus } from '@tabler/icons-react';
 import ButtonNavBar from './ButtonNavBar.tsx';
 
 export default function NavButtons() {
@@ -9,6 +10,7 @@ export default function NavButtons() {
             <ButtonNavBar to="/dashboard" end><IconHome2 stroke={2} />Inicio</ButtonNavBar>
             <ButtonNavBar to="/dashboard/calendario"><IconCalendarWeek stroke={2} />Calendario</ButtonNavBar>
             <ButtonNavBar to="/dashboard/importar"><IconFileUpload stroke={2} />Importar</ButtonNavBar>
+            <ButtonNavBar to="/dashboard/crear"><IconCalendarPlus stroke={2} />Crear</ButtonNavBar>
         </nav>
     )
 }

@@ -15,14 +15,16 @@ export default function ImportPage() {
     const [dragging, setDragging] = useState(false);
     const setJsonData = useFileStore((state) => state.setJsonData);
     const jsonDataState = useFileStore((state) => state.jsonData);
-    const clearJsonData = useFileStore((state) => state.clearJsonData);
+    const propios = useFileStore((state) => state.propios);
+    const borrarCalendario = useFileStore((state) => state.borrarCalendario);
+    const hayImportados = !!jsonDataState && jsonDataState.length > 0;
     const [borrado, setBorrado] = useState(false);
     const dialogBorrarRef = useRef<HTMLDialogElement>(null);
     // El diálogo devuelve el botón pulsado en returnValue; Esc o el gesto atrás lo dejan vacío
     const handleCerrarDialogo = (e: SyntheticEvent<HTMLDialogElement>) => {
         const dialog = e.currentTarget;
         if (dialog.returnValue === 'borrar') {
-            clearJsonData();
+            borrarCalendario();
             setFile(null);
             setJsonAuxData(null);
             setDisabled(true);
@@ -123,11 +125,13 @@ export default function ImportPage() {
                 )}
                 </div>
                 <div className='flex flex-col gap-6'>
-                    {jsonDataState && jsonDataState.length > 0 && (
+                    {(hayImportados || propios.length > 0) && (
                         <div className="text-sm text-texto border-t border-borde pt-6 gap-4 flex flex-row">
                             <IconExclamationCircle className="min-w-5 text-texto-suave" stroke={2} aria-hidden="true" />
                             <div className='flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between w-full'>
-                                <p>Ya tienes un calendario: importar otro lo sobrescribirá.</p>
+                                <p>{hayImportados
+                                    ? `Ya tienes un calendario: importar otro sustituirá lo importado${propios.length > 0 ? '; los exámenes que has creado a mano se mantienen' : ''}.`
+                                    : 'Los exámenes que has creado a mano se mantendrán al importar.'}</p>
                                 <button type="button" onClick={() => { setBorrado(false); dialogBorrarRef.current?.showModal(); }} className="self-start lg:self-auto shrink-0 min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium border border-primary bg-superficie text-primary cursor-pointer hover:bg-primary hover:text-sobre-primary transition-colors">
                                     <IconTrash size={18} stroke={2} />
                                     Borrar calendario
@@ -150,7 +154,7 @@ export default function ImportPage() {
             </form>
             <dialog ref={dialogBorrarRef} onClose={handleCerrarDialogo} aria-labelledby="borrar-titulo" aria-describedby="borrar-descripcion" className="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-superficie text-texto border border-borde p-6 shadow-lg dark:shadow-none overscroll-contain backdrop:bg-black/50 backdrop:overflow-hidden backdrop:overscroll-contain">
                 <h2 id="borrar-titulo" className="text-lg font-bold">¿Borrar el calendario?</h2>
-                <p id="borrar-descripcion" className="mt-2 text-sm text-texto-suave">Se eliminarán los exámenes guardados en este navegador. Para recuperarlos tendrás que volver a importar el Excel o el .ics.</p>
+                <p id="borrar-descripcion" className="mt-2 text-sm text-texto-suave">Se eliminarán todos los exámenes guardados en este navegador, también los que has creado a mano. Para recuperarlos tendrás que volver a importar el Excel o el .ics.</p>
                 <form method="dialog" className="mt-6 flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">
                     <button value="cancelar" autoFocus className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium border border-borde-fuerte bg-superficie text-texto cursor-pointer hover:bg-superficie-alta transition-colors">Cancelar</button>
                     <button value="borrar" className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90">Borrar calendario</button>

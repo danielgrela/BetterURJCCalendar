@@ -8,6 +8,7 @@ export default [
     index('components/HomePage.tsx'),
     route('calendario', 'components/CalendarPage.tsx'),
     route('importar', 'components/ImportPage.tsx'),
+    route('crear', 'components/CreateExamPage.tsx'),
     route('guia-de-uso', 'components/UseGuide.tsx'),
   ]),
   route('*', 'components/NotFound.tsx'),

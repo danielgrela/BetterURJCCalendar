@@ -12,6 +12,7 @@ El Excel oficial de exámenes de la URJC, convertido en un calendario que se ent
 - **Aviso de solapamientos**: marca los exámenes cuyas horas se cruzan y los que caen el mismo día.
 - **Exportación** a Excel (`.xlsx`) y a iCal (`.ics`) para Google Calendar, Outlook o el calendario del móvil, con la hora de Madrid. Si la URJC cambia un examen, volver a importar el `.ics` en tu calendario actualiza el evento en vez de duplicarlo.
 - **Importación** del Excel de la URJC o de un `.ics`.
+- **Exámenes propios**: en **Crear** añades a mano los que no estén en el Excel (curso, plan y franjas horarias se rellenan de un toque con lo que ya tienes) y se mantienen aunque importes otro archivo. Cualquier examen, importado o propio, se puede eliminar con la papelera de su tarjeta.
 - **Modo claro y oscuro** (la primera vez, el de tu sistema; después, el que elijas) y **funciona sin conexión** como PWA una vez cargada.
 
 ## Cómo se usa

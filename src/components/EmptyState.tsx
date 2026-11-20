@@ -15,7 +15,7 @@ export default function EmptyState({ icono, titulo, texto, children }: Props) {
             <span className="text-texto-suave" aria-hidden="true">{icono}</span>
             <p className="text-lg font-bold text-texto">{titulo}</p>
             {texto && <p className="text-sm text-texto-suave max-w-prose">{texto}</p>}
-            {children && <div className="mt-3">{children}</div>}
+            {children && <div className="mt-3 flex flex-col items-center gap-2 lg:flex-row lg:gap-4">{children}</div>}
         </div>
     );
 }

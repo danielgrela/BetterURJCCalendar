@@ -7,7 +7,7 @@
       "destination": "/__spa-fallback.html"
     },
     {
-      "source": "/dashboard/:pagina(calendario|importar|guia-de-uso)",
+      "source": "/dashboard/:pagina(calendario|importar|crear|guia-de-uso)",
       "destination": "/__spa-fallback.html"
     }
   ]

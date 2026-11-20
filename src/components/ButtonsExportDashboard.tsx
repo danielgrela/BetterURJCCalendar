@@ -2,10 +2,10 @@ import { IconFileTypeXls } from '@tabler/icons-react';
 import { descargarCalendarioExcel } from "../scripts/generateExcel";
 import { descargarCalendarioICS } from "../scripts/generateICS";
 import { IconCalendarDown } from '@tabler/icons-react';
-import useFileStore from "../hooks/useFileStore";
+import useExamenes from "../hooks/useExamenes";
 
 export default function ButtonsExportDashboard({ className = '' }: { className?: string }) {
-    const jsonData = useFileStore((state) => state.jsonData);
+    const jsonData = useExamenes();
     // Sin datos no hay nada que exportar: el estado vacío de NextExams lleva a Importar
     if (!jsonData || jsonData.length === 0) return null;
     return (

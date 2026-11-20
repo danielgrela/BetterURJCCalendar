@@ -13,6 +13,8 @@ interface Props {
     today?: Date;
     compact?: boolean;
     solapamientos?: Map<string, Solapamiento>;
+    /** Permite eliminar exámenes desde el detalle del día */
+    onEliminar?: (examen: Examen) => void;
 }
 
 const DIAS_SEMANA = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
@@ -20,7 +22,7 @@ const DIAS_SEMANA = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 const MAX_POR_DIA = 2;
 
 // today: día que se resalta (por defecto, hoy) · compact: mockup de la portada, sin detalle al pulsar
-export default function Calendar({ jsonData, year, month, today = new Date(), compact = false, solapamientos }: Props) {
+export default function Calendar({ jsonData, year, month, today = new Date(), compact = false, solapamientos, onEliminar }: Props) {
     const [diaAbierto, setDiaAbierto] = useState<number | null>(null);
     const dialogRef = useRef<HTMLDialogElement>(null);
     useEffect(() => {
@@ -37,6 +39,11 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
         if (m === month + 1 && y === year) porDia.set(d, [...(porDia.get(d) ?? []), evento]);
     }
     const examenesAbiertos = diaAbierto !== null ? porDia.get(diaAbierto) ?? [] : [];
+    // Si se elimina el último examen del día abierto, el detalle se queda vacío: se cierra
+    const diaVacio = diaAbierto !== null && examenesAbiertos.length === 0;
+    useEffect(() => {
+        if (diaVacio) dialogRef.current?.close();
+    }, [diaVacio]);
     const abrir = compact ? undefined : (dia: number) => () => setDiaAbierto(dia);
 
     return (
@@ -98,7 +105,7 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
                         </button>
                     </div>
                     {examenesAbiertos.map((ev) => (
-                        <ExamCard key={claveExamen(ev)} examen={ev} solapamiento={solapamientos?.get(claveExamen(ev))} hoy={today} />
+                        <ExamCard key={claveExamen(ev)} examen={ev} solapamiento={solapamientos?.get(claveExamen(ev))} hoy={today} onEliminar={onEliminar && (() => onEliminar(ev))} />
                     ))}
                 </div>
             </dialog>

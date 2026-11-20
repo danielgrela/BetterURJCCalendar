@@ -1,8 +1,10 @@
 import { useMemo } from "react";
 import useFileStore from "../hooks/useFileStore";
+import useExamenes from "../hooks/useExamenes";
 import parseEventDate, { sortedEvents } from "../scripts/sortEvents";
 import { IconCalendarOff, IconCircleCheck } from "@tabler/icons-react";
 import ImportButton from "./ImportButton";
+import CreateExamLink from "./CreateExamLink";
 import EmptyState from "./EmptyState";
 import ExamCard from "./ExamCard";
 import { claveExamen } from "../scripts/examen";
@@ -22,15 +24,17 @@ function proximosExamenes(examenes: Examen[]): Examen[] | null {
 }
 
 export default function NextExams() {
-    const jsonData = useFileStore((state) => state.jsonData);
+    const jsonData = useExamenes();
+    const eliminarExamen = useFileStore((state) => state.eliminarExamen);
     const solapamientos = useMemo(() => detectarSolapamientos(jsonData), [jsonData]);
     const proximos = useMemo(() => proximosExamenes(sortedEvents(jsonData)), [jsonData]);
     return (
         <section className="flex flex-col gap-3">
             <h2 className="text-2xl font-bold">Próximos exámenes</h2>
             {!proximos ?
-                <EmptyState icono={<IconCalendarOff size={32} stroke={2} />} titulo="Aún no hay exámenes" texto="Importa el Excel de exámenes de la URJC y aquí verás los próximos.">
+                <EmptyState icono={<IconCalendarOff size={32} stroke={2} />} titulo="Aún no hay exámenes" texto="Importa el Excel de exámenes de la URJC o añade los tuyos a mano, y aquí verás los próximos.">
                     <ImportButton />
+                    <CreateExamLink />
                 </EmptyState>
                 : proximos.length === 0 ?
                 // Hay exámenes importados pero ya han pasado todos
@@ -40,7 +44,7 @@ export default function NextExams() {
                 : 
                 <div className="flex flex-col gap-4">
                     {proximos.map((examen) => (
-                        <ExamCard key={claveExamen(examen)} examen={examen} solapamiento={solapamientos.get(claveExamen(examen))} />
+                        <ExamCard key={claveExamen(examen)} examen={examen} solapamiento={solapamientos.get(claveExamen(examen))} onEliminar={() => eliminarExamen(claveExamen(examen))} />
                 ))}
                 </div>
                 }
