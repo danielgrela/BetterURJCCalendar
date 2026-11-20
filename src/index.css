@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Inter variable autoalojada (solo latin): sin peticiones a Google Fonts. Precargada en index.html */
+/* Inter variable autoalojada (solo latin): sin peticiones a Google Fonts. Precargada en root.tsx */
 @font-face {
 	font-family: 'Inter';
 	font-style: normal;

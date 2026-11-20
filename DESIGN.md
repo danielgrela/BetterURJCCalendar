@@ -50,11 +50,11 @@ typography:
     fontSize: "0.875rem"  # text-sm
     fontWeight: 500
 rounded:
-  none: "0"     # CTAs y botones de exportar
-  sm: "4px"     # tarjetas de formulario, chips, nav lateral
-  md: "6px"     # tarjetas de características, capturas
-  lg: "8px"     # selects, zona de subida
-  full: "9999px" # botón de tema
+  none: "0"     # todos los botones (receta única de F6.11)
+  sm: "4px"     # chips y líneas de la rejilla, selects, avisos, estados vacíos, nav lateral, iconos del Header
+  md: "6px"     # tarjetas (examen, características, guía), rejilla mensual, diálogos
+  lg: "8px"     # zona de subida y su icono
+  full: "9999px" # botón de tema y número del día de hoy
 spacing:
   gutter: "16px"     # px-4 móvil
   gutter-lg: "48px"  # lg:p-12 dashboard
@@ -72,8 +72,8 @@ Derivado del código actual (`src/index.css` y componentes). Si el código y est
 Herramienta de estudiante para estudiantes ("De Daniel para Daniel (y amigos)"). Debe sentirse **institucional pero más clara que la web de la URJC**: el rojo URJC como único color de marca, mucho gris neutro y una jerarquía muy directa (qué examen, cuándo, dónde). Sin adornos: ni degradados, ni brillos, ni emojis, ni animaciones decorativas. La información manda; la interfaz se aparta.
 
 ## Color
-- **`primary` (rojo URJC `#E4002B`, `#FF5A64` en oscuro)**: acciones principales (CTAs, "Importar", "Exportar a .ics"), elemento activo de la navegación, marca ("Better URJC Calendar"), cuenta atrás de `NextExams` y borde izquierdo de las tarjetas de examen. Es escaso a propósito: si todo es rojo, nada destaca.
-- **`tertiary` (azul `#006D93`, `#38BDF8` en oscuro)**: acento secundario puntual (icono de calendario en Características). No usar para acciones.
+- **`primary` (rojo URJC `#E4002B`, `#FF5A64` en oscuro)**: acciones principales (CTAs, "Importar", "Exportar a .ics"), elemento activo de la navegación, marca ("Better URJC Calendar", título de la portada), iconos de Características y de la guía, día de hoy en la rejilla y cuenta atrás de las tarjetas de examen. Es escaso a propósito: si todo es rojo, nada destaca.
+- **`tertiary` (azul `#006D93`, `#38BDF8` en oscuro)**: acento secundario reservado; desde F6.4 ningún componente lo usa (los iconos de Características pasaron a `primary`). No usar para acciones.
 - **`sobre-primary`**: texto e iconos encima de `bg-primary` (nunca `text-white` a mano). Blanco en claro y casi negro en oscuro: el rojo oscuro tiene que ser claro para leerse como texto, y entonces el blanco encima no llega a AA. Igual en todos los botones rojos.
 - **`texto` / `texto-suave`**: texto principal y de apoyo (descripciones, plan, metadatos).
 - **Superficies**: `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios, avisos sobre el lienzo) < `superficie-alta` (chips, hovers y lo que va encima de una superficie). `borde` para todos los bordes; `borde-fuerte` para los controles que tienen que verse como tales (selects, zona de subida discontinua). Las capturas de la guía llevan `border border-borde` para no flotar sobre el oscuro.
@@ -100,7 +100,7 @@ Herramienta de estudiante para estudiantes ("De Daniel para Daniel (y amigos)").
 En claro, el rojo URJC se queda en `#E4002B` aunque como texto pequeño solo aprueba sobre `superficie`: los enlaces y botones de texto que van sobre el lienzo usan `enlace` o una caja `superficie`.
 
 ## Tipografía
-Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para el título de página (más pequeño en móvil), `text-2xl` bold para secciones, `text-xl` bold para el nombre de la asignatura, `text-base` para cuerpo y `text-sm` medium para metadatos (plan, archivo seleccionado, avisos). Pesos: bold para jerarquía, medium para datos; evitar `extrabold` salvo el logotipo de la barra lateral.
+Inter variable autoalojada (`@fontsource-variable/inter`, solo latin, precargada en `root.tsx`; sin peticiones a Google Fonts), con pesos 400/500/600/700. Escala corta: `text-5xl`/`3xl` bold para el título de página (más pequeño en móvil), `text-2xl` bold para secciones, `text-xl` bold para el nombre de la asignatura, `text-base` para cuerpo y `text-sm` medium para metadatos (plan, archivo seleccionado, avisos). Pesos: bold para jerarquía, medium para datos; evitar `extrabold` salvo el logotipo de la barra lateral.
 
 ## Componentes
 - **Botones, una sola receta** (F6.11): todos con **esquinas rectas** (como los CTA de siempre), `min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium`, icono Tabler de 20 px con `aria-hidden`. Tres tipos:
@@ -128,7 +128,7 @@ Inter 400/500/600/700 (Google Fonts). Escala corta: `text-5xl`/`3xl` bold para e
 - Mobile-first con un único corte en **`lg` (1024 px)**: por debajo, una columna, CTAs a ancho completo, navegación inferior y calendario en lista (`MobileCalendar`); por encima, barra lateral, rejilla mensual (`PCCalendar`) y mockup de calendario en la portada.
 - El dashboard ocupa `h-dvh` y hace scroll solo en el contenido principal (`overflow-y-auto`: la barra solo aparece si hace falta).
 - Márgenes: `px-4` en móvil, `lg:p-12` en el dashboard y `lg:p-15` en la portada.
-- Probar siempre a 375, 768 y ≥1024 px, en claro y oscuro, con y sin exámenes importados (estados vacíos incluidos: "Aún no hay exámenes", botón "Nuevo Calendario / Importar Excel").
+- Probar siempre a 375, 768 y ≥1024 px, en claro y oscuro, con y sin exámenes importados (estados vacíos incluidos: «Aún no hay exámenes» con «Importar Excel»; sin datos, la cabecera del dashboard no muestra botones).
 
 ## Movimiento
 Solo transiciones cortas de color/brillo en hover (`duration-200/300`). El cambio de tema desactiva transiciones un frame (`.no-transitions`) para que no parpadee. Nada de animaciones de entrada. Con `prefers-reduced-motion: reduce`, `index.css` deja las transiciones y animaciones en 0 s (el cambio de estado se ve igual, sin fundido).
