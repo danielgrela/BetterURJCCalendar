@@ -30,6 +30,10 @@
 	--texto: #1C1917;           /* stone-900 */
 	--texto-suave: #57534E;     /* stone-600: descripciones y datos de apoyo */
 	/* Controles nativos (<select>, selector de archivo, scroll, autocompletado) con el tema y el rojo */
+	/* QR del enlace compartido: siempre oscuro sobre claro, también en tema oscuro (los lectores de QR
+	   no leen bien los invertidos). Por eso .dark no los redefine */
+	--qr-fondo: #FFFFFF;
+	--qr-modulo: #000000;
 	color-scheme: light;
 	accent-color: var(--primary);
 	font-family: 'Inter', sans-serif;
@@ -63,6 +67,8 @@
 	--color-borde-fuerte: var(--borde-fuerte);
 	--color-texto: var(--texto);
 	--color-texto-suave: var(--texto-suave);
+	--color-qr-fondo: var(--qr-fondo);
+	--color-qr-modulo: var(--qr-modulo);
 }
 
 body {

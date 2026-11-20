@@ -1,16 +1,17 @@
 import { IconFileUpload, IconInfoCircle, IconExclamationCircle, IconHelpCircle, IconTrash } from '@tabler/icons-react';
 import useFileStore from '../hooks/useFileStore';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ChangeEvent, DragEvent, MouseEvent, SyntheticEvent } from 'react';
 import type { Examen } from '../types/examen';
 import excelToJson from '../scripts/handleExcel';
 import icsToJson from '../scripts/handleICS';
-import { NavLink, useNavigate } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import PageMeta from './PageMeta.tsx';
 import CambiosCalendario from './CambiosCalendario';
 import { compararCalendarios } from '../scripts/cambios';
 import { leerCopia, type CopiaSeguridad } from '../scripts/copiaSeguridad';
 import usePreferencias from '../hooks/usePreferencias';
+import { codigoDeHash, decodificarCalendario } from '../scripts/compartir';
 export default function ImportPage() {
     const [file, setFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -44,9 +45,32 @@ export default function ImportPage() {
         dialog.returnValue = '';
     };
     const navigate = useNavigate();
+    // Enlace compartido (#c=…, ver PanelCompartir): se lee como si se hubiera elegido un archivo
+    const [compartido, setCompartido] = useState(false);
+    const { hash } = useLocation();
+    useEffect(() => {
+        const codigo = codigoDeHash(hash);
+        if (!codigo) return;
+        let vigente = true;
+        decodificarCalendario(codigo)
+            .then((examenes) => {
+                if (!vigente) return;
+                setFile(null);
+                setCopia(null);
+                setJsonAuxData(examenes);
+                setCompartido(true);
+                setError(null);
+                setDisabled(false);
+            })
+            .catch((error: unknown) => {
+                if (vigente) setError(error instanceof Error ? error.message : String(error));
+            });
+        return () => { vigente = false; };
+    }, [hash]);
     const processFile = async (file: File | null) => {
         if (file) {
             setFile(file);
+            setCompartido(false);
             try{
                 const nombre = file.name.toLowerCase();
                 if (nombre.endsWith('.json')) {
@@ -94,7 +118,7 @@ export default function ImportPage() {
     };
     const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if (!file) {
+        if (!file && !compartido) {
             setError("Selecciona un archivo antes de importar.");
             return;
         }
@@ -146,6 +170,11 @@ export default function ImportPage() {
                     <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">exámenes</a>, un calendario .ics como el que exportas desde aquí o una copia de seguridad .json</p>
                 </label>
                 {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
+                {compartido && jsonAuxData && (
+                    <p role="status" className="text-start text-sm text-texto">
+                        <strong className="font-semibold">Te han compartido un calendario con {jsonAuxData.length === 1 ? '1 examen' : `${jsonAuxData.length} exámenes`}.</strong> Pulsa «Importar» para guardarlo en este navegador{hayImportados ? ': sustituye lo que tienes importado' : ''}{propios.length > 0 ? '; los exámenes que has creado a mano se mantienen' : ''}.
+                    </p>
+                )}
                 {copia && (
                     <p role="status" className="text-start text-sm text-texto">
                         Copia de seguridad del {new Date(copia.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}: {copia.importados?.length ?? 0} exámenes importados y {copia.propios.length} creados a mano, con tus ajustes. <strong className="font-semibold">Al importarla se sustituye todo lo que hay en este navegador.</strong>

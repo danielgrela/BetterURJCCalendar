@@ -51,7 +51,8 @@ const ESTADOS: Estado[] = ['aprobado', 'no-presento'];
 const esObjeto = (valor: unknown): valor is Record<string, unknown> => typeof valor === 'object' && valor !== null && !Array.isArray(valor);
 const esCodigo = (valor: unknown) => typeof valor === 'string' || typeof valor === 'number';
 
-function esExamen(valor: unknown): valor is Examen {
+// También lo usa el enlace compartido (compartir.ts) para validar lo que llega por la URL
+export function esExamen(valor: unknown): valor is Examen {
   return esObjeto(valor)
     && CAMPOS_TEXTO.every((campo) => typeof valor[campo] === 'string')
     && esCodigo(valor.CodigoPlan) && esCodigo(valor.CodigoAsignatura)
