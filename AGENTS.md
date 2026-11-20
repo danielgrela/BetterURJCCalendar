@@ -44,6 +44,7 @@ SPA que convierte el Excel oficial de exámenes de la URJC (servicios.urjc.es/ex
 - `public/og-image.png` → imagen 1200×630 para Open Graph/Twitter (captura real del calendario)
 - `public/robots.txt` y `public/sitemap.xml` → solo `/` y `/dashboard/guia-de-uso`; si se añade una ruta pública, añadirla al sitemap
 - `src/assets/` y `public/*.png|ico` → imágenes (no leer, binarios)
+- Documentación: `README.md` (para usuarios y quien quiera contribuir: qué hace, uso, privacidad, comandos, créditos), `DESIGN.md` (tokens, ratios de contraste y recetas de componentes) y `ROADMAP.md` (historial de fases y decisiones)
 - `vercel.json` → `outputDirectory: dist/client`; reescribe a `/__spa-fallback.html` **solo** las rutas conocidas del dashboard (los archivos prerenderizados ganan a las reescrituras); el resto recibe `404.html` con estado 404. **Si se añade una ruta en `routes.ts`, añadirla también aquí** o dará 404 al recargar
 - `vite.config.ts` → plugins de Tailwind, React Router, PWA (`vite-plugin-pwa`, `generateSW`: precache de todo `dist/client` menos `og-image.png` y `404.html`; navegación sin HTML propio → `__spa-fallback.html`) y `previewComoVercel` (solo para `npm run preview`). `buildEnd` de `react-router.config.ts` regenera el service worker tras el prerender para que entren esos HTML. El service worker no funciona en `npm run dev`; probarlo con `npm run build` + `npm run preview`
 
@@ -59,7 +60,7 @@ Objeto con `Curso, Plan, Asignatura, CodigoPlan, CodigoAsignatura, CodigoGrupo, 
 - Componentes funcionales con `export default function Nombre({ ... }: Props)` y props tipadas (interfaz `Props` en el mismo archivo; los datos de examen siempre con `Examen` de `src/types`); lógica pura (parseo, ordenación, exportación) en `src/scripts/`, estado compartido en un store de `src/hooks/`. No meter lógica de datos en los componentes si ya existe un helper.
 - Estado global solo con Zustand; nada de Context nuevo ni de leer `localStorage` a mano.
 - Iconos con `@tabler/icons-react` (`stroke={2}` por defecto); no añadir otra librería de iconos.
-- Estilo solo con utilidades Tailwind. Colores siempre con los tokens de `index.css`, que ya cambian con el tema y por eso van **sin** pareja `dark:`: marca `primary` (con `sobre-primary` para el texto encima), `tertiary` y `enlace`; superficies `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios) < `superficie-alta` (chips, hovers, lo que va sobre una superficie); `borde`; texto `texto` y `texto-suave`. Nunca hex sueltos en `className` ni en props (`color='#E4002B'` → `className="text-primary"`) ni pares `bg-white dark:bg-gray-950`; un color que no exista = token nuevo en `index.css` (y en `DESIGN.md`).
+- Estilo solo con utilidades Tailwind. Colores siempre con los tokens de `index.css`, que ya cambian con el tema y por eso van **sin** pareja `dark:`: marca `primary` (con `sobre-primary` para el texto encima), `tertiary` y `enlace`; superficies `lienzo` (fondo de página) < `superficie` (tarjetas, barra lateral, formularios) < `superficie-alta` (chips, hovers, lo que va sobre una superficie); `borde` y `borde-fuerte` (controles: selects, zona de subida); texto `texto` y `texto-suave`; `error` para errores (no `primary`). Nunca hex sueltos en `className` ni en props (`color='#E4002B'` → `className="text-primary"`) ni pares `bg-white dark:bg-gray-950`; un color que no exista = token nuevo en `index.css` (y en `DESIGN.md`).
 - **Responsive mobile-first (obligatorio)**: clases sin prefijo = móvil; se amplía con `lg:` (breakpoint principal del proyecto, coincide con el `matchMedia` de `CalendarPage`). Nunca al revés. Sin anchos/altos fijos que rompan en pantallas estrechas, sin scroll horizontal, zonas táctiles ≥ 44×44 px.
 - **Modo oscuro**: todo elemento nuevo con fondo, borde o texto propio usa tokens (ya cambian con el tema); `dark:` solo para lo que no es color (p. ej. iconos que dependen de `.dark`). Comprobar contraste en ambos temas (ratios en `DESIGN.md`).
 - Enlaces internos con `NavLink`/`useNavigate` de React Router; externos con `target="_blank" rel="noopener noreferrer"`.
@@ -81,11 +82,11 @@ Repo: `origin` = `danielgrela/BetterURJCCalendar` (GitHub), rama **`main`**. El 
 - **Push**: solo cuando el usuario lo apruebe en esa conversación (preguntar en una línea qué commits se suben). Nada de `--force`, `--no-verify`, reescribir historia publicada (`rebase`/`amend` de commits subidos) ni borrar ramas remotas.
 - **Tras el push**: comprobar el despliegue de Vercel unos minutos después (la portada y una ruta profunda como `/dashboard/calendario` deben responder 200).
 
-## Deuda conocida (candidatos a refactor, ver ROADMAP)
-- `README.md` es la plantilla de Vite (F7.1).
+## Deuda conocida
+Ninguna apuntada: la del análisis inicial se resolvió en las fases F0–F7 del ROADMAP.
 
 ## Trabajo pendiente
-Seguir [ROADMAP.md](ROADMAP.md) por fases: cada petición de «seguir con el roadmap» cubre la fase entera (F4, no solo F4.2), con un commit por tarea y preguntando al usuario en cuanto surja una duda. Marcar tareas `[x]` al terminar. Guía visual en [DESIGN.md](DESIGN.md).
+[ROADMAP.md](ROADMAP.md) está completo (F0–F7). Trabajo nuevo = fase nueva al final del ROADMAP, con el mismo formato (tareas `F8.1`…, `dep:` y nota «Hecho: …» al marcar `[x]`). Cada petición de «seguir con el roadmap» cubre la fase entera, con un commit por tarea y preguntando al usuario en cuanto surja una duda. Guía visual en [DESIGN.md](DESIGN.md).
 
 ## Skills (`.claude/skills/`, copiadas del portfolio, no se versionan)
 - `modern-web-guidance` (GoogleChrome, Apache 2.0): consultar antes de escribir HTML/CSS/JS de cliente (`npx -y modern-web-guidance@latest search "<consulta>"`). No para config/tooling.
