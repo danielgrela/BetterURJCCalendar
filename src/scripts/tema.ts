@@ -1,35 +1,25 @@
-// Tema de la interfaz: 'sistema' sigue a prefers-color-scheme; 'claro' y 'oscuro' lo fijan
-export type Tema = 'sistema' | 'claro' | 'oscuro';
+// La interfaz solo tiene dos temas. Mientras la persona no elige uno (preferencia null) se usa el del
+// sistema operativo (prefers-color-scheme); en cuanto pulsa el botón, su elección se guarda y manda.
+export type Tema = 'claro' | 'oscuro';
+export type Preferencia = Tema | null;
 
-export const NOMBRE_TEMA: Record<Tema, string> = {
-  sistema: 'sistema',
-  claro: 'claro',
-  oscuro: 'oscuro',
-};
-
-const ORDEN: Tema[] = ['sistema', 'claro', 'oscuro'];
-
-/** Orden del botón: sistema → claro → oscuro → sistema */
-export function siguienteTema(tema: Tema): Tema {
-  return ORDEN[(ORDEN.indexOf(tema) + 1) % ORDEN.length];
+export function temaEfectivo(preferencia: Preferencia, sistemaOscuro: boolean): Tema {
+  return preferencia ?? (sistemaOscuro ? 'oscuro' : 'claro');
 }
 
-export function esOscuro(tema: Tema, sistemaOscuro: boolean): boolean {
-  return tema === 'oscuro' || (tema === 'sistema' && sistemaOscuro);
-}
-
-function esTema(valor: unknown): valor is Tema {
-  return valor === 'sistema' || valor === 'claro' || valor === 'oscuro';
+export function temaOpuesto(tema: Tema): Tema {
+  return tema === 'oscuro' ? 'claro' : 'oscuro';
 }
 
 /**
- * Tema a partir del estado guardado en localStorage ('dark-mode' › state). Acepta el formato
- * antiguo `{ isDark }` (antes de F5.5 solo había claro/oscuro) y, si no hay nada válido, 'sistema'.
- * SCRIPT_TEMA_INICIAL hace lo mismo en JS plano (lo comprueba temaInicial.test.ts).
+ * Preferencia a partir del estado guardado en localStorage ('dark-mode' › state). Acepta los formatos
+ * antiguos: `{ isDark }` (v0) y `{ tema: 'sistema' }` (v1, cuando «sistema» era una opción del botón,
+ * que ahora equivale a no haber elegido). Cualquier otra cosa también es null.
+ * SCRIPT_TEMA_INICIAL hace lo mismo en JS plano (lo comprueba tema.test.ts).
  */
-export function temaDeEstado(estado: unknown): Tema {
-  if (typeof estado !== 'object' || estado === null) return 'sistema';
-  if ('tema' in estado && esTema(estado.tema)) return estado.tema;
+export function preferenciaDeEstado(estado: unknown): Preferencia {
+  if (typeof estado !== 'object' || estado === null) return null;
+  if ('tema' in estado && (estado.tema === 'claro' || estado.tema === 'oscuro')) return estado.tema;
   if ('isDark' in estado && typeof estado.isDark === 'boolean') return estado.isDark ? 'oscuro' : 'claro';
-  return 'sistema';
+  return null;
 }

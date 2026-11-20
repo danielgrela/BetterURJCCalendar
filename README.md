@@ -11,7 +11,7 @@ El Excel oficial de exámenes de la URJC, convertido en un calendario que se ent
 - **Próximos exámenes** con la cuenta atrás de cada uno.
 - **Aviso de solapamientos**: marca los exámenes cuyas horas se cruzan y los que caen el mismo día.
 - **Exportación** a Excel (`.xlsx`) y a iCal (`.ics`) para Google Calendar, Outlook o el calendario del móvil.
-- **Modo claro y oscuro** (sigue al sistema por defecto) y **funciona sin conexión** como PWA una vez cargada.
+- **Modo claro y oscuro** (la primera vez, el de tu sistema; después, el que elijas) y **funciona sin conexión** como PWA una vez cargada.
 
 ## Cómo se usa
 1. Entra en [servicios.urjc.es/examenes](https://servicios.urjc.es/examenes/alumno/login) con tus credenciales de la URJC y pulsa «Descargar en Excel».
