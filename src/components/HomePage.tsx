@@ -3,6 +3,7 @@ import DashboardHeader from "./DashboardHeader";
 import PageMeta from "./PageMeta.tsx";
 import CambiosCalendario from "./CambiosCalendario";
 import TusAsignaturas from "./TusAsignaturas";
+import PanelCargaEstudio from "./PanelCargaEstudio";
 import useFileStore from "../hooks/useFileStore";
 export default function HomePage() {
     const cambios = useFileStore((state) => state.cambios);
@@ -18,7 +19,11 @@ export default function HomePage() {
                 </CambiosCalendario>
             )}
             <NextExams />
-            <TusAsignaturas />
+            {/* Herramientas plegadas: juntas y más pegadas entre sí que el resto de bloques */}
+            <div className="flex flex-col gap-3">
+                <PanelCargaEstudio />
+                <TusAsignaturas />
+            </div>
         </div>
     )
 }
