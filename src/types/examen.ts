@@ -22,4 +22,6 @@ export interface FiltrosCalendario {
   /** '' = todas */
   convocatoria: string;
   fecha: 'Todos' | 'Pendientes';
+  /** Busca en el nombre (y el código) de la asignatura; '' = sin buscar */
+  texto: string;
 }

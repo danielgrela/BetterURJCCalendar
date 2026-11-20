@@ -26,14 +26,25 @@ describe('filtrarExamenes', () => {
   });
 
   it('filtra por convocatoria', () => {
-    expect(filtrarExamenes(lista, { convocatoria: 'Junio', fecha: 'Todos' }, hoy)).toEqual([junio]);
+    expect(filtrarExamenes(lista, { ...FILTROS_INICIALES, convocatoria: 'Junio' }, hoy)).toEqual([junio]);
   });
 
   it('«Pendientes» deja los de hoy (aunque ya sea tarde) y los futuros', () => {
-    expect(filtrarExamenes(lista, { convocatoria: '', fecha: 'Pendientes' }, hoy)).toEqual([deHoy, junio]);
+    expect(filtrarExamenes(lista, { ...FILTROS_INICIALES, fecha: 'Pendientes' }, hoy)).toEqual([deHoy, junio]);
   });
 
   it('combina los dos filtros', () => {
-    expect(filtrarExamenes(lista, { convocatoria: 'Mayo', fecha: 'Pendientes' }, hoy)).toEqual([deHoy]);
+    expect(filtrarExamenes(lista, { ...FILTROS_INICIALES, convocatoria: 'Mayo', fecha: 'Pendientes' }, hoy)).toEqual([deHoy]);
+  });
+
+  it('busca la asignatura sin distinguir tildes ni mayúsculas, también por código', () => {
+    const calculo = examen({ Asignatura: 'CÁLCULO (2034001)' });
+    const redes = examen({ Asignatura: 'Redes de Ordenadores (2034002)' });
+    const conBusqueda = (texto: string) => filtrarExamenes([calculo, redes], { ...FILTROS_INICIALES, texto }, hoy);
+    expect(conBusqueda('calculo')).toEqual([calculo]);
+    expect(conBusqueda('  REDES ')).toEqual([redes]);
+    expect(conBusqueda('2034002')).toEqual([redes]);
+    expect(conBusqueda('química')).toEqual([]);
+    expect(conBusqueda('')).toEqual([calculo, redes]);
   });
 });

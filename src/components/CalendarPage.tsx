@@ -4,11 +4,12 @@ import { useExamenesVisibles } from '../hooks/useExamenesVisibles';
 import useMediaQuery from '../hooks/useMediaQuery';
 import MobileCalendar from './MobileCalendar';
 import PCCalendar from './PCCalendar';
-import { sortedEvents, mesDelProximoExamen } from '../scripts/sortEvents';
+import { sortedEvents, mesDelProximoExamen, hayExamenesEnMes } from '../scripts/sortEvents';
 import { FILTROS_INICIALES, convocatoriasDe, filtrarExamenes } from '../scripts/filtersCalendar';
 import PageMeta from './PageMeta.tsx';
 import { detectarSolapamientos } from '../scripts/solapamientos';
 import type { FiltersCalendarProps } from './FiltersCalendar';
+import type { FiltrosCalendario } from '../types/examen';
 import EmptyState from './EmptyState';
 import ImportButton from './ImportButton';
 import CreateExamLink from './CreateExamLink';
@@ -24,7 +25,15 @@ export default function CalendarPage() {
     const solapamientos = useMemo(() => detectarSolapamientos(examenes), [examenes]);
     const convocatorias = useMemo(() => convocatoriasDe(examenes), [examenes]);
     const visibleData = useMemo(() => filtrarExamenes(examenes, filtros), [examenes, filtros]);
-    const filtersProps: FiltersCalendarProps = { filtros, setFiltros, convocatorias, ocultos };
+    // Al buscar una asignatura, la rejilla salta a su mes si el actual no tiene ninguna coincidencia
+    // (la lista móvil ya enseña todos los meses)
+    const cambiarFiltros = (nuevos: FiltrosCalendario) => {
+        setFiltros(nuevos);
+        if (nuevos.texto === filtros.texto || !nuevos.texto.trim()) return;
+        const encontrados = filtrarExamenes(examenes, nuevos);
+        if (encontrados.length > 0 && !hayExamenesEnMes(encontrados, date.getFullYear(), date.getMonth())) setDate(mesDelProximoExamen(encontrados));
+    };
+    const filtersProps: FiltersCalendarProps = { filtros, setFiltros: cambiarFiltros, convocatorias, ocultos };
     const isLg = useMediaQuery('(min-width: 1024px)');
     // Sin datos → Importar; con datos pero nada tras filtrar → Quitar filtros
     const estadoVacio = !hayExamenes ? (
