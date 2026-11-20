@@ -49,4 +49,9 @@ Para contribuir: [`DESIGN.md`](DESIGN.md) recoge la guía visual (tokens de colo
 - Iconos de [Tabler Icons](https://tabler.io/icons) y fuente [Inter](https://rsms.me/inter/).
 - Lectura y escritura de Excel con [read-excel-file](https://gitlab.com/catamphetamine/read-excel-file) y [write-excel-file](https://gitlab.com/catamphetamine/write-excel-file); iCal con [ics](https://github.com/adamgibbons/ics).
 
-Proyecto independiente, sin relación oficial con la Universidad Rey Juan Carlos. Es open source: se permite su uso y modificación libremente.
+Proyecto independiente, sin relación oficial con la Universidad Rey Juan Carlos.
+
+## Licencia
+Copyright © 2026 Daniel Grela.
+
+Software libre bajo la [GNU General Public License v3.0](LICENSE): puedes usarlo, estudiarlo, modificarlo y compartirlo, siempre que las versiones que distribuyas sigan siendo código libre con la misma licencia.
