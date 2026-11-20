@@ -2,11 +2,12 @@ import { useId, useRef, type SyntheticEvent } from 'react';
 import { IconCalendarDown, IconFileTypeXls } from '@tabler/icons-react';
 import { descargarCalendarioExcel } from "../scripts/generateExcel";
 import { descargarCalendarioICS, OPCIONES_AVISO, type Aviso } from "../scripts/generateICS";
-import useExamenes from "../hooks/useExamenes";
+import { useExamenesExportables } from "../hooks/useExamenesVisibles";
 import usePreferencias from '../hooks/usePreferencias';
 
 export default function ButtonsExportDashboard({ className = '' }: { className?: string }) {
-    const jsonData = useExamenes();
+    // Sin asignaturas ocultas, otros grupos, lo posterior a un aprobado ni lo marcado «No me presento»
+    const jsonData = useExamenesExportables();
     const aviso = usePreferencias((state) => state.aviso);
     const setAviso = usePreferencias((state) => state.setAviso);
     const dialogRef = useRef<HTMLDialogElement>(null);

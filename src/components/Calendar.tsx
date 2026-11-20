@@ -106,7 +106,7 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
                         </button>
                     </div>
                     {examenesAbiertos.map((ev) => (
-                        <ExamCard key={claveExamen(ev)} examen={ev} solapamiento={solapamientos?.get(claveExamen(ev))} hoy={today} conAcciones={conAcciones} alEliminar={() => dialogRef.current?.close()} />
+                        <ExamCard key={claveExamen(ev)} examen={ev} solapamiento={solapamientos?.get(claveExamen(ev))} hoy={today} conAcciones={conAcciones} alAvisar={() => dialogRef.current?.close()} />
                     ))}
                 </div>
             </dialog>

@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import useExamenes from "../hooks/useExamenes";
+import { useExamenesVisibles } from "../hooks/useExamenesVisibles";
+import AvisoOcultos from "./AvisoOcultos";
 import parseEventDate, { sortedEvents } from "../scripts/sortEvents";
 import { IconCalendarOff, IconCircleCheck } from "@tabler/icons-react";
 import ImportButton from "./ImportButton";
@@ -10,11 +12,8 @@ import { claveExamen } from "../scripts/examen";
 import { detectarSolapamientos } from "../scripts/solapamientos";
 import { NavLink } from 'react-router';
 import type { Examen } from '../types/examen';
-// Los 5 primeros exámenes desde hoy; null si no hay datos importados
-function proximosExamenes(examenes: Examen[]): Examen[] | null {
-    if(!examenes || examenes?.length === 0){
-        return null;
-    }
+// Los 5 primeros exámenes desde hoy
+function proximosExamenes(examenes: Examen[]): Examen[] {
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
     return examenes
@@ -23,13 +22,16 @@ function proximosExamenes(examenes: Examen[]): Examen[] | null {
 }
 
 export default function NextExams() {
-    const jsonData = useExamenes();
-    const solapamientos = useMemo(() => detectarSolapamientos(jsonData), [jsonData]);
-    const proximos = useMemo(() => proximosExamenes(sortedEvents(jsonData)), [jsonData]);
+    const hayExamenes = useExamenes().length > 0;
+    // Solapamientos sobre lo visible: una asignatura oculta o de otro grupo no choca con nada
+    const { visibles, ocultos } = useExamenesVisibles();
+    const solapamientos = useMemo(() => detectarSolapamientos(visibles), [visibles]);
+    const proximos = useMemo(() => proximosExamenes(sortedEvents(visibles)), [visibles]);
     return (
         <section className="flex flex-col gap-3">
             <h2 className="text-2xl font-bold">Próximos exámenes</h2>
-            {!proximos ?
+            <AvisoOcultos ocultos={ocultos} />
+            {!hayExamenes ?
                 <EmptyState icono={<IconCalendarOff size={32} stroke={2} />} titulo="Aún no hay exámenes" texto="Importa el Excel de exámenes de la URJC o añade los tuyos a mano, y aquí verás los próximos.">
                     <ImportButton />
                     <CreateExamLink />

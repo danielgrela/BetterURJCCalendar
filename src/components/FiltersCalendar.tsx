@@ -1,18 +1,21 @@
 import { useId, type ChangeEvent } from 'react';
 import type { FiltrosCalendario } from '../types/examen';
+import AvisoOcultos from './AvisoOcultos';
 
 export interface FiltersCalendarProps {
     filtros: FiltrosCalendario;
     setFiltros: (filtros: FiltrosCalendario) => void;
     convocatorias: string[];
+    /** Exámenes que no se ven por los ajustes de asignaturas */
+    ocultos?: number;
     className?: string;
 }
 
-export default function FiltersCalendar({ filtros, setFiltros, convocatorias, className = '' }: FiltersCalendarProps) {
+export default function FiltersCalendar({ filtros, setFiltros, convocatorias, ocultos = 0, className = '' }: FiltersCalendarProps) {
     const id = useId();
     const handleChange = (e: ChangeEvent<HTMLSelectElement>) => setFiltros({ ...filtros, [e.target.name]: e.target.value });
     return (
-        <form onSubmit={(e) => e.preventDefault()} className={`w-full grid grid-cols-2 gap-3 lg:flex lg:flex-row ${className}`}>
+        <form onSubmit={(e) => e.preventDefault()} className={`w-full grid grid-cols-2 gap-3 lg:flex lg:flex-row lg:flex-wrap lg:items-end ${className}`}>
             <div className="flex flex-col gap-1 min-w-0">
                 <label htmlFor={`${id}-convocatoria`} className="text-sm font-medium text-texto-suave">Convocatoria</label>
                 <select id={`${id}-convocatoria`} name="convocatoria" value={filtros.convocatoria} onChange={handleChange} className="w-full lg:w-48 min-h-11 px-3 rounded-sm border border-borde-fuerte bg-superficie shadow-sm dark:shadow-none">
@@ -29,6 +32,7 @@ export default function FiltersCalendar({ filtros, setFiltros, convocatorias, cl
                     <option value="Pendientes">Solo pendientes</option>
                 </select>
             </div>
+            <AvisoOcultos ocultos={ocultos} className="col-span-2 lg:w-full" />
         </form>
     );
 }

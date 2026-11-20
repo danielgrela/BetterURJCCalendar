@@ -30,8 +30,8 @@ function AvisoSolapamiento({ solapamiento }: { solapamiento: Solapamiento }) {
 }
 
 // Aparte para poder usar el hook solo en las tarjetas que llevan menú
-function AccionesExamen({ examen, alEliminar }: { examen: Examen; alEliminar?: () => void }) {
-    const acciones = useAccionesExamen(examen, { alEliminar });
+function AccionesExamen({ examen, alAvisar }: { examen: Examen; alAvisar?: () => void }) {
+    const acciones = useAccionesExamen(examen, { alAvisar });
     return <MenuAcciones etiqueta={`Acciones de ${nombreLegible(examen)}`} acciones={acciones} className="absolute top-1 right-1 lg:top-2 lg:right-2" />;
 }
 
@@ -47,11 +47,11 @@ interface Props {
     hoy?: Date;
     /** Solo en "card": menú «⋯» con las acciones del examen (eliminar, etc.) */
     conAcciones?: boolean;
-    /** Con conAcciones: se llama tras eliminar (el detalle del día lo usa para cerrarse) */
-    alEliminar?: () => void;
+    /** Con conAcciones: se llama tras una acción que muestra un aviso (el detalle del día lo usa para cerrarse) */
+    alAvisar?: () => void;
 }
 
-export default function ExamCard({ examen, variant = 'card', solapamiento, onSelect, hoy = new Date(), conAcciones = false, alEliminar }: Props) {
+export default function ExamCard({ examen, variant = 'card', solapamiento, onSelect, hoy = new Date(), conAcciones = false, alAvisar }: Props) {
     const nombre = nombreLegible(examen);
 
     if (variant === 'line') {
@@ -106,7 +106,7 @@ export default function ExamCard({ examen, variant = 'card', solapamiento, onSel
                 <p className="text-sm text-texto-suave">{examen.Plan}</p>
                 {solapamiento && <AvisoSolapamiento solapamiento={solapamiento} />}
             </div>
-            {conAcciones && <AccionesExamen examen={examen} alEliminar={alEliminar} />}
+            {conAcciones && <AccionesExamen examen={examen} alAvisar={alAvisar} />}
         </article>
     );
 }
