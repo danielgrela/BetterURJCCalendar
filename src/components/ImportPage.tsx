@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import type { ChangeEvent, DragEvent, MouseEvent, SyntheticEvent } from 'react';
 import type { Examen } from '../types/examen';
 import excelToJson from '../scripts/handleExcel';
+import icsToJson from '../scripts/handleICS';
 import { NavLink, useNavigate } from 'react-router';
 import PageMeta from './PageMeta.tsx';
 export default function ImportPage() {
@@ -35,11 +36,13 @@ export default function ImportPage() {
         if (file) {
             setFile(file);
             try{
-                if (!file.name.toLowerCase().endsWith('.xlsx')) {
-                    throw new Error("Solo se admiten archivos .xlsx. Descarga el Excel original desde la web de exámenes de la URJC.");
+                const nombre = file.name.toLowerCase();
+                const leer = nombre.endsWith('.xlsx') ? excelToJson : nombre.endsWith('.ics') ? icsToJson : null;
+                if (!leer) {
+                    throw new Error("Solo se admiten archivos .xlsx o .ics. Descarga el Excel original desde la web de exámenes de la URJC o usa un .ics exportado desde aquí.");
                 }
-                const data = await excelToJson(file);
-                // excelToJson normaliza Fecha y Hora, descarta filas incompletas y lanza un error legible si no queda ninguna
+                const data = await leer(file);
+                // Los dos lectores normalizan Fecha y Hora, descartan lo incompleto y lanzan un error legible si no queda ningún examen
                 setJsonAuxData(data);
                 setError(null);
                 setDisabled(false);
@@ -85,7 +88,7 @@ export default function ImportPage() {
     };
     return (
         <div className='min-h-full flex flex-col'>
-            <PageMeta titulo="Importar Excel" noindex />
+            <PageMeta titulo="Importar calendario" noindex />
             <h1 className="text-3xl font-bold">Importar calendario de exámenes</h1>
             <div className='flex flex-row gap-1 items-center text-center mt-3'>
                 <IconHelpCircle size={16} className="inline-block text-texto-suave mr-1" />
@@ -97,7 +100,7 @@ export default function ImportPage() {
                 onChange={handleFileChange}
                     id="exam-file"
                     type="file"
-                    accept=".xlsx"
+                    accept=".xlsx,.ics,text/calendar"
                     className="peer sr-only"/>
                 <label
                     htmlFor="exam-file"
@@ -109,7 +112,7 @@ export default function ImportPage() {
                         <IconFileUpload stroke={2} />
                     </div>
                     <p className="font-semibold">Arrastra tu archivo de exámenes aquí o haz clic para buscar</p>
-                    <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">exámenes</a></p>
+                    <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">exámenes</a> o un calendario .ics, como el que exportas desde aquí</p>
                 </label>
                 {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
                 {error && (
@@ -147,7 +150,7 @@ export default function ImportPage() {
             </form>
             <dialog ref={dialogBorrarRef} onClose={handleCerrarDialogo} aria-labelledby="borrar-titulo" aria-describedby="borrar-descripcion" className="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-superficie text-texto border border-borde p-6 shadow-lg dark:shadow-none overscroll-contain backdrop:bg-black/50 backdrop:overflow-hidden backdrop:overscroll-contain">
                 <h2 id="borrar-titulo" className="text-lg font-bold">¿Borrar el calendario?</h2>
-                <p id="borrar-descripcion" className="mt-2 text-sm text-texto-suave">Se eliminarán los exámenes guardados en este navegador. Para recuperarlos tendrás que volver a importar el Excel.</p>
+                <p id="borrar-descripcion" className="mt-2 text-sm text-texto-suave">Se eliminarán los exámenes guardados en este navegador. Para recuperarlos tendrás que volver a importar el Excel o el .ics.</p>
                 <form method="dialog" className="mt-6 flex flex-col-reverse gap-3 lg:flex-row lg:justify-end">
                     <button value="cancelar" autoFocus className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium border border-borde-fuerte bg-superficie text-texto cursor-pointer hover:bg-superficie-alta transition-colors">Cancelar</button>
                     <button value="borrar" className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90">Borrar calendario</button>

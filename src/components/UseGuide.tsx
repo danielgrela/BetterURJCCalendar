@@ -48,7 +48,7 @@ export default function UseGuide() {
                         <p className="font-bold">01.</p>
                         <div>
                             <h3 className="font-bold">Acceder al dashboard</h3>
-                            <p>Accede a la <NavLink to="/dashboard/importar" className="text-enlace underline underline-offset-2 hover:decoration-2">página de importar</NavLink> y añade tu archivo de exámenes. Si el sistema no da ningún error, pulsa el botón de importar y se te llevará directamente a la sección «Calendario».</p>
+                            <p>Accede a la <NavLink to="/dashboard/importar" className="text-enlace underline underline-offset-2 hover:decoration-2">página de importar</NavLink> y añade tu archivo de exámenes: el Excel de la URJC o un .ics que hayas exportado antes desde aquí (por ejemplo, para pasar tus exámenes a otro dispositivo). Si el sistema no da ningún error, pulsa el botón de importar y se te llevará directamente a la sección «Calendario».</p>
                         </div>    
                     </div>
                     <div className='flex flex-row gap-4'>

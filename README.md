@@ -10,12 +10,13 @@ El Excel oficial de exámenes de la URJC, convertido en un calendario que se ent
 - **Calendario personal**: rejilla mensual en el ordenador y lista por meses en el móvil, con filtros por convocatoria y por exámenes pendientes.
 - **Próximos exámenes** con la cuenta atrás de cada uno.
 - **Aviso de solapamientos**: marca los exámenes cuyas horas se cruzan y los que caen el mismo día.
-- **Exportación** a Excel (`.xlsx`) y a iCal (`.ics`) para Google Calendar, Outlook o el calendario del móvil.
+- **Exportación** a Excel (`.xlsx`) y a iCal (`.ics`) para Google Calendar, Outlook o el calendario del móvil, con la hora de Madrid. Si la URJC cambia un examen, volver a importar el `.ics` en tu calendario actualiza el evento en vez de duplicarlo.
+- **Importación** del Excel de la URJC o de un `.ics`.
 - **Modo claro y oscuro** (la primera vez, el de tu sistema; después, el que elijas) y **funciona sin conexión** como PWA una vez cargada.
 
 ## Cómo se usa
 1. Entra en [servicios.urjc.es/examenes](https://servicios.urjc.es/examenes/alumno/login) con tus credenciales de la URJC y pulsa «Descargar en Excel».
-2. En la app, ve a **Importar** y arrastra o elige el archivo.
+2. En la app, ve a **Importar** y arrastra o elige el archivo. También vale un `.ics`: el que exporta la propia app conserva todos los datos, así que sirve para pasar tus exámenes a otro dispositivo.
 3. Pulsa «Importar»: te lleva al Calendario, y en Inicio verás los próximos exámenes.
 
 La [guía de uso](https://betterurjccalendar.danielgrela.com/dashboard/guia-de-uso) lo explica con capturas y ofrece un [Excel de ejemplo](public/Examenes.xlsx) para probarla.
