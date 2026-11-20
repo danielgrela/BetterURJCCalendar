@@ -15,7 +15,6 @@ interface Props {
     /** Lo que se pinta si no hay exámenes que mostrar */
     estadoVacio: ReactNode;
     solapamientos: Map<string, Solapamiento>;
-    onEliminar: (examen: Examen) => void;
 }
 
 const MES_Y_ANIO = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' });
@@ -31,7 +30,7 @@ function porMes(examenes: Examen[]): [string, Examen[]][] {
     return [...grupos];
 }
 
-export default function MobileCalendar({ visibleData, filtersProps, estadoVacio, solapamientos, onEliminar }: Props) {
+export default function MobileCalendar({ visibleData, filtersProps, estadoVacio, solapamientos }: Props) {
     const grupos = useMemo(() => porMes(visibleData), [visibleData]);
     const hoy = new Date();
     const proximo = visibleData.find((ev) => diasHasta(ev.Fecha, hoy) >= 0);
@@ -61,7 +60,7 @@ export default function MobileCalendar({ visibleData, filtersProps, estadoVacio,
                     </h2>
                     {examenes.map((ev) => (
                         <div key={claveExamen(ev)} id={ev === proximo ? ID_PROXIMO : undefined} className="scroll-mt-14">
-                            <ExamCard examen={ev} solapamiento={solapamientos.get(claveExamen(ev))} hoy={hoy} onEliminar={() => onEliminar(ev)} />
+                            <ExamCard examen={ev} solapamiento={solapamientos.get(claveExamen(ev))} hoy={hoy} conAcciones />
                         </div>
                     ))}
                 </section>

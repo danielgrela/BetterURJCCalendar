@@ -21,10 +21,9 @@ interface Props {
     /** Aviso si no hay exámenes que mostrar (sin datos o sin resultados con los filtros) */
     estadoVacio: ReactNode;
     solapamientos: Map<string, Solapamiento>;
-    onEliminar: (examen: Examen) => void;
 }
 
-export default function PCCalendar({date, setDate, visibleData, filtersProps, year, month, estadoVacio, solapamientos, onEliminar }: Props) {
+export default function PCCalendar({date, setDate, visibleData, filtersProps, year, month, estadoVacio, solapamientos }: Props) {
     const prevMonth = () => setDate(new Date(year, month - 1, 1));
     const nextMonth = () => setDate(new Date(year, month + 1, 1));
     const hoy = new Date();
@@ -65,7 +64,7 @@ export default function PCCalendar({date, setDate, visibleData, filtersProps, ye
                 </div>
             )}
             {estadoVacio && <div className="max-w-6xl mx-auto mb-5">{estadoVacio}</div>}
-            <Calendar jsonData={visibleData} year={year} month={month} solapamientos={solapamientos} onEliminar={onEliminar} />
+            <Calendar jsonData={visibleData} year={year} month={month} solapamientos={solapamientos} conAcciones />
         </>
     );
 }

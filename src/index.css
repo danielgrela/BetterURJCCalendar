@@ -108,3 +108,20 @@ body {
 }
 
 
+
+/* Menú «⋯» (MenuAcciones): debajo del botón y alineado a su derecha, dándose la vuelta si no
+   cabe. Solo con anchor positioning; sin él lo coloca el componente desde script (y el popover
+   no se queda en la esquina por el inset: auto, que va dentro de @supports) */
+@supports (position-area: block-end) {
+	.menu-acciones {
+		inset: auto;
+		margin-block: 4px;
+		position-area: block-end span-inline-start;
+		position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+	}
+}
+@supports not (position-area: block-end) {
+	.menu-acciones {
+		position: fixed;
+	}
+}

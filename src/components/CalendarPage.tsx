@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import useFileStore from '../hooks/useFileStore';
 import useExamenes from '../hooks/useExamenes';
 import useMediaQuery from '../hooks/useMediaQuery';
 import MobileCalendar from './MobileCalendar';
@@ -12,13 +11,9 @@ import type { FiltersCalendarProps } from './FiltersCalendar';
 import EmptyState from './EmptyState';
 import ImportButton from './ImportButton';
 import CreateExamLink from './CreateExamLink';
-import { claveExamen } from '../scripts/examen';
-import type { Examen } from '../types/examen';
 import { IconCalendarOff, IconFilterOff } from '@tabler/icons-react';
 export default function CalendarPage() {
     const jsonData = useExamenes();
-    const eliminarExamen = useFileStore((state) => state.eliminarExamen);
-    const onEliminar = (examen: Examen) => eliminarExamen(claveExamen(examen));
     const [date, setDate] = useState(() => mesDelProximoExamen(jsonData));
     const [filtros, setFiltros] = useState(FILTROS_INICIALES);
     const examenes = useMemo(() => sortedEvents(jsonData), [jsonData]);
@@ -47,9 +42,9 @@ export default function CalendarPage() {
         <>
         <PageMeta titulo="Calendario" noindex />
         {isLg ? (
-            <PCCalendar date={date} setDate={setDate} visibleData={visibleData} filtersProps={filtersProps} year={year} month={month} estadoVacio={estadoVacio} solapamientos={solapamientos} onEliminar={onEliminar} />
+            <PCCalendar date={date} setDate={setDate} visibleData={visibleData} filtersProps={filtersProps} year={year} month={month} estadoVacio={estadoVacio} solapamientos={solapamientos} />
             ) :
-                <MobileCalendar visibleData={visibleData} filtersProps={filtersProps} estadoVacio={estadoVacio} solapamientos={solapamientos} onEliminar={onEliminar} />
+                <MobileCalendar visibleData={visibleData} filtersProps={filtersProps} estadoVacio={estadoVacio} solapamientos={solapamientos} />
             }
         </>
     );

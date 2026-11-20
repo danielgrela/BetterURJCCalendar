@@ -82,7 +82,6 @@ export default function CreateExamPage() {
     const examenes = useExamenes();
     const propios = useFileStore((state) => state.propios);
     const anadirPropio = useFileStore((state) => state.anadirPropio);
-    const eliminarExamen = useFileStore((state) => state.eliminarExamen);
 
     const [datos, setDatos] = useState<DatosExamen>(() => datosIniciales(examenes, propios));
     // Mientras no se toquen a mano, la hora de fin y la convocatoria se deducen de inicio y fecha
@@ -246,7 +245,7 @@ export default function CreateExamPage() {
                     ? <p className="text-sm text-texto-suave">Aún no has creado ningún examen.</p>
                     : <div className="flex flex-col gap-4">
                         {misExamenes.map((ev) => (
-                            <ExamCard key={claveExamen(ev)} examen={ev} solapamiento={solapamientos.get(claveExamen(ev))} onEliminar={() => eliminarExamen(claveExamen(ev))} />
+                            <ExamCard key={claveExamen(ev)} examen={ev} solapamiento={solapamientos.get(claveExamen(ev))} conAcciones />
                         ))}
                     </div>}
                 <p className="text-sm text-texto-suave">Los exámenes importados también se pueden eliminar con la papelera de su tarjeta, en Inicio o en el calendario.</p>

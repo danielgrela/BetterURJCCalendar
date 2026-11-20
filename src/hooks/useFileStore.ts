@@ -2,8 +2,16 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { normalizarAula } from '../scripts/handleExcel';
 import { sinExamen } from '../scripts/examenPropio';
+import { claveExamen } from '../scripts/examen';
 import { compararCalendarios, type Cambio } from '../scripts/cambios';
 import type { Examen } from '../types/examen';
+
+/** Lo necesario para devolver un examen eliminado a su sitio («Deshacer») */
+export interface ExamenEliminado {
+  examen: Examen;
+  origen: 'importado' | 'propio';
+  indice: number;
+}
 
 // Para mostrar el calendario entero se usa useExamenes, que une los dos
 interface FileStore {
@@ -17,22 +25,36 @@ interface FileStore {
   setJsonData: (data: Examen[]) => void;
   descartarCambios: () => void;
   anadirPropio: (examen: Examen) => void;
-  /** Quita el examen con esa claveExamen, sea importado o propio */
-  eliminarExamen: (clave: string) => void;
+  /** Quita el examen con esa claveExamen, sea importado o propio; devuelve lo que hace falta para deshacerlo */
+  eliminarExamen: (clave: string) => ExamenEliminado | null;
+  restaurarExamen: (eliminado: ExamenEliminado) => void;
   /** Borra todo: lo importado y lo creado a mano */
   borrarCalendario: () => void;
 }
 
-const useFileStore = create<FileStore>()(persist((set) => ({
+const useFileStore = create<FileStore>()(persist((set, get) => ({
   jsonData: null,
   propios: [],
   cambios: [],
   setJsonData: (data) => set((estado) => ({ jsonData: data, cambios: estado.jsonData ? compararCalendarios(estado.jsonData, data) : [] })),
   descartarCambios: () => set({ cambios: [] }),
   anadirPropio: (examen) => set((estado) => ({ propios: [...estado.propios, examen] })),
-  eliminarExamen: (clave) => set((estado) => {
-    const importados = sinExamen(estado.jsonData ?? [], clave);
-    return { jsonData: importados.length > 0 ? importados : null, propios: sinExamen(estado.propios, clave) };
+  eliminarExamen: (clave) => {
+    const { jsonData, propios } = get();
+    const enImportados = (jsonData ?? []).findIndex((ev) => claveExamen(ev) === clave);
+    const enPropios = propios.findIndex((ev) => claveExamen(ev) === clave);
+    const eliminado: ExamenEliminado | null = enImportados >= 0
+      ? { examen: jsonData![enImportados], origen: 'importado', indice: enImportados }
+      : enPropios >= 0 ? { examen: propios[enPropios], origen: 'propio', indice: enPropios } : null;
+    const importados = sinExamen(jsonData ?? [], clave);
+    set({ jsonData: importados.length > 0 ? importados : null, propios: sinExamen(propios, clave) });
+    return eliminado;
+  },
+  restaurarExamen: ({ examen, origen, indice }) => set((estado) => {
+    const insertar = (lista: Examen[]) => [...lista.slice(0, indice), examen, ...lista.slice(indice)];
+    return origen === 'importado'
+      ? { jsonData: insertar(estado.jsonData ?? []) }
+      : { propios: insertar(estado.propios) };
   }),
   borrarCalendario: () => set({ jsonData: null, propios: [], cambios: [] })}),
   {

@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import useFileStore from "../hooks/useFileStore";
 import useExamenes from "../hooks/useExamenes";
 import parseEventDate, { sortedEvents } from "../scripts/sortEvents";
 import { IconCalendarOff, IconCircleCheck } from "@tabler/icons-react";
@@ -25,7 +24,6 @@ function proximosExamenes(examenes: Examen[]): Examen[] | null {
 
 export default function NextExams() {
     const jsonData = useExamenes();
-    const eliminarExamen = useFileStore((state) => state.eliminarExamen);
     const solapamientos = useMemo(() => detectarSolapamientos(jsonData), [jsonData]);
     const proximos = useMemo(() => proximosExamenes(sortedEvents(jsonData)), [jsonData]);
     return (
@@ -44,7 +42,7 @@ export default function NextExams() {
                 : 
                 <div className="flex flex-col gap-4">
                     {proximos.map((examen) => (
-                        <ExamCard key={claveExamen(examen)} examen={examen} solapamiento={solapamientos.get(claveExamen(examen))} onEliminar={() => eliminarExamen(claveExamen(examen))} />
+                        <ExamCard key={claveExamen(examen)} examen={examen} solapamiento={solapamientos.get(claveExamen(examen))} conAcciones />
                 ))}
                 </div>
                 }

@@ -14,7 +14,8 @@ interface Props {
     compact?: boolean;
     solapamientos?: Map<string, Solapamiento>;
     /** Permite eliminar exámenes desde el detalle del día */
-    onEliminar?: (examen: Examen) => void;
+    /** Menú «⋯» en las tarjetas del detalle del día (no en el mockup de la portada) */
+    conAcciones?: boolean;
 }
 
 const DIAS_SEMANA = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
@@ -22,7 +23,7 @@ const DIAS_SEMANA = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 const MAX_POR_DIA = 2;
 
 // today: día que se resalta (por defecto, hoy) · compact: mockup de la portada, sin detalle al pulsar
-export default function Calendar({ jsonData, year, month, today = new Date(), compact = false, solapamientos, onEliminar }: Props) {
+export default function Calendar({ jsonData, year, month, today = new Date(), compact = false, solapamientos, conAcciones = false }: Props) {
     const [diaAbierto, setDiaAbierto] = useState<number | null>(null);
     const dialogRef = useRef<HTMLDialogElement>(null);
     useEffect(() => {
@@ -105,7 +106,7 @@ export default function Calendar({ jsonData, year, month, today = new Date(), co
                         </button>
                     </div>
                     {examenesAbiertos.map((ev) => (
-                        <ExamCard key={claveExamen(ev)} examen={ev} solapamiento={solapamientos?.get(claveExamen(ev))} hoy={today} onEliminar={onEliminar && (() => onEliminar(ev))} />
+                        <ExamCard key={claveExamen(ev)} examen={ev} solapamiento={solapamientos?.get(claveExamen(ev))} hoy={today} conAcciones={conAcciones} alEliminar={() => dialogRef.current?.close()} />
                     ))}
                 </div>
             </dialog>
