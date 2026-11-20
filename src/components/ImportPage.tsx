@@ -1,12 +1,14 @@
 import { IconFileUpload, IconInfoCircle, IconExclamationCircle, IconHelpCircle, IconTrash } from '@tabler/icons-react';
 import useFileStore from '../hooks/useFileStore';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import type { ChangeEvent, DragEvent, MouseEvent, SyntheticEvent } from 'react';
 import type { Examen } from '../types/examen';
 import excelToJson from '../scripts/handleExcel';
 import icsToJson from '../scripts/handleICS';
 import { NavLink, useNavigate } from 'react-router';
 import PageMeta from './PageMeta.tsx';
+import CambiosCalendario from './CambiosCalendario';
+import { compararCalendarios } from '../scripts/cambios';
 export default function ImportPage() {
     const [file, setFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -19,6 +21,8 @@ export default function ImportPage() {
     const borrarCalendario = useFileStore((state) => state.borrarCalendario);
     const hayImportados = !!jsonDataState && jsonDataState.length > 0;
     const [borrado, setBorrado] = useState(false);
+    // Solo si ya hay algo importado: la primera importación no «cambia» nada
+    const cambiosPrevistos = useMemo(() => (hayImportados && jsonAuxData ? compararCalendarios(jsonDataState, jsonAuxData) : null), [hayImportados, jsonDataState, jsonAuxData]);
     const dialogBorrarRef = useRef<HTMLDialogElement>(null);
     // El diálogo devuelve el botón pulsado en returnValue; Esc o el gesto atrás lo dejan vacío
     const handleCerrarDialogo = (e: SyntheticEvent<HTMLDialogElement>) => {
@@ -82,7 +86,8 @@ export default function ImportPage() {
         if (!jsonAuxData) return;
         try {
             setJsonData(jsonAuxData);
-            navigate('/dashboard/calendario');
+            // Con cambios se va a Inicio, donde se quedan apuntados hasta que se descartan
+            navigate(cambiosPrevistos && cambiosPrevistos.length > 0 ? '/dashboard' : '/dashboard/calendario');
         } catch (error) {
             console.error("Error al importar el archivo:", error);
             setError(error instanceof Error ? error.message : String(error));
@@ -117,6 +122,9 @@ export default function ImportPage() {
                     <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">exámenes</a> o un calendario .ics, como el que exportas desde aquí</p>
                 </label>
                 {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
+                {cambiosPrevistos && (cambiosPrevistos.length === 0
+                    ? <p role="status" className="text-start text-sm text-texto">Es el mismo calendario que ya tienes: no cambia ningún examen.</p>
+                    : <div role="status"><CambiosCalendario cambios={cambiosPrevistos} titulo={cambiosPrevistos.length === 1 ? 'Al importar cambiará 1 examen' : `Al importar cambiarán ${cambiosPrevistos.length} exámenes`} /></div>)}
                 {error && (
                     <p role="alert" className="flex flex-row gap-2 items-start text-start text-sm text-error font-medium">
                         <IconExclamationCircle size={20} stroke={2} className="min-w-5" aria-hidden="true" />

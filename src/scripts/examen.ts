@@ -12,6 +12,10 @@ export const diasHasta = (fecha: string, hoy: Date = new Date()): number => {
 // Clave estable para listas de React (el grupo evita choques si se importan varios grupos)
 export const claveExamen = (ev: Examen): string => [ev.CodigoAsignatura, ev.CodigoGrupo, ev.Fecha, ev.Hora].join('|');
 
+// Identifica un examen aunque la URJC le cambie la fecha, la hora o el aula (como el UID del .ics):
+// sirve para comparar dos importaciones y para guardar preferencias que no se pierdan al reimportar
+export const claveEstable = (ev: Pick<Examen, 'CodigoAsignatura' | 'CodigoGrupo' | 'Convocatoria'>): string => [ev.CodigoAsignatura, ev.CodigoGrupo, ev.Convocatoria].join('|');
+
 // Los nombres llegan en mayúsculas desde el Excel de la URJC: se pasan a tipo frase para leerse mejor
 // (los números romanos, como el «II» de «Estadística II», se quedan en mayúsculas)
 export const nombreLegible = (ev: Pick<Examen, 'Asignatura'> | null | undefined): string => {
