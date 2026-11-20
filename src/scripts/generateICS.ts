@@ -1,20 +1,10 @@
 import * as ics from 'ics';
 import { descargarBlob } from './descargarBlob';
-import { AULA_SIN_ASIGNAR, CAMPOS_DESCRIPCION } from './formatoICS';
+import { AULA_SIN_ASIGNAR, CAMPOS_DESCRIPCION, type Aviso } from './formatoICS';
 import { instanteExamen } from './horaMadrid';
 import type { Examen } from '../types/examen';
 
 const DOMINIO_UID = 'betterurjccalendar.danielgrela.com';
-
-/** Recordatorio que llevan los eventos exportados; lo elige el alumno al exportar */
-export type Aviso = 'ninguno' | '1d' | '2h' | 'ambos';
-
-export const OPCIONES_AVISO: { valor: Aviso; texto: string }[] = [
-  { valor: '1d', texto: '1 día antes' },
-  { valor: '2h', texto: '2 horas antes' },
-  { valor: 'ambos', texto: '1 día y 2 horas antes' },
-  { valor: 'ninguno', texto: 'Sin aviso' },
-];
 
 // VALARM de tipo display: Google, Apple y Outlook lo convierten en su notificación habitual.
 // El día va como 24 horas: con { days: 1 } la librería escribe «-P1DT», que no es una duración

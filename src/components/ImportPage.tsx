@@ -9,10 +9,15 @@ import { NavLink, useNavigate } from 'react-router';
 import PageMeta from './PageMeta.tsx';
 import CambiosCalendario from './CambiosCalendario';
 import { compararCalendarios } from '../scripts/cambios';
+import { leerCopia, type CopiaSeguridad } from '../scripts/copiaSeguridad';
+import usePreferencias from '../hooks/usePreferencias';
 export default function ImportPage() {
     const [file, setFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [jsonAuxData, setJsonAuxData] = useState<Examen[] | null>(null);
+    // Una copia de seguridad (.json) no se importa como un calendario: lo sustituye todo, ajustes incluidos
+    const [copia, setCopia] = useState<CopiaSeguridad | null>(null);
+    const restaurarCopia = useFileStore((state) => state.restaurarCopia);
     const [disabled, setDisabled] = useState(true);
     const [dragging, setDragging] = useState(false);
     const setJsonData = useFileStore((state) => state.setJsonData);
@@ -31,6 +36,7 @@ export default function ImportPage() {
             borrarCalendario();
             setFile(null);
             setJsonAuxData(null);
+            setCopia(null);
             setDisabled(true);
             setError(null);
             setBorrado(true);
@@ -43,9 +49,17 @@ export default function ImportPage() {
             setFile(file);
             try{
                 const nombre = file.name.toLowerCase();
+                if (nombre.endsWith('.json')) {
+                    setCopia(leerCopia(await file.text()));
+                    setJsonAuxData(null);
+                    setError(null);
+                    setDisabled(false);
+                    return;
+                }
+                setCopia(null);
                 const leer = nombre.endsWith('.xlsx') ? excelToJson : nombre.endsWith('.ics') ? icsToJson : null;
                 if (!leer) {
-                    throw new Error("Solo se admiten archivos .xlsx o .ics. Descarga el Excel original desde la web de exámenes de la URJC o usa un .ics exportado desde aquí.");
+                    throw new Error("Solo se admiten archivos .xlsx, .ics o una copia de seguridad .json. Descarga el Excel original desde la web de exámenes de la URJC o usa un archivo exportado desde aquí.");
                 }
                 const data = await leer(file);
                 // Los dos lectores normalizan Fecha y Hora, descartan lo incompleto y lanzan un error legible si no queda ningún examen
@@ -56,6 +70,8 @@ export default function ImportPage() {
             catch(error) {
                 console.error("Error al procesar el archivo:", error);
                 setError(error instanceof Error ? error.message : String(error));
+                setCopia(null);
+                setJsonAuxData(null);
                 setDisabled(true);
             }
         }
@@ -80,6 +96,14 @@ export default function ImportPage() {
         e.preventDefault();
         if (!file) {
             setError("Selecciona un archivo antes de importar.");
+            return;
+        }
+        if (copia) {
+            restaurarCopia(copia.importados, copia.propios);
+            const { aviso, ...preferencias } = copia.preferencias;
+            usePreferencias.getState().setPreferenciasCalendario(preferencias);
+            usePreferencias.getState().setAviso(aviso);
+            navigate('/dashboard');
             return;
         }
         // Sin datos válidos el botón está desactivado; se comprueba también para el tipo
@@ -107,7 +131,7 @@ export default function ImportPage() {
                 onChange={handleFileChange}
                     id="exam-file"
                     type="file"
-                    accept=".xlsx,.ics,text/calendar"
+                    accept=".xlsx,.ics,text/calendar,.json,application/json"
                     className="peer sr-only"/>
                 <label
                     htmlFor="exam-file"
@@ -119,9 +143,14 @@ export default function ImportPage() {
                         <IconFileUpload stroke={2} />
                     </div>
                     <p className="font-semibold">Arrastra tu archivo de exámenes aquí o haz clic para buscar</p>
-                    <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">exámenes</a> o un calendario .ics, como el que exportas desde aquí</p>
+                    <p className="mt-1 text-sm text-texto-suave">Formatos soportados: el archivo .xlsx original de <a href="https://servicios.urjc.es/examenes/" target="_blank" rel="noopener noreferrer" className="text-enlace underline underline-offset-2 hover:decoration-2">exámenes</a>, un calendario .ics como el que exportas desde aquí o una copia de seguridad .json</p>
                 </label>
                 {file && <p className="text-start text-sm text-texto font-medium">Archivo seleccionado: {file.name}</p>}
+                {copia && (
+                    <p role="status" className="text-start text-sm text-texto">
+                        Copia de seguridad del {new Date(copia.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}: {copia.importados?.length ?? 0} exámenes importados y {copia.propios.length} creados a mano, con tus ajustes. <strong className="font-semibold">Al importarla se sustituye todo lo que hay en este navegador.</strong>
+                    </p>
+                )}
                 {cambiosPrevistos && (cambiosPrevistos.length === 0
                     ? <p role="status" className="text-start text-sm text-texto">Es el mismo calendario que ya tienes: no cambia ningún examen.</p>
                     : <div role="status"><CambiosCalendario cambios={cambiosPrevistos} titulo={cambiosPrevistos.length === 1 ? 'Al importar cambiará 1 examen' : `Al importar cambiarán ${cambiosPrevistos.length} exámenes`} /></div>)}

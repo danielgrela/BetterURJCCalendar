@@ -30,6 +30,8 @@ interface FileStore {
   restaurarExamen: (eliminado: ExamenEliminado) => void;
   /** Sustituye el examen con esa claveExamen (importado o propio) en su misma posición */
   reemplazarExamen: (clave: string, nuevo: Examen) => void;
+  /** Sustituye lo importado y lo creado a mano por los de una copia de seguridad (sin apuntar cambios) */
+  restaurarCopia: (importados: Examen[] | null, propios: Examen[]) => void;
   /** Borra todo: lo importado y lo creado a mano */
   borrarCalendario: () => void;
 }
@@ -62,6 +64,7 @@ const useFileStore = create<FileStore>()(persist((set, get) => ({
       ? { jsonData: insertar(estado.jsonData ?? []) }
       : { propios: insertar(estado.propios) };
   }),
+  restaurarCopia: (importados, propios) => set({ jsonData: importados, propios, cambios: [] }),
   borrarCalendario: () => set({ jsonData: null, propios: [], cambios: [] })}),
   {
     name: 'file-storage',

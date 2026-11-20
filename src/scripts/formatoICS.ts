@@ -17,3 +17,13 @@ export const CAMPOS_DESCRIPCION = [
 ] as const satisfies readonly { etiqueta: string; campo: keyof Examen }[];
 
 export const AULA_SIN_ASIGNAR = 'Aula por determinar';
+
+/** Recordatorio que llevan los eventos exportados; lo elige el alumno al exportar */
+export type Aviso = 'ninguno' | '1d' | '2h' | 'ambos';
+
+export const OPCIONES_AVISO: { valor: Aviso; texto: string }[] = [
+  { valor: '1d', texto: '1 día antes' },
+  { valor: '2h', texto: '2 horas antes' },
+  { valor: 'ambos', texto: '1 día y 2 horas antes' },
+  { valor: 'ninguno', texto: 'Sin aviso' },
+];

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Aviso } from '../scripts/generateICS';
+import type { Aviso } from '../scripts/formatoICS';
 import type { Estado, PreferenciasCalendario } from '../scripts/preferencias';
 
 // Preferencias del alumno sobre su calendario, aparte de los datos (useFileStore): importar

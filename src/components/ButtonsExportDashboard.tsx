@@ -1,7 +1,8 @@
 import { useId, useRef, type SyntheticEvent } from 'react';
 import { IconCalendarDown, IconFileTypeXls } from '@tabler/icons-react';
 import { descargarCalendarioExcel } from "../scripts/generateExcel";
-import { descargarCalendarioICS, OPCIONES_AVISO, type Aviso } from "../scripts/generateICS";
+import { descargarCalendarioICS } from "../scripts/generateICS";
+import { OPCIONES_AVISO, type Aviso } from "../scripts/formatoICS";
 import { useExamenesExportables } from "../hooks/useExamenesVisibles";
 import usePreferencias from '../hooks/usePreferencias';
 
