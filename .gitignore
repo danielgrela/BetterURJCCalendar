@@ -24,5 +24,8 @@ dist-ssr
 *.sln
 *.sw?
 .env
-# Agentes (skills locales)
+# Agentes: skills, instrucciones y roadmap se quedan en local
 .claude/
+AGENTS.md
+CLAUDE.md
+ROADMAP.md

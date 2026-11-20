@@ -42,7 +42,7 @@ npm run dev        # http://localhost:5173
 
 Hecho con React 19, React Router 7 (modo framework, sitio estático), Vite, Tailwind CSS 4, Zustand y TypeScript. Se despliega en Vercel desde `main`.
 
-Para contribuir: [`AGENTS.md`](AGENTS.md) describe la estructura y las convenciones, [`DESIGN.md`](DESIGN.md) la guía visual y [`ROADMAP.md`](ROADMAP.md) el trabajo hecho y pendiente.
+Para contribuir: [`DESIGN.md`](DESIGN.md) recoge la guía visual (tokens de color, contraste y componentes).
 
 ## Créditos
 - Creado por [Daniel Grela](https://www.danielgrela.com).
