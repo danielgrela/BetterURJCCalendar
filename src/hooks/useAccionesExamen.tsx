@@ -1,8 +1,9 @@
-import { IconPencil, IconTrash } from '@tabler/icons-react';
+import { IconBrandGoogle, IconPencil, IconTrash } from '@tabler/icons-react';
 import { useLocation, useNavigate } from 'react-router';
 import useFileStore from './useFileStore';
 import useAvisos from './useAvisos';
 import { claveExamen, nombreLegible } from '../scripts/examen';
+import { enlaceGoogleCalendar } from '../scripts/googleCalendar';
 import type { AccionMenu } from '../components/MenuAcciones';
 import type { Examen } from '../types/examen';
 
@@ -32,6 +33,7 @@ export default function useAccionesExamen(examen: Examen, { alEliminar }: Opcion
 
     return [
         { id: 'editar', texto: 'Editar', icono: <IconPencil size={20} stroke={2} />, onSelect: editar },
+        { id: 'google', texto: 'Añadir a Google Calendar', icono: <IconBrandGoogle size={20} stroke={2} />, href: enlaceGoogleCalendar(examen), detalle: 'Se abre en otra pestaña' },
         { id: 'eliminar', texto: 'Eliminar', icono: <IconTrash size={20} stroke={2} />, onSelect: eliminar, peligro: true, separada: true },
     ];
 }

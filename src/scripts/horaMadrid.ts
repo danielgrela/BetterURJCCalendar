@@ -49,3 +49,10 @@ export function desdeZona(local: HoraLocal, zona: string): Date {
 
 export const enMadrid = (instante: Date): HoraLocal => enZona(instante, MADRID);
 export const desdeMadrid = (local: HoraLocal): Date => desdeZona(local, MADRID);
+
+// Fecha "DD-MM-YYYY" y hora "HH:MM" del Excel (hora de Madrid) → instante en milisegundos UTC
+export function instanteExamen(fecha: string, hora: string): number {
+  const [dia, mes, anio] = fecha.split('-').map(Number);
+  const [h, minuto] = hora.split(':').map(Number);
+  return desdeMadrid({ anio, mes, dia, hora: h, minuto }).getTime();
+}

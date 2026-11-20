@@ -1,11 +1,13 @@
-import { useId, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode, type ToggleEvent } from 'react';
+import { useId, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent, type ReactNode, type ToggleEvent } from 'react';
 import { IconDots } from '@tabler/icons-react';
 
 export interface AccionMenu {
     id: string;
     texto: string;
     icono: ReactNode;
-    onSelect: () => void;
+    /** Una orden; o bien href, un destino externo que se abre en otra pestaña */
+    onSelect?: () => void;
+    href?: string;
     /** Texto pequeño bajo la acción (p. ej. qué consecuencia tiene) */
     detalle?: string;
     /** En color de error (eliminar) */
@@ -36,6 +38,31 @@ function colocarDesdeScript(menu: HTMLElement, boton: HTMLElement) {
     menu.style.top = `${cabeDebajo ? b.bottom + 4 : Math.max(b.top - 4 - alto, MARGEN)}px`;
 }
 
+const CLASES_ITEM = 'min-h-11 w-full flex items-center gap-3 px-3 py-2 text-start text-sm font-medium rounded-sm cursor-pointer outline-none hover:bg-superficie-alta focus:bg-superficie-alta focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary';
+
+function ItemMenu({ accion, onClick }: { accion: AccionMenu; onClick: (e: MouseEvent<HTMLElement>) => void }) {
+    const contenido = (
+        <>
+            <span className="shrink-0 text-current" aria-hidden="true">{accion.icono}</span>
+            <span className="flex flex-col">
+                {accion.texto}
+                {accion.detalle && <span className="text-xs font-normal text-texto-suave">{accion.detalle}</span>}
+            </span>
+        </>
+    );
+    const props = {
+        role: 'menuitem',
+        tabIndex: -1,
+        onClick,
+        // El puntero y el foco van juntos: así las flechas siguen desde donde está el ratón
+        onPointerMove: (e: PointerEvent<HTMLElement>) => { if (document.activeElement !== e.currentTarget) e.currentTarget.focus({ focusVisible: false }); },
+        className: `${CLASES_ITEM} ${accion.peligro ? 'text-error' : 'text-texto'}`,
+    };
+    return accion.href
+        ? <a href={accion.href} target="_blank" rel="noopener noreferrer" {...props}>{contenido}</a>
+        : <button type="button" {...props}>{contenido}</button>;
+}
+
 // Menú de acciones «⋯» con el Popover API: se cierra al pulsar fuera o con Esc (y el foco vuelve
 // al botón). Flechas, Inicio y Fin recorren las acciones; abrir con teclado entra en el menú
 export default function MenuAcciones({ etiqueta, acciones, className = '' }: Props) {
@@ -45,7 +72,7 @@ export default function MenuAcciones({ etiqueta, acciones, className = '' }: Pro
     const entrarAlAbrir = useRef(false);
     const [abierto, setAbierto] = useState(false);
 
-    const items = () => [...(menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]') ?? [])];
+    const items = () => [...(menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? [])];
 
     const handleToggle = (e: ToggleEvent<HTMLDivElement>) => {
         const abre = e.newState === 'open';
@@ -77,7 +104,7 @@ export default function MenuAcciones({ etiqueta, acciones, className = '' }: Pro
             return;
         }
         const lista = items();
-        const actual = lista.indexOf(document.activeElement as HTMLButtonElement);
+        const actual = lista.indexOf(document.activeElement as HTMLElement);
         const siguiente = {
             ArrowDown: (actual + 1) % lista.length,
             ArrowUp: (actual - 1 + lista.length) % lista.length,
@@ -89,11 +116,11 @@ export default function MenuAcciones({ etiqueta, acciones, className = '' }: Pro
         lista[siguiente]?.focus();
     };
 
-    const elegir = (accion: AccionMenu, e: MouseEvent<HTMLButtonElement>) => {
+    const elegir = (accion: AccionMenu, e: MouseEvent<HTMLElement>) => {
         // Primero se cierra y se devuelve el foco: la acción puede quitar la tarjeta (eliminar)
         botonRef.current?.focus({ focusVisible: e.detail === 0 });
         menuRef.current?.hidePopover();
-        accion.onSelect();
+        accion.onSelect?.();
     };
 
     return (
@@ -122,20 +149,7 @@ export default function MenuAcciones({ etiqueta, acciones, className = '' }: Pro
                 <div role="menu" aria-label={etiqueta} onKeyDown={handleKeyDownMenu} className="flex flex-col">
                     {acciones.map((accion) => (
                         <div key={accion.id} role="none" className={accion.separada ? 'mt-1 pt-1 border-t border-borde' : ''}>
-                            <button
-                                type="button"
-                                role="menuitem"
-                                tabIndex={-1}
-                                onClick={(e) => elegir(accion, e)}
-                                onPointerMove={(e) => { if (document.activeElement !== e.currentTarget) e.currentTarget.focus({ focusVisible: false }); }}
-                                className={`min-h-11 w-full flex items-center gap-3 px-3 py-2 text-start text-sm font-medium rounded-sm cursor-pointer outline-none hover:bg-superficie-alta focus:bg-superficie-alta focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary ${accion.peligro ? 'text-error' : 'text-texto'}`}
-                            >
-                                <span className="shrink-0 text-current" aria-hidden="true">{accion.icono}</span>
-                                <span className="flex flex-col">
-                                    {accion.texto}
-                                    {accion.detalle && <span className="text-xs font-normal text-texto-suave">{accion.detalle}</span>}
-                                </span>
-                            </button>
+                            <ItemMenu accion={accion} onClick={(e) => elegir(accion, e)} />
                         </div>
                     ))}
                 </div>

@@ -1,7 +1,7 @@
 import * as ics from 'ics';
 import { descargarBlob } from './descargarBlob';
 import { AULA_SIN_ASIGNAR, CAMPOS_DESCRIPCION } from './formatoICS';
-import { desdeMadrid } from './horaMadrid';
+import { instanteExamen } from './horaMadrid';
 import type { Examen } from '../types/examen';
 
 const DOMINIO_UID = 'betterurjccalendar.danielgrela.com';
@@ -42,12 +42,6 @@ function uids(examenes: Examen[]): string[] {
   });
 }
 
-function instante(fecha: string, hora: string): number {
-  const [dia, mes, anio] = fecha.split('-').map(Number);
-  const [h, minuto] = hora.split(':').map(Number);
-  return desdeMadrid({ anio, mes, dia, hora: h, minuto }).getTime();
-}
-
 export const eventosICS = (examenes: Examen[], aviso: Aviso = 'ninguno'): ics.EventAttributes[] => {
   const ids = uids(examenes);
   return examenes.map((examen, i): ics.EventAttributes => {
@@ -58,10 +52,10 @@ export const eventosICS = (examenes: Examen[], aviso: Aviso = 'ninguno'): ics.Ev
       title: examen.Asignatura,
       description: CAMPOS_DESCRIPCION.map(({ etiqueta, campo }) => `${etiqueta}: ${examen[campo]}`).join('\n'),
       location: examen.Aula !== '-' ? examen.Aula : AULA_SIN_ASIGNAR,
-      start: instante(examen.Fecha, horaInicio),
+      start: instanteExamen(examen.Fecha, horaInicio),
       startInputType: 'utc',
       startOutputType: 'utc',
-      end: instante(examen.Fecha, horaFin),
+      end: instanteExamen(examen.Fecha, horaFin),
       endInputType: 'utc',
       endOutputType: 'utc',
       productId: 'Better URJC Calendar',
