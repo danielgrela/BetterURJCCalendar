@@ -125,3 +125,25 @@ body {
 		position: fixed;
 	}
 }
+
+/* Al imprimir siempre en claro, aunque la app esté en oscuro: papel blanco y tinta oscura. Repite
+   los valores claros de :root porque .dark los sobrescribe con más especificidad */
+@media print {
+	.dark {
+		--primary: #E4002B;
+		--sobre-primary: #FFFFFF;
+		--enlace: #1D4ED8;
+		--error: #DC2626;
+		--lienzo: #FFFFFF;
+		--superficie: #FFFFFF;
+		--superficie-alta: #E7E5E4;
+		--borde: #E7E5E4;
+		--borde-fuerte: #D6D3D1;
+		--texto: #1C1917;
+		--texto-suave: #57534E;
+		color-scheme: light;
+	}
+	body {
+		background: #FFFFFF;
+	}
+}

@@ -37,3 +37,15 @@ export const hayExamenesEnMes = (examenes: Examen[] | null | undefined, year: nu
     const fecha = parseEventDate(ev?.Fecha);
     return fecha.getFullYear() === year && fecha.getMonth() === month;
 });
+
+const MES_Y_ANIO = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' });
+
+// Exámenes (ya ordenados) agrupados por mes: [«mayo de 2026», [...]] (lista móvil e impresión)
+export function porMes(examenes: Examen[]): [string, Examen[]][] {
+    const grupos = new Map<string, Examen[]>();
+    for (const ev of examenes) {
+        const mes = MES_Y_ANIO.format(parseEventDate(ev.Fecha));
+        grupos.set(mes, [...(grupos.get(mes) ?? []), ev]);
+    }
+    return [...grupos];
+}

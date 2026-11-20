@@ -3,7 +3,7 @@ import { IconArrowDown } from '@tabler/icons-react';
 import FiltersCalendar from './FiltersCalendar';
 import ExamCard from './ExamCard';
 import { claveExamen, diasHasta } from '../scripts/examen';
-import parseEventDate from '../scripts/sortEvents';
+import { porMes } from '../scripts/sortEvents';
 import type { FiltersCalendarProps } from './FiltersCalendar';
 import type { Examen } from '../types/examen';
 import type { ReactNode } from 'react';
@@ -17,18 +17,7 @@ interface Props {
     solapamientos: Map<string, Solapamiento>;
 }
 
-const MES_Y_ANIO = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' });
 const ID_PROXIMO = 'proximo-examen';
-
-// Exámenes (ya ordenados) agrupados por mes: [«Mayo de 2026», [...]]
-function porMes(examenes: Examen[]): [string, Examen[]][] {
-    const grupos = new Map<string, Examen[]>();
-    for (const ev of examenes) {
-        const mes = MES_Y_ANIO.format(parseEventDate(ev.Fecha));
-        grupos.set(mes, [...(grupos.get(mes) ?? []), ev]);
-    }
-    return [...grupos];
-}
 
 export default function MobileCalendar({ visibleData, filtersProps, estadoVacio, solapamientos }: Props) {
     const grupos = useMemo(() => porMes(visibleData), [visibleData]);

@@ -55,7 +55,7 @@ export default function Root() {
   return (
     <>
       <Outlet />
-      <ToggleThemeButton className="fixed hidden lg:block bottom-8 right-8" />
+      <ToggleThemeButton className="fixed hidden lg:block bottom-8 right-8 print:hidden" />
       <AvisoActualizacion />
     </>
   )

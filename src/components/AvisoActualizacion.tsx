@@ -19,7 +19,7 @@ export default function AvisoActualizacion() {
     if (!hayVersionNueva) return null;
 
     return (
-        <div role="status" className="fixed z-50 inset-x-4 bottom-28 lg:inset-x-auto lg:left-8 lg:bottom-8 lg:max-w-sm flex flex-col gap-4 p-4 rounded-sm border border-borde bg-superficie text-sm text-texto shadow-md dark:shadow-none">
+        <div role="status" className="print:hidden fixed z-50 inset-x-4 bottom-28 lg:inset-x-auto lg:left-8 lg:bottom-8 lg:max-w-sm flex flex-col gap-4 p-4 rounded-sm border border-borde bg-superficie text-sm text-texto shadow-md dark:shadow-none">
             <p className="flex flex-row gap-3 items-center">
                 <IconInfoCircle className="min-w-5" stroke={2} />
                 Hay una versión nueva de la app.

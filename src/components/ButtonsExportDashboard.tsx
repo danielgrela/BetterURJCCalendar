@@ -1,5 +1,5 @@
 import { useId, useRef, type SyntheticEvent } from 'react';
-import { IconCalendarDown, IconFileTypeXls } from '@tabler/icons-react';
+import { IconCalendarDown, IconFileTypeXls, IconPrinter } from '@tabler/icons-react';
 import { descargarCalendarioExcel } from "../scripts/generateExcel";
 import { descargarCalendarioICS } from "../scripts/generateICS";
 import { OPCIONES_AVISO, type Aviso } from "../scripts/formatoICS";
@@ -30,6 +30,10 @@ export default function ButtonsExportDashboard({ className = '' }: { className?:
                         <button type="button" className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium bg-primary text-sobre-primary cursor-pointer hover:brightness-90 py-3 whitespace-nowrap" onClick={() => dialogRef.current?.showModal()}>
                             <IconCalendarDown size={20} className="min-w-fit" stroke={2} aria-hidden="true" />
                             Exportar a .ics
+                        </button>
+                        <button type="button" title="Imprime tus exámenes o guárdalos en PDF" className="min-h-11 inline-flex items-center justify-center gap-2 px-6 font-medium border border-borde-fuerte bg-superficie text-texto cursor-pointer hover:bg-superficie-alta transition-colors py-3 whitespace-nowrap" onClick={() => window.print()}>
+                            <IconPrinter size={20} className="min-w-fit" stroke={2} aria-hidden="true" />
+                            Imprimir
                         </button>
                         <dialog ref={dialogRef} onClose={handleCerrar} aria-labelledby={`${id}-titulo`} className="m-auto w-[calc(100%-2rem)] max-w-md rounded-md bg-superficie text-texto border border-borde p-6 shadow-lg dark:shadow-none overscroll-contain backdrop:bg-black/50 backdrop:overflow-hidden backdrop:overscroll-contain">
                             <h2 id={`${id}-titulo`} className="text-lg font-bold">Exportar a .ics</h2>
