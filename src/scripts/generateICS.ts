@@ -6,6 +6,27 @@ import type { Examen } from '../types/examen';
 
 const DOMINIO_UID = 'betterurjccalendar.danielgrela.com';
 
+/** Recordatorio que llevan los eventos exportados; lo elige el alumno al exportar */
+export type Aviso = 'ninguno' | '1d' | '2h' | 'ambos';
+
+export const OPCIONES_AVISO: { valor: Aviso; texto: string }[] = [
+  { valor: '1d', texto: '1 día antes' },
+  { valor: '2h', texto: '2 horas antes' },
+  { valor: 'ambos', texto: '1 día y 2 horas antes' },
+  { valor: 'ninguno', texto: 'Sin aviso' },
+];
+
+// VALARM de tipo display: Google, Apple y Outlook lo convierten en su notificación habitual.
+// El día va como 24 horas: con { days: 1 } la librería escribe «-P1DT», que no es una duración
+// válida (tras la T tiene que haber horas, minutos o segundos) y algún calendario la rechaza
+function alarmas(aviso: Aviso, asignatura: string): ics.Alarm[] {
+  const avisoDe = (trigger: ics.DurationObject): ics.Alarm => ({ action: 'display', description: `Examen: ${asignatura}`, trigger: { ...trigger, before: true } });
+  if (aviso === '1d') return [avisoDe({ hours: 24 })];
+  if (aviso === '2h') return [avisoDe({ hours: 2 })];
+  if (aviso === 'ambos') return [avisoDe({ hours: 24 }), avisoDe({ hours: 2 })];
+  return [];
+}
+
 // UID sin fecha ni hora: si la URJC mueve un examen, volver a importar el .ics en Google,
 // Apple u Outlook actualiza el evento en lugar de duplicarlo. Si una asignatura tiene dos
 // exámenes en la misma convocatoria y grupo, el segundo lleva un sufijo para no pisar al primero
@@ -27,10 +48,11 @@ function instante(fecha: string, hora: string): number {
   return desdeMadrid({ anio, mes, dia, hora: h, minuto }).getTime();
 }
 
-export const eventosICS = (examenes: Examen[]): ics.EventAttributes[] => {
+export const eventosICS = (examenes: Examen[], aviso: Aviso = 'ninguno'): ics.EventAttributes[] => {
   const ids = uids(examenes);
   return examenes.map((examen, i): ics.EventAttributes => {
     const [horaInicio, horaFin] = examen.Hora.split(' - ');
+    const avisos = alarmas(aviso, examen.Asignatura);
     return {
       uid: ids[i],
       title: examen.Asignatura,
@@ -44,16 +66,17 @@ export const eventosICS = (examenes: Examen[]): ics.EventAttributes[] => {
       endOutputType: 'utc',
       productId: 'Better URJC Calendar',
       calName: 'Exámenes URJC',
+      ...(avisos.length > 0 ? { alarms: avisos } : {}),
     };
   });
 };
 
-export const descargarCalendarioICS = (examenesJSON: Examen[] | null | undefined): void => {
+export const descargarCalendarioICS = (examenesJSON: Examen[] | null | undefined, aviso: Aviso = 'ninguno'): void => {
   if (!examenesJSON || examenesJSON.length === 0) {
     console.warn("El JSON de exámenes está vacío o no es válido.");
     return;
   }
-  ics.createEvents(eventosICS(examenesJSON), (error, value) => {
+  ics.createEvents(eventosICS(examenesJSON, aviso), (error, value) => {
     if (error || !value) {
       console.error("Error al generar el archivo ICS:", error);
       return;

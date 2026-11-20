@@ -1,6 +1,7 @@
 import { createEvents } from 'ics';
 import { describe, expect, it } from 'vitest';
 import { eventosICS } from './generateICS';
+import { icsAExamenes } from './handleICS';
 import { desdeMadrid, enMadrid } from './horaMadrid';
 import { examen } from './examenDePrueba';
 
@@ -65,5 +66,26 @@ describe('eventosICS', () => {
     expect(value).toContain('X-WR-CALNAME:Exámenes URJC');
     expect(value).toContain('DTSTART:20260511T150000Z');
     expect(value?.match(/BEGIN:VEVENT/g)).toHaveLength(2);
+  });
+
+  it('sin aviso no añade alarmas', () => {
+    const [evento] = eventosICS([examen()]);
+    expect(evento.alarms).toBeUndefined();
+  });
+
+  it('añade el aviso elegido antes del examen', () => {
+    expect(eventosICS([examen()], '1d')[0].alarms).toEqual([{ action: 'display', description: 'Examen: BASES DE DATOS (2034011)', trigger: { hours: 24, before: true } }]);
+    expect(eventosICS([examen()], '2h')[0].alarms?.[0].trigger).toEqual({ hours: 2, before: true });
+    expect(eventosICS([examen()], 'ambos')[0].alarms).toHaveLength(2);
+  });
+
+  it('el .ics con avisos se vuelve a importar igual', () => {
+    const original = [examen(), examen({ Fecha: '02-06-2026', Convocatoria: 'Junio' })];
+    const { value } = createEvents(eventosICS(original, 'ambos'));
+    expect(value?.match(/BEGIN:VALARM/g)).toHaveLength(4);
+    expect(value).toContain('TRIGGER:-PT24H');
+    expect(value).not.toMatch(/TRIGGER:-P\d+DT\r?\n/);
+    expect(value).toContain('TRIGGER:-PT2H');
+    expect(icsAExamenes(value ?? '')).toEqual(original);
   });
 });
