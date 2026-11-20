@@ -1,9 +1,11 @@
-import { IconAlertTriangle, IconCalendarEvent, IconClock, IconMapPin } from '@tabler/icons-react';
+import { IconAlertTriangle, IconCalendarEvent, IconCircleCheck, IconCircleX, IconClock, IconMapPin } from '@tabler/icons-react';
+import usePreferencias from '../hooks/usePreferencias';
 import MenuAcciones from './MenuAcciones';
 import useAccionesExamen from '../hooks/useAccionesExamen';
-import { aulaLegible, diasHasta, fechaLarga, horaInicio, horaLegible, nombreLegible, partesFecha } from '../scripts/examen';
+import { aulaLegible, claveEstable, diasHasta, fechaLarga, horaInicio, horaLegible, nombreLegible, partesFecha } from '../scripts/examen';
 import type { Examen } from '../types/examen';
 import type { Solapamiento } from '../scripts/solapamientos';
+import type { Estado } from '../scripts/preferencias';
 
 function textoDias(dias: number) {
     if (dias < 0) return 'Ya pasó';
@@ -27,6 +29,13 @@ function AvisoSolapamiento({ solapamiento }: { solapamiento: Solapamiento }) {
             <span>{textoSolapamiento(solapamiento)}</span>
         </p>
     );
+}
+
+// Con texto e icono (no solo color). «No me presento» recuerda que no se exporta
+function EtiquetaEstado({ estado }: { estado: Estado }) {
+    return estado === 'aprobado'
+        ? <p className="flex items-center gap-1.5 text-sm font-semibold text-texto"><IconCircleCheck size={16} stroke={2} className="min-w-fit" aria-hidden="true" />Aprobado</p>
+        : <p className="flex items-center gap-1.5 text-sm font-semibold text-texto-suave"><IconCircleX size={16} stroke={2} className="min-w-fit" aria-hidden="true" />No me presento · no se exporta</p>;
 }
 
 // Aparte para poder usar el hook solo en las tarjetas que llevan menú
@@ -53,6 +62,10 @@ interface Props {
 
 export default function ExamCard({ examen, variant = 'card', solapamiento, onSelect, hoy = new Date(), conAcciones = false, alAvisar }: Props) {
     const nombre = nombreLegible(examen);
+    // Solo en el dashboard (con menú o detalle): la portada prerenderizada no puede leer un store
+    // persistido sin descuadrar la hidratación
+    const enDashboard = conAcciones || !!onSelect;
+    const estado = usePreferencias((state) => (enDashboard ? state.estados[claveEstable(examen)] : undefined));
 
     if (variant === 'line') {
         const conflicto = solapamiento?.tipo === 'conflicto';
@@ -62,8 +75,12 @@ export default function ExamCard({ examen, variant = 'card', solapamiento, onSel
                     {horaInicio(examen.Hora)}
                     {conflicto && <IconAlertTriangle size={12} stroke={2.5} className="text-error" aria-hidden="true" />}
                 </span>
-                <span className="line-clamp-2 font-medium text-texto">{nombre}</span>
+                <span className={`line-clamp-2 font-medium ${estado === 'no-presento' ? 'text-texto-suave line-through' : 'text-texto'}`}>
+                    {estado === 'aprobado' && <IconCircleCheck size={12} stroke={2.5} className="inline me-0.5 -mt-0.5" aria-hidden="true" />}
+                    {nombre}
+                </span>
                 {conflicto && <span className="sr-only">. {textoSolapamiento(solapamiento)}</span>}
+                {estado && <span className="sr-only">. {estado === 'aprobado' ? 'Aprobado' : 'No me presento'}</span>}
             </>
         );
         const clases = 'flex flex-col w-full text-start text-xs leading-snug rounded-sm px-1.5 py-1 bg-superficie-alta';
@@ -74,17 +91,19 @@ export default function ExamCard({ examen, variant = 'card', solapamiento, onSel
 
     const dias = diasHasta(examen.Fecha, hoy);
     const pasado = dias < 0;
+    // Pasado o «No me presento»: se ve más apagado
+    const atenuado = pasado || estado === 'no-presento';
     const { dia, diaSemana, mes } = partesFecha(examen.Fecha);
     return (
-        <article className={`relative flex flex-row gap-4 p-4 lg:p-5 rounded-md border border-borde ${pasado ? 'bg-lienzo' : 'bg-superficie shadow-sm dark:shadow-none'}`}>
+        <article className={`relative flex flex-row gap-4 p-4 lg:p-5 rounded-md border border-borde ${atenuado ? 'bg-lienzo' : 'bg-superficie shadow-sm dark:shadow-none'}`}>
             {/* Bloque de fecha como en una agenda; la fecha completa va en texto para lectores de pantalla */}
-            <div aria-hidden="true" className={`flex flex-col items-center justify-center shrink-0 w-14 py-2 rounded-sm ${pasado ? 'border border-borde' : 'bg-superficie-alta'}`}>
+            <div aria-hidden="true" className={`flex flex-col items-center justify-center shrink-0 w-14 py-2 rounded-sm ${atenuado ? 'border border-borde' : 'bg-superficie-alta'}`}>
                 <span className="text-xs font-medium text-texto-suave">{diaSemana}</span>
-                <span className={`text-2xl font-bold leading-tight tabular-nums ${pasado ? 'text-texto-suave' : 'text-texto'}`}>{dia}</span>
+                <span className={`text-2xl font-bold leading-tight tabular-nums ${atenuado ? 'text-texto-suave' : 'text-texto'}`}>{dia}</span>
                 <span className="text-xs font-medium text-texto-suave">{mes}</span>
             </div>
             <div className={`flex flex-col gap-1 min-w-0 ${conAcciones ? 'pe-10' : ''}`}>
-                <h3 className={`text-base lg:text-lg font-bold leading-snug ${pasado ? 'text-texto-suave' : 'text-texto'}`}>
+                <h3 className={`text-base lg:text-lg font-bold leading-snug ${atenuado ? 'text-texto-suave' : 'text-texto'}`}>
                     {nombre}
                     <span className="sr-only">, {fechaLarga(examen.Fecha)}</span>
                 </h3>
@@ -101,9 +120,10 @@ export default function ExamCard({ examen, variant = 'card', solapamiento, onSel
                 <p className="text-sm text-texto-suave">
                     {examen.Convocatoria}
                     {' · '}
-                    <span className={pasado ? '' : 'font-semibold text-primary'}>{textoDias(dias)}</span>
+                    <span className={atenuado ? '' : 'font-semibold text-primary'}>{textoDias(dias)}</span>
                 </p>
                 <p className="text-sm text-texto-suave">{examen.Plan}</p>
+                {estado && <EtiquetaEstado estado={estado} />}
                 {solapamiento && <AvisoSolapamiento solapamiento={solapamiento} />}
             </div>
             {conAcciones && <AccionesExamen examen={examen} alAvisar={alAvisar} />}
