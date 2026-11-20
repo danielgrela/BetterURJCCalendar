@@ -118,7 +118,7 @@ Inter variable autoalojada (`@fontsource-variable/inter`, solo latin, precargada
 - **Selects de filtro**: `rounded-sm border border-borde-fuerte shadow-sm min-h-11`, con `label` visible encima (`text-sm` medium `texto-suave`: «Convocatoria», «Mostrar») y opciones cortas («Todas», «Todos», «Solo pendientes»); en móvil, rejilla de 2 columnas a todo el ancho.
 - **Navegación del dashboard**: barra lateral (`superficie`) en `lg:` con logotipo y botones apilados; en móvil, barra inferior de 3 botones a un tercio de ancho cada uno. Activo = `bg-primary text-sobre-primary font-bold`.
 - **Portada**: la frase «De Daniel para Daniel (y amigos)» es una línea `text-sm` en `texto-suave`, sin píldora ni icono. El visual es el `Calendar` real a tamaño nativo (`compact`: celdas `min-h-20`, sin detalle al pulsar) con los datos de ejemplo de `jsonMockup.json`, en un `figure` con pie «Ejemplo: …» para quien aún no ha usado la app. Las tarjetas de Características son `superficie` con borde fino y el icono suelto en `primary` (sin cuadro de color ni borde lateral). Nada crece al pasar el ratón: los iconos del `Header` cambian de fondo.
-- **Botón de tema**: círculo invertido (`bg-texto text-lienzo`) fijo abajo a la derecha; en el dashboard móvil va en `ReturnMobile`.
+- **Botón de tema**: círculo invertido (`bg-texto text-lienzo`) con anillo `ring-2 ring-lienzo` y `shadow-md` en claro, para que se separe de lo que tenga debajo; fijo abajo a la derecha; en el dashboard móvil va en `ReturnMobile`.
 
 ## Layout y responsive
 - Mobile-first con un único corte en **`lg` (1024 px)**: por debajo, una columna, CTAs a ancho completo, navegación inferior y calendario en lista (`MobileCalendar`); por encima, barra lateral, rejilla mensual (`PCCalendar`) y mockup de calendario en la portada.
@@ -127,7 +127,7 @@ Inter variable autoalojada (`@fontsource-variable/inter`, solo latin, precargada
 - Probar siempre a 375, 768 y ≥1024 px, en claro y oscuro, con y sin exámenes importados (estados vacíos incluidos: «Aún no hay exámenes» con «Importar Excel»; sin datos, la cabecera del dashboard no muestra botones).
 
 ## Movimiento
-Solo transiciones cortas de color/brillo en hover (`duration-200/300`). El cambio de tema desactiva transiciones un frame (`.no-transitions`) para que no parpadee. Nada de animaciones de entrada. Con `prefers-reduced-motion: reduce`, `index.css` deja las transiciones y animaciones en 0 s (el cambio de estado se ve igual, sin fundido).
+Solo transiciones cortas de color/brillo en hover (`duration-200/300`). El cambio de tema desactiva transiciones un frame (`.no-transitions`) para que no parpadee. Nada de animaciones de entrada. Única animación: el giro del icono del botón de tema al pulsarlo (500 ms; sale girando a 90° y encogiendo, entra desde -90° con un pequeño rebote), hecho con `@keyframes` y no con transiciones porque `.no-transitions` las anula en ese frame. Con `prefers-reduced-motion: reduce`, `index.css` deja las transiciones y animaciones en 0 s (el cambio de estado se ve igual, sin fundido).
 
 ## No hacer
 - Más de un color de acento por pantalla, o el rojo para cosas que no son acción/marca/urgencia.

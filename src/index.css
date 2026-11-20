@@ -91,6 +91,16 @@ body {
 	}
 }
 
+/* Giro del icono del botón de tema. Son animaciones y no transiciones porque .no-transitions
+   anula las transiciones justo en el frame en que cambia .dark; solo traen el «desde»: el
+   estado final lo ponen las clases del icono */
+@keyframes icono-tema-entra {
+	from { rotate: -90deg; scale: 0; opacity: 0; }
+}
+@keyframes icono-tema-sale {
+	from { rotate: 0deg; scale: 1; opacity: 1; }
+}
+
 .no-transitions *,
 .no-transitions *::before,
 .no-transitions *::after {
