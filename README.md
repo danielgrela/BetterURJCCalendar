@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# Better URJC Calendar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+El Excel oficial de exámenes de la URJC, convertido en un calendario que se entiende de un vistazo.
 
-Currently, two official plugins are available:
+**[betterurjccalendar.danielgrela.com](https://betterurjccalendar.danielgrela.com/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![Calendario de mayo de 2026 con exámenes importados](public/og-image.png)
 
-## React Compiler
+## Qué hace
+- **Calendario personal**: rejilla mensual en el ordenador y lista por meses en el móvil, con filtros por convocatoria y por exámenes pendientes.
+- **Próximos exámenes** con la cuenta atrás de cada uno.
+- **Aviso de solapamientos**: marca los exámenes cuyas horas se cruzan y los que caen el mismo día.
+- **Exportación** a Excel (`.xlsx`) y a iCal (`.ics`) para Google Calendar, Outlook o el calendario del móvil.
+- **Modo claro y oscuro** (sigue al sistema por defecto) y **funciona sin conexión** como PWA una vez cargada.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Cómo se usa
+1. Entra en [servicios.urjc.es/examenes](https://servicios.urjc.es/examenes/alumno/login) con tus credenciales de la URJC y pulsa «Descargar en Excel».
+2. En la app, ve a **Importar** y arrastra o elige el archivo.
+3. Pulsa «Importar»: te lleva al Calendario, y en Inicio verás los próximos exámenes.
 
-## Expanding the ESLint configuration
+La [guía de uso](https://betterurjccalendar.danielgrela.com/dashboard/guia-de-uso) lo explica con capturas y ofrece un [Excel de ejemplo](public/Examenes.xlsx) para probarla.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Privacidad
+Todo ocurre en tu navegador: el Excel no se sube a ningún servidor, no hay cuentas ni analítica. Los exámenes importados se guardan en el `localStorage` de tu navegador y puedes borrarlos desde Importar.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Desarrollo
+Requiere Node.js 20.19+ o 22.12+ (lo que pide Vite 8).
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm install
+npm run dev        # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| Comando | Qué hace |
+|---|---|
+| `npm run host` | Igual que `dev`, accesible desde otros dispositivos de la red (para probar en el móvil) |
+| `npm run build` | Sitio estático en `dist/client` (prerenderiza la portada y la guía de uso) |
+| `npm run preview` | Sirve el build en http://localhost:4173 como lo haría Vercel |
+| `npm run typecheck` | Tipos de las rutas + `tsc` |
+| `npm run lint` | ESLint |
+| `npm test` | Tests de la lógica (Vitest) |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Hecho con React 19, React Router 7 (modo framework, sitio estático), Vite, Tailwind CSS 4, Zustand y TypeScript. Se despliega en Vercel desde `main`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Para contribuir: [`AGENTS.md`](AGENTS.md) describe la estructura y las convenciones, [`DESIGN.md`](DESIGN.md) la guía visual y [`ROADMAP.md`](ROADMAP.md) el trabajo hecho y pendiente.
+
+## Créditos
+- Creado por [Daniel Grela](https://www.danielgrela.com).
+- Iconos de [Tabler Icons](https://tabler.io/icons) y fuente [Inter](https://rsms.me/inter/).
+- Lectura y escritura de Excel con [read-excel-file](https://gitlab.com/catamphetamine/read-excel-file) y [write-excel-file](https://gitlab.com/catamphetamine/write-excel-file); iCal con [ics](https://github.com/adamgibbons/ics).
+
+Proyecto independiente, sin relación oficial con la Universidad Rey Juan Carlos. Es open source: se permite su uso y modificación libremente.
