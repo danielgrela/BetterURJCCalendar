@@ -48,7 +48,7 @@ export default function UseGuide() {
                         <p className="font-bold">01.</p>
                         <div>
                             <h3 className="font-bold">Acceder al dashboard</h3>
-                            <p>Accede a la <NavLink to="/dashboard/importar" className="text-enlace underline underline-offset-2 hover:decoration-2">página de importar</NavLink> y añade tu archivo de exámenes: el Excel de la URJC o un .ics que hayas exportado antes desde aquí (por ejemplo, para pasar tus exámenes a otro dispositivo). Si el sistema no da ningún error, pulsa el botón de importar y se te llevará directamente a la sección «Calendario».</p>
+                            <p>Accede a la <NavLink to="/dashboard/importar" className="text-enlace underline underline-offset-2 hover:decoration-2">página de importar</NavLink> y añade tu archivo de exámenes: el Excel de la URJC, un .ics que hayas exportado antes desde aquí o una copia de seguridad .json (las dos últimas sirven para pasar tus exámenes a otro dispositivo). Si ya tenías un calendario, antes de importar verás qué exámenes cambian de fecha, hora o aula. Si el sistema no da ningún error, pulsa el botón de importar y se te llevará directamente a la sección «Calendario».</p>
                         </div>    
                     </div>
                     <div className='flex flex-row gap-4'>
@@ -58,9 +58,12 @@ export default function UseGuide() {
                             <p>En la fecha en la que escribo esta guía, las siguientes funciones están disponibles en el calendario de exámenes.</p>
                             <ul className='list-disc pl-6'>
                                 <li>Visualización de exámenes por fecha</li>
-                                <li>Filtro por convocatoria</li>
-                                <li>Filtro por exámenes pendientes</li>
+                                <li>Filtro por convocatoria y por exámenes pendientes</li>
+                                <li>Buscador de asignatura por nombre o código</li>
+                                <li>En el ordenador, ← y → para cambiar de mes y T para volver al actual</li>
+                                <li>Menú «⋯» en cada examen: editarlo, añadirlo a Google Calendar, marcarlo como aprobado o «No me presento», ocultar la asignatura o eliminarlo</li>
                             </ul>
+                            <p className="mt-2">En Inicio tienes además tus asignaturas (para ocultarlas o elegir tu grupo), la carga de estudio, compartir el calendario con un enlace o un QR y la copia de seguridad.</p>
                         </div>    
                     </div>
                 </div>

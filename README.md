@@ -7,12 +7,15 @@ El Excel oficial de exámenes de la URJC, convertido en un calendario que se ent
 ![Calendario de mayo de 2026 con exámenes importados](public/og-image.png)
 
 ## Qué hace
-- **Calendario personal**: rejilla mensual en el ordenador y lista por meses en el móvil, con filtros por convocatoria y por exámenes pendientes.
+- **Calendario personal**: rejilla mensual en el ordenador (con ← y → para cambiar de mes) y lista por meses en el móvil, con buscador de asignatura y filtros por convocatoria y por exámenes pendientes.
 - **Próximos exámenes** con la cuenta atrás de cada uno.
 - **Aviso de solapamientos**: marca los exámenes cuyas horas se cruzan y los que caen el mismo día.
-- **Exportación** a Excel (`.xlsx`) y a iCal (`.ics`) para Google Calendar, Outlook o el calendario del móvil, con la hora de Madrid. Si la URJC cambia un examen, volver a importar el `.ics` en tu calendario actualiza el evento en vez de duplicarlo.
-- **Importación** del Excel de la URJC o de un `.ics`.
-- **Exámenes propios**: en **Crear** añades a mano los que no estén en el Excel (curso, plan y franjas horarias se rellenan de un toque con lo que ya tienes) y se mantienen aunque importes otro archivo. Cualquier examen, importado o propio, se puede eliminar con la papelera de su tarjeta.
+- **Exportación** a Excel (`.xlsx`) y a iCal (`.ics`) para Google Calendar, Outlook o el calendario del móvil, con la hora de Madrid y el recordatorio que elijas (1 día antes, 2 horas antes o ambos). Si la URJC cambia un examen, volver a importar el `.ics` en tu calendario actualiza el evento en vez de duplicarlo. También se puede añadir un examen suelto a Google Calendar o **imprimir** la lista (o guardarla en PDF).
+- **Importación** del Excel de la URJC o de un `.ics`. Al volver a importar, avisa de qué exámenes han cambiado de fecha, hora o aula.
+- **Tus asignaturas**: oculta las que no te interesan, elige tu grupo y marca cada examen como aprobado (se ocultan sus convocatorias posteriores) o «No me presento» (no se exporta).
+- **Carga de estudio**: cuántos días tienes para preparar cada examen pendiente y cuál es tu semana más cargada.
+- **Exámenes propios**: en **Crear** añades a mano los que no estén en el Excel (curso, plan y franjas horarias se rellenan de un toque con lo que ya tienes) y se mantienen aunque importes otro archivo. Cualquier examen, importado o propio, se puede editar o eliminar desde su menú «⋯» (eliminar se puede deshacer).
+- **Compartir y copia de seguridad**: pasa tu calendario a un compañero con un enlace o un QR, o descarga una copia `.json` con todo (también tus ajustes) para llevarla a otro navegador.
 - **Modo claro y oscuro** (la primera vez, el de tu sistema; después, el que elijas) y **funciona sin conexión** como PWA una vez cargada.
 
 ## Cómo se usa
@@ -23,7 +26,9 @@ El Excel oficial de exámenes de la URJC, convertido en un calendario que se ent
 La [guía de uso](https://betterurjccalendar.danielgrela.com/dashboard/guia-de-uso) lo explica con capturas y ofrece un [Excel de ejemplo](public/Examenes.xlsx) para probarla.
 
 ## Privacidad
-Todo ocurre en tu navegador: el Excel no se sube a ningún servidor, no hay cuentas ni analítica. Los exámenes importados se guardan en el `localStorage` de tu navegador y puedes borrarlos desde Importar.
+Todo ocurre en tu navegador: el Excel no se sube a ningún servidor, no hay cuentas ni analítica. Los exámenes importados y tus ajustes se guardan en el `localStorage` de tu navegador y puedes borrarlos desde Importar.
+
+Al compartir el calendario, los exámenes viajan comprimidos **dentro del propio enlace** (tras el `#`, que el navegador no envía al servidor): no se suben a ninguna parte, pero cualquiera que tenga el enlace o el QR puede verlos. Solo se comparte lo que ves en tu calendario, sin tus estados (aprobado, no me presento).
 
 ## Desarrollo
 Requiere Node.js 20.19+ o 22.12+ (lo que pide Vite 8).
@@ -49,7 +54,7 @@ Para contribuir: [`DESIGN.md`](DESIGN.md) recoge la guía visual (tokens de colo
 ## Créditos
 - Creado por [Daniel Grela](https://www.danielgrela.com).
 - Iconos de [Tabler Icons](https://tabler.io/icons) y fuente [Inter](https://rsms.me/inter/).
-- Lectura y escritura de Excel con [read-excel-file](https://gitlab.com/catamphetamine/read-excel-file) y [write-excel-file](https://gitlab.com/catamphetamine/write-excel-file); iCal con [ics](https://github.com/adamgibbons/ics).
+- Lectura y escritura de Excel con [read-excel-file](https://gitlab.com/catamphetamine/read-excel-file) y [write-excel-file](https://gitlab.com/catamphetamine/write-excel-file); iCal con [ics](https://github.com/adamgibbons/ics); códigos QR con [uqr](https://github.com/unjs/uqr).
 
 Proyecto independiente, sin relación oficial con la Universidad Rey Juan Carlos.
 
