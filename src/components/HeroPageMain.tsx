@@ -20,7 +20,6 @@ export default function HeroPageMain() {
             {/* Demostración para quien aún no ha importado nada: el calendario real con datos de ejemplo */}
             <figure className="w-1/2 hidden lg:flex flex-col gap-3">
                 <Calendar jsonData={jsonMockup} year={2026} month={4} today={new Date(2026, 4, 18)} solapamientos={SOLAPAMIENTOS_MOCKUP} compact />
-                <figcaption className="text-sm text-texto-suave text-center">Ejemplo: así se ve mayo de 2026 con exámenes importados</figcaption>
             </figure>
         </section>
     );
